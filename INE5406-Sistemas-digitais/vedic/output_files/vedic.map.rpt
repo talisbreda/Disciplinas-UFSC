@@ -1,0 +1,553 @@
+Analysis & Synthesis report for vedic
+Wed Nov 23 22:32:05 2022
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Registers Removed During Synthesis
+  9. General Register Statistics
+ 10. Parameter Settings for User Entity Instance: Top-level Entity: |multiplicador
+ 11. Parameter Settings for User Entity Instance: registrador:regA
+ 12. Parameter Settings for User Entity Instance: registrador:regB
+ 13. Port Connectivity Checks: "eightbitmult:\mult1:mult8|halfadder:ha4"
+ 14. Port Connectivity Checks: "eightbitmult:\mult1:mult8|cla8bit:cla2"
+ 15. Port Connectivity Checks: "eightbitmult:\mult1:mult8|cla8bit:cla1"
+ 16. Port Connectivity Checks: "eightbitmult:\mult1:mult8|fourbitmult:mult1|halfadder:ha2"
+ 17. Port Connectivity Checks: "eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla2"
+ 18. Port Connectivity Checks: "eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1"
+ 19. Port Connectivity Checks: "registrador:regB"
+ 20. Port Connectivity Checks: "registrador:regA"
+ 21. Elapsed Time Per Partition
+ 22. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++--------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                         ;
++------------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Wed Nov 23 22:32:05 2022           ;
+; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
+; Revision Name                      ; vedic                                           ;
+; Top-level Entity Name              ; multiplicador                                   ;
+; Family                             ; Cyclone IV GX                                   ;
+; Total logic elements               ; 224                                             ;
+;     Total combinational functions  ; 212                                             ;
+;     Dedicated logic registers      ; 112                                             ;
+; Total registers                    ; 112                                             ;
+; Total pins                         ; 35                                              ;
+; Total virtual pins                 ; 0                                               ;
+; Total memory bits                  ; 0                                               ;
+; Embedded Multiplier 9-bit elements ; 0                                               ;
+; Total GXB Receiver Channel PCS     ; 0                                               ;
+; Total GXB Receiver Channel PMA     ; 0                                               ;
+; Total GXB Transmitter Channel PCS  ; 0                                               ;
+; Total GXB Transmitter Channel PMA  ; 0                                               ;
+; Total PLLs                         ; 0                                               ;
++------------------------------------+-------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP4CGX15BF14A7     ;                    ;
+; Top-level entity name                                                      ; multiplicador      ; vedic              ;
+; Family name                                                                ; Cyclone IV GX      ; Cyclone IV GX      ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization                                               ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 6      ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                      ;
++----------------------------------+-----------------+-----------------+--------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type       ; File Name with Absolute Path                                                               ; Library ;
++----------------------------------+-----------------+-----------------+--------------------------------------------------------------------------------------------+---------+
+; eightbitmult.vhd                 ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/eightbitmult.vhd     ;         ;
+; halfadder.vhd                    ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/halfadder.vhd        ;         ;
+; twobitmult.vhd                   ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/twobitmult.vhd       ;         ;
+; cla4bit.vhd                      ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/cla4bit.vhd          ;         ;
+; fourbitmult.vhd                  ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/fourbitmult.vhd      ;         ;
+; partialfulladder.vhd             ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/partialfulladder.vhd ;         ;
+; cla8bit.vhd                      ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/cla8bit.vhd          ;         ;
+; multiplicador.vhd                ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/multiplicador.vhd    ;         ;
+; bc.vhd                           ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/bc.vhd               ;         ;
+; registrador.vhd                  ; yes             ; User VHDL File  ; C:/Users/talis/OneDrive/햞ea de Trabalho/Workspace/quartus-vhdl/vedic/registrador.vhd      ;         ;
++----------------------------------+-----------------+-----------------+--------------------------------------------------------------------------------------------+---------+
+
+
++---------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary ;
++--------------------------+------------------+
+; Resource                 ; Usage            ;
++--------------------------+------------------+
+; I/O pins                 ; 35               ;
+; DSP block 9-bit elements ; 0                ;
+; Maximum fan-out node     ; CLK~input        ;
+; Maximum fan-out          ; 112              ;
+; Total fan-out            ; 1002             ;
+; Average fan-out          ; 2.54             ;
++--------------------------+------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                        ;
++-------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+-----------+------+--------------+-----------------------------------------------------------------------------------------------+--------------+
+; Compilation Hierarchy Node          ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; DSP 36x36 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                           ; Library Name ;
++-------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+-----------+------+--------------+-----------------------------------------------------------------------------------------------+--------------+
+; |multiplicador                      ; 212 (0)           ; 112 (0)      ; 0           ; 0            ; 0       ; 0         ; 0         ; 35   ; 0            ; |multiplicador                                                                                ; work         ;
+;    |eightbitmult:\mult1:mult8|      ; 212 (0)           ; 112 (16)     ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8                                                      ; work         ;
+;       |cla8bit:cla1|                ; 19 (19)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|cla8bit:cla1                                         ; work         ;
+;       |cla8bit:cla2|                ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|cla8bit:cla2                                         ; work         ;
+;       |fourbitmult:mult1|           ; 43 (4)            ; 24 (8)       ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1                                    ; work         ;
+;          |cla4bit:cla1|             ; 8 (4)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1                       ; work         ;
+;             |partialfulladder:PFA1| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1|partialfulladder:PFA1 ; work         ;
+;             |partialfulladder:PFA2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1|partialfulladder:PFA2 ; work         ;
+;             |partialfulladder:PFA3| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1|partialfulladder:PFA3 ; work         ;
+;             |partialfulladder:PFA4| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1|partialfulladder:PFA4 ; work         ;
+;          |cla4bit:cla2|             ; 13 (4)            ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla2                       ; work         ;
+;             |partialfulladder:PFA1| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla2|partialfulladder:PFA1 ; work         ;
+;             |partialfulladder:PFA2| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla2|partialfulladder:PFA2 ; work         ;
+;             |partialfulladder:PFA3| ; 3 (3)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla2|partialfulladder:PFA3 ; work         ;
+;             |partialfulladder:PFA4| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla2|partialfulladder:PFA4 ; work         ;
+;          |halfadder:ha1|            ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|halfadder:ha1                      ; work         ;
+;          |halfadder:ha2|            ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|halfadder:ha2                      ; work         ;
+;          |twobitmult:tbm1|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm1                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm1|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm1|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm2|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm2                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm2|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm2|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm3|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm3                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm3|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm3|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm4|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm4                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm4|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm4|halfadder:ha2      ; work         ;
+;       |fourbitmult:mult2|           ; 43 (4)            ; 24 (8)       ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2                                    ; work         ;
+;          |cla4bit:cla1|             ; 8 (4)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla1                       ; work         ;
+;             |partialfulladder:PFA1| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla1|partialfulladder:PFA1 ; work         ;
+;             |partialfulladder:PFA2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla1|partialfulladder:PFA2 ; work         ;
+;             |partialfulladder:PFA3| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla1|partialfulladder:PFA3 ; work         ;
+;             |partialfulladder:PFA4| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla1|partialfulladder:PFA4 ; work         ;
+;          |cla4bit:cla2|             ; 13 (4)            ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla2                       ; work         ;
+;             |partialfulladder:PFA1| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla2|partialfulladder:PFA1 ; work         ;
+;             |partialfulladder:PFA2| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla2|partialfulladder:PFA2 ; work         ;
+;             |partialfulladder:PFA3| ; 3 (3)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla2|partialfulladder:PFA3 ; work         ;
+;             |partialfulladder:PFA4| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|cla4bit:cla2|partialfulladder:PFA4 ; work         ;
+;          |halfadder:ha1|            ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|halfadder:ha1                      ; work         ;
+;          |halfadder:ha2|            ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|halfadder:ha2                      ; work         ;
+;          |twobitmult:tbm1|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm1                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm1|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm1|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm2|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm2                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm2|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm2|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm3|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm3                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm3|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm3|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm4|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm4                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm4|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult2|twobitmult:tbm4|halfadder:ha2      ; work         ;
+;       |fourbitmult:mult3|           ; 43 (4)            ; 24 (8)       ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3                                    ; work         ;
+;          |cla4bit:cla1|             ; 8 (4)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla1                       ; work         ;
+;             |partialfulladder:PFA1| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla1|partialfulladder:PFA1 ; work         ;
+;             |partialfulladder:PFA2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla1|partialfulladder:PFA2 ; work         ;
+;             |partialfulladder:PFA3| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla1|partialfulladder:PFA3 ; work         ;
+;             |partialfulladder:PFA4| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla1|partialfulladder:PFA4 ; work         ;
+;          |cla4bit:cla2|             ; 13 (4)            ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla2                       ; work         ;
+;             |partialfulladder:PFA1| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla2|partialfulladder:PFA1 ; work         ;
+;             |partialfulladder:PFA2| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla2|partialfulladder:PFA2 ; work         ;
+;             |partialfulladder:PFA3| ; 3 (3)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla2|partialfulladder:PFA3 ; work         ;
+;             |partialfulladder:PFA4| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|cla4bit:cla2|partialfulladder:PFA4 ; work         ;
+;          |halfadder:ha1|            ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|halfadder:ha1                      ; work         ;
+;          |halfadder:ha2|            ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|halfadder:ha2                      ; work         ;
+;          |twobitmult:tbm1|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm1                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm1|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm1|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm2|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm2                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm2|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm2|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm3|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm3                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm3|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm3|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm4|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm4                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm4|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult3|twobitmult:tbm4|halfadder:ha2      ; work         ;
+;       |fourbitmult:mult4|           ; 43 (4)            ; 24 (8)       ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4                                    ; work         ;
+;          |cla4bit:cla1|             ; 8 (4)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla1                       ; work         ;
+;             |partialfulladder:PFA1| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla1|partialfulladder:PFA1 ; work         ;
+;             |partialfulladder:PFA2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla1|partialfulladder:PFA2 ; work         ;
+;             |partialfulladder:PFA3| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla1|partialfulladder:PFA3 ; work         ;
+;             |partialfulladder:PFA4| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla1|partialfulladder:PFA4 ; work         ;
+;          |cla4bit:cla2|             ; 13 (4)            ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla2                       ; work         ;
+;             |partialfulladder:PFA1| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla2|partialfulladder:PFA1 ; work         ;
+;             |partialfulladder:PFA2| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla2|partialfulladder:PFA2 ; work         ;
+;             |partialfulladder:PFA3| ; 3 (3)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla2|partialfulladder:PFA3 ; work         ;
+;             |partialfulladder:PFA4| ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|cla4bit:cla2|partialfulladder:PFA4 ; work         ;
+;          |halfadder:ha1|            ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|halfadder:ha1                      ; work         ;
+;          |halfadder:ha2|            ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|halfadder:ha2                      ; work         ;
+;          |twobitmult:tbm1|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm1                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm1|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm1|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm2|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm2                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm2|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm2|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm3|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm3                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm3|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm3|halfadder:ha2      ; work         ;
+;          |twobitmult:tbm4|          ; 4 (1)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm4                    ; work         ;
+;             |halfadder:ha1|         ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm4|halfadder:ha1      ; work         ;
+;             |halfadder:ha2|         ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|fourbitmult:mult4|twobitmult:tbm4|halfadder:ha2      ; work         ;
+;       |halfadder:ha1|               ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|halfadder:ha1                                        ; work         ;
+;       |halfadder:ha2|               ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|halfadder:ha2                                        ; work         ;
+;       |halfadder:ha3|               ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|halfadder:ha3                                        ; work         ;
+;       |halfadder:ha4|               ; 2 (2)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0         ; 0    ; 0            ; |multiplicador|eightbitmult:\mult1:mult8|halfadder:ha4                                        ; work         ;
++-------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+-----------+------+--------------+-----------------------------------------------------------------------------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++--------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                             ;
++---------------------------------------+----------------------------------------+
+; Register name                         ; Reason for Removal                     ;
++---------------------------------------+----------------------------------------+
+; bc:BC1|pronto                         ; Stuck at VCC due to stuck port data_in ;
+; Total Number of Removed Registers = 1 ;                                        ;
++---------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 112   ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |multiplicador ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; N              ; 8     ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: registrador:regA ;
++----------------+-------+--------------------------------------+
+; Parameter Name ; Value ; Type                                 ;
++----------------+-------+--------------------------------------+
+; n              ; 8     ; Signed Integer                       ;
++----------------+-------+--------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: registrador:regB ;
++----------------+-------+--------------------------------------+
+; Parameter Name ; Value ; Type                                 ;
++----------------+-------+--------------------------------------+
+; n              ; 8     ; Signed Integer                       ;
++----------------+-------+--------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "eightbitmult:\mult1:mult8|halfadder:ha4"                                            ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; cout ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "eightbitmult:\mult1:mult8|cla8bit:cla2"                                                                                                         ;
++----------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port     ; Type  ; Severity ; Details                                                                                                                                      ;
++----------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; carry_in ; Input ; Info     ; Stuck at GND                                                                                                                                 ;
+; clk      ; Input ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
++----------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "eightbitmult:\mult1:mult8|cla8bit:cla1"                                                                                                         ;
++----------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port     ; Type  ; Severity ; Details                                                                                                                                      ;
++----------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; carry_in ; Input ; Info     ; Stuck at GND                                                                                                                                 ;
+; clk      ; Input ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
++----------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "eightbitmult:\mult1:mult8|fourbitmult:mult1|halfadder:ha2"                          ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; cout ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla2" ;
++------+-------+----------+------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                    ;
++------+-------+----------+------------------------------------------------------------+
+; cin  ; Input ; Info     ; Stuck at GND                                               ;
++------+-------+----------+------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1" ;
++------+-------+----------+------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                    ;
++------+-------+----------+------------------------------------------------------------+
+; cin  ; Input ; Info     ; Stuck at GND                                               ;
++------+-------+----------+------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "registrador:regB"                                                                   ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; q    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "registrador:regA"                                                                   ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; q    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:01     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Analysis & Synthesis
+    Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+    Info: Processing started: Wed Nov 23 22:32:01 2022
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off vedic -c vedic
+Warning (20028): Parallel compilation is not licensed and has been disabled
+Info (12021): Found 2 design units, including 1 entities, in source file eightbitmult.vhd
+    Info (12022): Found design unit 1: eightbitmult-estrutura
+    Info (12023): Found entity 1: eightbitmult
+Info (12021): Found 2 design units, including 1 entities, in source file sixteenbitmult.vhd
+    Info (12022): Found design unit 1: sixteenbitmult-estrutura
+    Info (12023): Found entity 1: sixteenbitmult
+Info (12021): Found 2 design units, including 1 entities, in source file halfadder.vhd
+    Info (12022): Found design unit 1: halfadder-myarch
+    Info (12023): Found entity 1: halfadder
+Info (12021): Found 2 design units, including 1 entities, in source file twobitmult.vhd
+    Info (12022): Found design unit 1: twobitmult-estrutura
+    Info (12023): Found entity 1: twobitmult
+Info (12021): Found 2 design units, including 1 entities, in source file cla4bit.vhd
+    Info (12022): Found design unit 1: cla4bit-Behavioral
+    Info (12023): Found entity 1: cla4bit
+Info (12021): Found 2 design units, including 1 entities, in source file fourbitmult.vhd
+    Info (12022): Found design unit 1: fourbitmult-estrutura
+    Info (12023): Found entity 1: fourbitmult
+Info (12021): Found 2 design units, including 1 entities, in source file partialfulladder.vhd
+    Info (12022): Found design unit 1: partialfulladder-Behavioral
+    Info (12023): Found entity 1: partialfulladder
+Info (12021): Found 2 design units, including 1 entities, in source file cla8bit.vhd
+    Info (12022): Found design unit 1: cla8bit-behavioral
+    Info (12023): Found entity 1: cla8bit
+Info (12021): Found 2 design units, including 1 entities, in source file cla16bit.vhd
+    Info (12022): Found design unit 1: cla16bit-Structure
+    Info (12023): Found entity 1: cla16bit
+Info (12021): Found 2 design units, including 1 entities, in source file gpfulladder.vhd
+    Info (12022): Found design unit 1: GPFullAdder-Equations
+    Info (12023): Found entity 1: GPFullAdder
+Info (12021): Found 2 design units, including 1 entities, in source file clalogic.vhd
+    Info (12022): Found design unit 1: CLALogic-Equations
+    Info (12023): Found entity 1: CLALogic
+Info (12021): Found 2 design units, including 1 entities, in source file cla4.vhd
+    Info (12022): Found design unit 1: CLA4-structure
+    Info (12023): Found entity 1: CLA4
+Info (12021): Found 2 design units, including 1 entities, in source file main.vhd
+    Info (12022): Found design unit 1: main-estrutura
+    Info (12023): Found entity 1: main
+Info (12021): Found 2 design units, including 1 entities, in source file multiplicador.vhd
+    Info (12022): Found design unit 1: multiplicador-estrutura
+    Info (12023): Found entity 1: multiplicador
+Info (12021): Found 2 design units, including 1 entities, in source file bc.vhd
+    Info (12022): Found design unit 1: bc-estrutura
+    Info (12023): Found entity 1: bc
+Info (12021): Found 2 design units, including 1 entities, in source file registrador.vhd
+    Info (12022): Found design unit 1: registrador-bhv
+    Info (12023): Found entity 1: registrador
+Info (12127): Elaborating entity "multiplicador" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at multiplicador.vhd(49): object "A_in" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at multiplicador.vhd(49): object "B_in" assigned a value but never read
+Info (12128): Elaborating entity "bc" for hierarchy "bc:BC1"
+Warning (10541): VHDL Signal Declaration warning at bc.vhd(12): used implicit default value for signal "STATE" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Info (12128): Elaborating entity "registrador" for hierarchy "registrador:regA"
+Info (12128): Elaborating entity "eightbitmult" for hierarchy "eightbitmult:\mult1:mult8"
+Warning (10036): Verilog HDL or VHDL warning at eightbitmult.vhd(36): object "coutha4" assigned a value but never read
+Info (12128): Elaborating entity "fourbitmult" for hierarchy "eightbitmult:\mult1:mult8|fourbitmult:mult1"
+Warning (10036): Verilog HDL or VHDL warning at fourbitmult.vhd(35): object "coutha2" assigned a value but never read
+Info (12128): Elaborating entity "twobitmult" for hierarchy "eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm1"
+Info (12128): Elaborating entity "halfadder" for hierarchy "eightbitmult:\mult1:mult8|fourbitmult:mult1|twobitmult:tbm1|halfadder:ha1"
+Info (12128): Elaborating entity "cla4bit" for hierarchy "eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1"
+Info (12128): Elaborating entity "partialfulladder" for hierarchy "eightbitmult:\mult1:mult8|fourbitmult:mult1|cla4bit:cla1|partialfulladder:PFA1"
+Info (12128): Elaborating entity "cla8bit" for hierarchy "eightbitmult:\mult1:mult8|cla8bit:cla1"
+Warning (10492): VHDL Process Statement warning at cla8bit.vhd(29): signal "carry_in" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (12241): 2 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "R" is stuck at VCC
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 1 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "INICIAR"
+Info (21057): Implemented 259 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 18 input pins
+    Info (21059): Implemented 17 output pins
+    Info (21061): Implemented 224 logic cells
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 12 warnings
+    Info: Peak virtual memory: 4680 megabytes
+    Info: Processing ended: Wed Nov 23 22:32:05 2022
+    Info: Elapsed time: 00:00:04
+    Info: Total CPU time (on all processors): 00:00:04
+
+

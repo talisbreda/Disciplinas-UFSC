@@ -1,0 +1,43 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY main IS
+GENERIC(
+	N : integer := 16
+);
+PORT (A, B: in std_logic_vector(N-1 downto 0);
+		S: out std_logic_vector((2*N)-1 downto 0));
+END main;
+
+ARCHITECTURE estrutura OF main IS
+	
+	component fourbitmult IS
+	PORT (A, B: in std_logic_vector(3 downto 0);
+			S: out std_logic_vector(7 downto 0));
+	END component;
+	
+	component eightbitmult IS
+	PORT (A, B: in std_logic_vector(7 downto 0);
+			S: out std_logic_vector(15 downto 0));
+	END component;
+	
+	component sixteenbitmult is
+	PORT (
+         A, B: in std_logic_vector(15 downto 0);
+			S: out std_logic_vector(31 downto 0));
+	end component;
+	
+BEGIN
+	
+	process is
+	begin
+		if N = 4 then
+			mult: fourbitmult port map (A, B, S);
+		elsif N = 8 then
+			mult: eightbitmult port map (A, B, S);
+		elsif N = 16 then
+			mult: sixteenbitmult port map (A, B, S);
+		end if;
+	end process;
+	
+END estrutura;

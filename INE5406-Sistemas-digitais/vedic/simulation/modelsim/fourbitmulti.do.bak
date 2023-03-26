@@ -1,0 +1,3 @@
+force /clk_1hz 0 0 ns, 1 2 ns -r 4 ns
+force /a 1111 0 ns, 1000 5 ns, 1101 9 ns, 0101 13 ns, 1110 17 ns, 1000 21 ns
+force /b 1100 0 ns, 0110 5 ns, 1110 9 ns, 1000 13 ns, 1101 17 ns, 1000 21 ns
