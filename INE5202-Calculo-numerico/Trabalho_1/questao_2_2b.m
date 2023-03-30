@@ -11,13 +11,13 @@ function questao_2_2b(A, n)
       principal = A(i, i);
       eq = A(i, n+1);
       for j = 1 : n
-        if (i != j && A(i, j) != 0)
+        if (i != j)
           eq += A(i, j) * x(j) *(-1);
-          ops += 1;
+          ops += 2;
         endif
       endfor
       x(i) = (1-f_relax)* x(i) + f_relax * eq / principal;
-      ops += 1;
+      ops += 5;
     endfor
     dif = max(abs(x - original));
   endwhile

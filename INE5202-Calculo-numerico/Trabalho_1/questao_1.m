@@ -13,6 +13,6 @@ function questao_1()
   printf("Float: %.20f\n", x_float);
   printf("Double: %.20f\n", x_double);
 
-  erro = ((x_float - x_double) / x_double) * 100;
+  erro = ((double(x_float) - x_double) / x_double) * 100;
   printf("Erro percentual: %.20f%%\n", erro)
 end

@@ -1,5 +1,4 @@
 function x = questao_2_1bc(A, n)
-  ops = 0;
   B = A(1:n, n+1);
   A_original = A;
 
@@ -9,7 +8,6 @@ function x = questao_2_1bc(A, n)
       ops += 1;
       for j = k+1 : n+1
         A(i, j) = A(i, j) - aux * A(k, j);
-        ops += 1;
       endfor
     endfor
   endfor
@@ -21,12 +19,12 @@ function x = questao_2_1bc(A, n)
     x(i, 1) = (A(i, n+1) - soma) / A(i, i);
   endfor
 
-
   residuo = (A_original(1:n, 1:n)*x) - B;
+  operacoes = (4*n^3 + 15*n^2 - 7*n - 6)/6
 
   printf("\n")
   printf("Solução: ")
   x
   printf("Resíduo máximo: %.6f\n", max(residuo))
-  printf("Total de operações: %d\n", ops)
+  printf("Total de operações: %d\n", operacoes)
 end
