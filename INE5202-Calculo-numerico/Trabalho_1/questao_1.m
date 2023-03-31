@@ -1,9 +1,7 @@
-#1). Faça o armazenamento de  -60.06 em float, nesse link VPL.
-# Imprima com 20 dígitos significativos o número decimal acima convertido em
-# variável float (single) e double, e calcule o erro estimado de
-# arredondamento percentual gerado.
-
 function questao_1()
+
+  printf("Armazenar -60.06 em float e em double, e calcular a porcentagem de erro estimado\n\n")
+
   format long;
 
   x = -60.06;

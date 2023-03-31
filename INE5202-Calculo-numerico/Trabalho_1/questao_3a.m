@@ -1,9 +1,7 @@
 function [t, r, d, b] = questao_3a(n1, n2)
 
-%   for i=1;                         #         x(i)+x(i+1)  = -1.00;
-% for i=2:n1                    #x(i-1)+2x(i)+x(i+1) = 1.00;
-% for i=n1+1:n2-1          # x(i-1)+3x(i)+x(i+1) = 2.00;
-% for i=n2;                     #  x(i-1)+4x(i)            = 3.00; 
+  printf("\n3 - a) ")
+  printf("Armazenar o sistema na forma de vetores t, r, d, b (sem imprimir)\n")
 
   t = zeros(1, n2);
   r = zeros(1, n2);

@@ -1,32 +1,60 @@
-function questao_2_2b(A, n)
+function questao_2_2b(A, n1, n2, n3)
+
   printf("\n");
+  printf("2.2 - b) ")
+  printf("Resolver o mesmo sistema por um método iterativo e imprimir a solução e o resíduo máximo\n")
+
   k = 0; dif = 1;
-  x = ones(n, 1);
-  f_relax = 0.99;
+  x = ones(n3, 1);
+  f_relax = 1;
   ops = 0;
+
+  eq_relax = (1-f_relax);
+
   while dif > 1e-6
     k += 1;
-    original = x;
-    for i = 1 : n
-      principal = A(i, i);
-      eq = A(i, n+1);
-      for j = 1 : n
-        if (i != j)
-          eq += A(i, j) * x(j) *(-1);
-          ops += 2;
-        endif
-      endfor
-      x(i) = (1-f_relax)* x(i) + f_relax * eq / principal;
-      ops += 5;
+    x_original = x;
+
+    i = 1;
+    x(i) = eq_relax * x(i) + f_relax * (A(i, n3+1) - A(i, i+5) * x(i+5)) / A(i, i);
+    ops += 6;
+
+    for i = 2 : n1-1
+      x(i) = eq_relax * x(i) + f_relax * (A(i, n3+1) - A(i, i-1) * x(i-1) - A(i, i+5) * x(i+5)) / A(i, i);
+      ops += 8;
     endfor
-    dif = max(abs(x - original));
+
+    for i = n1 : n2-1
+      x(i) = eq_relax * x(i) + f_relax * (A(i, n3+1) - A(i, i-4) * x(i-4) - A(i, i+1) * x(i+1)) / A(i, i);
+      ops += 8;
+    endfor
+
+    i = n2;
+    x(i) = eq_relax * x(i) + f_relax * (A(i, n3+1) - A(i, i-1) * x(i-1) - A(i, i+4) * x(i+4)) / A(i, i);
+    ops += 8;
+
+    for i = n2+1 : n3-1
+      x(i) = eq_relax * x(i) + f_relax * (A(i, n3+1) - A(i, i-3) * x(i-3) - A(i, i-1) * x(i-1) - A(i, i+1) * x(i+1)) / A(i, i);
+      ops += 10;
+    endfor
+
+    i = n3;
+    x(i) = eq_relax * x(i) + f_relax * (A(i, n3+1) - A(i, i-10) * x(i-10)) / A(i, i);
+    ops += 6;
+
+    dif = max(abs(x - x_original));
+
   endwhile
 
-  printf("Solução: ")
+  printf("\nSolução: ")
   x
   printf("Total de iterações: %d\n", k)
-  b = A(1:n, n+1);
-  residuo = (A(1:n, 1:n)*x) - b;
-  printf("Resíduo máximo: %.6f\n", max(residuo))
-  printf("Total de operações: %d\n", ops)
+  printf("Fator de relaxamento escolhido: %.2f\n", f_relax)
+  B = A(1:n3, n3+1);
+  residuo = (A(1:n3, 1:n3)*x) - B;
+  printf("Resíduo máximo: %e\n", max(residuo))
+
+  printf("\n2.2 - c) ")
+  printf("Imprimir o número total de operações realizadas\n")
+  printf("\nTotal de operações: %d\n", ops)
 end

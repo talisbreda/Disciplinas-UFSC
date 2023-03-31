@@ -1,6 +1,10 @@
 function A = questao_2_1a(n1, n2, n3)
+
+  printf("2.1 - a) ")
+  printf("Armazenar o sistema da questão 2 em forma de matriz completa (sem imprimir)\n")
+
   i = 1;
-  A = zeros(n3, n3+1);
+  A = zeros(n3, n3);
 
   A(i, i) = 3;
   A(i, i+5) = 2;
@@ -14,7 +18,7 @@ function A = questao_2_1a(n1, n2, n3)
   endfor
 
   for i = n1 : n2-1
-    A(i-4) = 2;
+    A(i, i-4) = 2;
     A(i, i) = 4;
     A(i, i+1) = 1;
     A(i, n3+1) = 3;

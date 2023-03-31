@@ -1,4 +1,5 @@
 function x = questao_2_1bc(A, n)
+
   B = A(1:n, n+1);
   A_original = A;
 
@@ -19,11 +20,17 @@ function x = questao_2_1bc(A, n)
   endfor
 
   residuo = (A_original(1:n, 1:n)*x) - B;
-  operacoes = (4*n^3 + 15*n^2 - 7*n - 6)/6;
+  operacoes = (4*n^3 + 9*n^2 - n - 6)/6;
 
+  printf("2.1 - b) ")
+  printf("Resolver o sistema por método direto e imprimir resultado e resíduo máximo\n")
   printf("\n")
   printf("Solução: ")
   x
-  printf("Resíduo máximo: %.6f\n", max(residuo))
-  printf("Total de operações: %d\n", operacoes)
+  printf("Resíduo máximo: %e\n", max(residuo))
+
+  printf("\n2.1 - c) ")
+  printf("Imprimir o número total de operações realizadas\n")
+
+  printf("\nTotal de operações: %d\n", operacoes)
 end
