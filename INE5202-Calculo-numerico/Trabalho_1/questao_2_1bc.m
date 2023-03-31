@@ -5,7 +5,6 @@ function x = questao_2_1bc(A, n)
   for k = 1 : n-1
     for i = k+1 : n
       aux = A(i, k) / A(k, k);
-      ops += 1;
       for j = k+1 : n+1
         A(i, j) = A(i, j) - aux * A(k, j);
       endfor
@@ -20,7 +19,7 @@ function x = questao_2_1bc(A, n)
   endfor
 
   residuo = (A_original(1:n, 1:n)*x) - B;
-  operacoes = (4*n^3 + 15*n^2 - 7*n - 6)/6
+  operacoes = (4*n^3 + 15*n^2 - 7*n - 6)/6;
 
   printf("\n")
   printf("Solução: ")
