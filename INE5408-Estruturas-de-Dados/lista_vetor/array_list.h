@@ -44,20 +44,24 @@ class ArrayList {
             }
         }
         void insert_sorted(const T& data) {
-            if (size_ == max_size_) {
+            if (empty()) {
+                push_front(data);
+            } else if (full()) {
                 throw std::out_of_range("Lista cheia");
-            }
-            for (int i = 0; i < static_cast<int>(size_)-1; i++) {
-                if (contents[i] > data && contents[i+1] < data) {
-                    shift_to_right(i+1);
-                    contents[i+1] = data;
-                    size_++;
-                    break;
+            } else {
+                std::size_t index = 0;
+                for (int i = 0; i < static_cast<int>(size_); i++) {
+                    if (data > contents[i]) {
+                        index++;
+                    }
                 }
+                insert(data, index);
             }
         }
         T pop(std::size_t index) {
-            if (size_ > index) {
+            if (empty()) {
+                throw std::out_of_range("Lista vazia");
+            } else if (size_ > index) {
                 T aux = contents[index];
                 shift_to_left(index);
                 size_--;
@@ -67,22 +71,10 @@ class ArrayList {
             }
         }
         T pop_back() {
-            if (static_cast<int>(size_) > 0) {
-                size_--;
-                return contents[size_-1];
-            } else {
-                throw std::out_of_range("Lista vazia");
-            }
+            return pop(size_-1);
         }
         T pop_front() {
-            if (static_cast<int>(size_) > 0) {
-                T aux = contents[0];
-                shift_to_left(0);
-                size_--;
-                return aux;
-            } else {
-                throw std::out_of_range("Lista vazia");
-            }
+            return pop(0);
         }
         void remove(const T& data) {
             for (int i = 0; i < static_cast<int>(size_); i++) {
@@ -109,10 +101,10 @@ class ArrayList {
         std::size_t find(const T& data) const {
             for (int i = 0; i < static_cast<int>(size_); i++) {
                 if (contents[i] == data) {
-                    return static_cast<std::size_t>(i);
+                    return static_cast<int>(i);
                 }
             }
-            return static_cast<int>(-1);
+            return size_;
         }
         std::size_t size() const {
             return size_;
