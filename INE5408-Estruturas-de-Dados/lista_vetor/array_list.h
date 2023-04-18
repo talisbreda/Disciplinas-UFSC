@@ -138,7 +138,7 @@ class ArrayList {
         }
 
         void shift_to_left(std::size_t index) {
-            for (int i = index; i < static_cast<int>(size_)-2; i++) {
+            for (int i = index; i < static_cast<int>(size_)-1; i++) {
                 contents[i] = contents[i+1];
             }
         }
