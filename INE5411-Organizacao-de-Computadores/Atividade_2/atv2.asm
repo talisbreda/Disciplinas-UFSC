@@ -5,6 +5,7 @@
 	C: .word 0:9
 	space: .asciiz " "
 	newline: .asciiz "\n"
+	.align 2
 	filename: .asciiz "output.txt"
 
 .text
@@ -12,33 +13,33 @@ main:
 	
 	li	$t0, 0		# Contador para o loop
 	li	$t1, 9		# Limite do contador
-	la	$t2, A  	# Endereço de A
-	la	$t3, B  	# Endereço de B
-	la 	$t4, C		# Endereço de C
+	la	$t2, A  	# Endereï¿½o de A
+	la	$t3, B  	# Endereï¿½o de B
+	la 	$t4, C		# Endereï¿½o de C
 
 loop:
 	
 	lw	$t5, 0($t2)	# Carrega o elemento atual de A para o registrador
 	lw	$t6, 0($t3)	# Carrega o elemento atual de B para o registrador
 	
-	mul	$t6, $t5, $t6	# Faz a multiplicação no elemento atual
+	mul	$t6, $t5, $t6	# Faz a multiplicaï¿½ï¿½o no elemento atual
 	sw	$t6, 0($t4)	# Armazena o resultado em C
 	
-	# Soma dos endereços
+	# Soma dos endereï¿½os
 	addi	$t2, $t2, 4
 	addi	$t3, $t3, 4
 	addi	$t4, $t4, 4
 	
 	addi	$t0, $t0, 1	# Soma do contador
 	
-	bne	$t0, $t1, loop  # Condição de continuidade do loop
+	bne	$t0, $t1, loop  # Condiï¿½ï¿½o de continuidade do loop
 	
 endloop:
 	
 	li	$t0, 0		# Iterador de colunas
 	li	$t1, 0		# Iterador de linhas
 	li	$t2, 3		# Limite dos iteradores
-	la	$t4, C		# Endereço de C
+	la	$t4, C		# Endereï¿½o de C
 	
 	# Abrir arquivo 
 	li	$v0, 13		# Comando para abrir arquivo
@@ -46,7 +47,7 @@ endloop:
 	li	$a1, 1		# Flag para modo escrita
 	syscall
 	
-	move 	$s0, $v0	# Armazena a descrição do arquivo em $s0
+	move 	$s0, $v0	# Armazena a descriï¿½ï¿½o do arquivo em $s0
 	
 print_loop1:
 
@@ -55,25 +56,28 @@ print_loop1:
 	print_loop2:
 	
 		lw	$t5, 0($t4)	# Carrega o valor atual de C
+		addi	$t5, $t5, 48	#
+		sw	$t5, 0($t4)	# 
 	
 		# Imprime o inteiro
 		li	$v0, 15		# Comando para escrever em arquivo
-		move	$a0, $s0	# Descrição do arquivo
-		move	$a1, $t5	# Elemento a ser escrito
-		li	$a2, 4		# Quantidade de elementos a serem escritos
+		move	$a0, $s0	# Descriï¿½ï¿½o do arquivo
+#		move	$a1, $t5	# Elemento a ser escrito
+		la	$a1, ($t4)
+		li	$a2, 1		# Quantidade de elementos a serem escritos
 		syscall
 	
-		# Imprime um espaço
+		# Imprime um espaï¿½o
 		li	$v0, 15		# Comando para escrever em arquivo
 		move	$a0, $s0	# Carrega o arquivo
 		la	$a1, space	# Elemento a ser escrito
-		li	$a2, 4		# Quantidade de elementos a serem escritos
+		li	$a2, 1		# Quantidade de elementos a serem escritos
 		syscall
 	
 		addi 	$t0, $t0, 1	# Soma o contador interno
-		addi	$t4, $t4, 4	# Pula para o próximo elemento da lista
+		addi	$t4, $t4, 4	# Pula para o prï¿½ximo elemento da lista
 	
-		bne	$t0, $t2, print_loop2	# Condição de continuidade
+		bne	$t0, $t2, print_loop2	# Condiï¿½ï¿½o de continuidade
 
 	end_print_loop2:
 
@@ -81,9 +85,13 @@ print_loop1:
 		li	$v0, 15		# Comando para escrever em arquivo
 		move	$a0, $s0	# Carrega o arquivo
 		la	$a1, newline	# Elemento a ser escrito
-		li	$a2, 4		# Quantidade de elementos a serem escritos
+		li	$a2, 1		# Quantidade de elementos a serem escritos
 		syscall
 	
 		addi	$t1, $t1, 1	# Soma o contador externo
 	
-		bne	$t1, $t2, print_loop1	# Condição de continuidade
+		bne	$t1, $t2, print_loop1	# Condiï¿½ï¿½o de continuidade
+		
+	li	$v0, 16
+	move	$a0, $s0
+	syscall
