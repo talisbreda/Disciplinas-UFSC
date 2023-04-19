@@ -3,95 +3,117 @@
 	A: .word 1, 2, 3, 0, 1, 4, 0, 0, 1
 	B: .word 1, 0, 0, -2, 1, 0, 5, -4, 1
 	C: .word 0:9
+	string: .asciiz "                      "
 	space: .asciiz " "
-	newline: .asciiz "\n"
-	.align 2
 	filename: .asciiz "output.txt"
 
 .text
+
+	# ===============================================================================================
+	# Início da multiplicação de matrizes
+	# ===============================================================================================	
+
 main:
-	
+
+	la	$s0, A  	# Endereco de A
+	la	$s1, B  	# Endereco de B
+	la 	$s2, C		# Endereco de C
+	la	$s3, string	# Endereco da string
+		
 	li	$t0, 0		# Contador para o loop
 	li	$t1, 9		# Limite do contador
-	la	$t2, A  	# Endereï¿½o de A
-	la	$t3, B  	# Endereï¿½o de B
-	la 	$t4, C		# Endereï¿½o de C
 
-loop:
+	loop:
 	
-	lw	$t5, 0($t2)	# Carrega o elemento atual de A para o registrador
-	lw	$t6, 0($t3)	# Carrega o elemento atual de B para o registrador
+		lw	$t2, 0($s0)	# Carrega o endereco atual de A para o registrador
+		lw	$t3, 0($s1)	# Carrega o endereco atual de B para o registrador
 	
-	mul	$t6, $t5, $t6	# Faz a multiplicaï¿½ï¿½o no elemento atual
-	sw	$t6, 0($t4)	# Armazena o resultado em C
+		mul	$t3, $t2, $t3	# Faz a multiplicacao no $t2 atual
+		sw	$t3, 0($s2)	# Armazena o resultado em C
 	
-	# Soma dos endereï¿½os
-	addi	$t2, $t2, 4
-	addi	$t3, $t3, 4
-	addi	$t4, $t4, 4
+		# Pula para o proximo índice de cada lista
+		addi	$s0, $s0, 4
+		addi	$s1, $s1, 4
+		addi	$s2, $s2, 4
 	
-	addi	$t0, $t0, 1	# Soma do contador
+		addi	$t0, $t0, 1	# Soma do contador
 	
-	bne	$t0, $t1, loop  # Condiï¿½ï¿½o de continuidade do loop
+		bne	$t0, $t1, loop  # Se o contador for diferente do limite, continua
 	
-endloop:
+	# ===============================================================================================
+	# Fim da multiplicacao de matrizes
+	# ===============================================================================================
+	
+save_to_string:	
+	
+	# ===============================================================================================
+	# Inicio do armazenamento da matriz na string
+	# ===============================================================================================
+		
+	# Armazena nova linha na string
+	li	$t2, 10
+	sw	$t2, ($s3)
+	addi	$s3, $s3, 4
 	
 	li	$t0, 0		# Iterador de colunas
 	li	$t1, 0		# Iterador de linhas
-	li	$t2, 3		# Limite dos iteradores
-	la	$t4, C		# Endereï¿½o de C
+	li	$s0, 3		# Limite dos iteradores
+	la	$s2, C		# Endereco de C
 	
-	# Abrir arquivo 
+	save_loop1:
+
+		move	$t0, $zero	# Reseta o valor do contador de colunas
+
+		save_loop2:
+	
+			lw	$t2, 0($s2)	# Carrega o valor atual de C
+			addi	$t2, $t2, 48	# Transforma o numero para a sua representacao ASCII
+		
+			sw	$t2, ($s3)	# Salva o índice na string
+	
+			addi 	$t0, $t0, 1	# Soma o contador de colunas
+			addi	$s2, $s2, 4	# Pula para o proximo índice da lista
+			addi	$s3, $s3, 4	# Soma o endereço da string
+	
+			bne	$t0, $s0, save_loop2	# Condicao de continuidade
+	
+		li	$t2, 10		# Carrega caracter de nova linha
+		sw	$t2, ($s3)	# Salva a nova linha na string
+		
+		addi 	$s3, $s3, 4	# Soma o endereço da string
+		addi	$t1, $t1, 1	# Soma o contador de linhas
+	
+		bne	$t1, $s0, save_loop1	# Condicao de continuidade
+
+	# ===============================================================================================
+	# Fim do armazenamento da matriz na string
+	# ===============================================================================================
+	
+write:
+	# ===============================================================================================
+	# Inicio da escrita da string no arquivo .txt
+	# ===============================================================================================
+	
+	# Abre o arquivo txt 
 	li	$v0, 13		# Comando para abrir arquivo
 	la	$a0, filename	# Nome do arquivo
 	li	$a1, 1		# Flag para modo escrita
 	syscall
 	
-	move 	$s0, $v0	# Armazena a descriï¿½ï¿½o do arquivo em $s0
+	move 	$s4, $v0	# Armazena a descricao do arquivo em $s4
 	
-print_loop1:
-
-	move	$t0, $zero	# Reseta o valor de $t0
-
-	print_loop2:
-	
-		lw	$t5, 0($t4)	# Carrega o valor atual de C
-		addi	$t5, $t5, 48	#
-		sw	$t5, 0($t4)	# 
-	
-		# Imprime o inteiro
-		li	$v0, 15		# Comando para escrever em arquivo
-		move	$a0, $s0	# Descriï¿½ï¿½o do arquivo
-#		move	$a1, $t5	# Elemento a ser escrito
-		la	$a1, ($t4)
-		li	$a2, 1		# Quantidade de elementos a serem escritos
-		syscall
-	
-		# Imprime um espaï¿½o
-		li	$v0, 15		# Comando para escrever em arquivo
-		move	$a0, $s0	# Carrega o arquivo
-		la	$a1, space	# Elemento a ser escrito
-		li	$a2, 1		# Quantidade de elementos a serem escritos
-		syscall
-	
-		addi 	$t0, $t0, 1	# Soma o contador interno
-		addi	$t4, $t4, 4	# Pula para o prï¿½ximo elemento da lista
-	
-		bne	$t0, $t2, print_loop2	# Condiï¿½ï¿½o de continuidade
-
-	end_print_loop2:
-
-		# Imprime uma nova linha
-		li	$v0, 15		# Comando para escrever em arquivo
-		move	$a0, $s0	# Carrega o arquivo
-		la	$a1, newline	# Elemento a ser escrito
-		li	$a2, 1		# Quantidade de elementos a serem escritos
-		syscall
-	
-		addi	$t1, $t1, 1	# Soma o contador externo
-	
-		bne	$t1, $t2, print_loop1	# Condiï¿½ï¿½o de continuidade
-		
-	li	$v0, 16
-	move	$a0, $s0
+	# Escreve a string no arquivo
+	li	$v0, 15		# Comando para escrever em arquivo
+	move	$a0, $s4	# Descrição do arquivo
+	la	$a1, string	# Buffer do que será escrito
+	li	$a2, 50		# Tamanho limite
 	syscall
+	
+	# Fecha o arquivo
+	li	$v0, 16		# Código para fechar arquivo
+	move	$a0, $s4	# Descrição do arquivo
+	syscall
+
+	# ===============================================================================================
+	# Fim da escrita da string no arquivo .txt
+	# ===============================================================================================
