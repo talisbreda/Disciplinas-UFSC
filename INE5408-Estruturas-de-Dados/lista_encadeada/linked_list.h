@@ -6,7 +6,6 @@
 
 
 namespace structures {
-
 //! ...
 template<typename T>
 class LinkedList {
@@ -25,26 +24,94 @@ class LinkedList {
     } // limpar lista
     //! ...
     void push_back(const T& data) {
+        if (empty()) {
+            head = new Node(data);
+        } else {
+            Node* aux = travelTo(size());
+            aux->next(new Node(data));
+        }
+        size_++;
 
     }  // inserir no fim
     //! ...
     void push_front(const T& data) {
-
+        if (empty()) {
+            head = new Node(data);
+        } else {
+            Node* aux = new Node(data, head);
+            head = aux;
+        }
+        size_++;   
     }  // inserir no início
     //! ...
     void insert(const T& data, std::size_t index) {
-        
+        if (size() <= index) {
+            throw std::out_of_range("Posição inválida");
+        } else {
+            Node* aux = travelTo(index);
+            Node* novo = new Node(data, aux->next());
+            aux->next(novo);
+        }
+        size_++
     }  // inserir na posição
     //! ...
-    void insert_sorted(const T& data);  // inserir em ordem
+    void insert_sorted(const T& data) {
+        if (empty()) {
+            head = new Node(data);
+        } else {
+            Node* aux = head;
+            Node* anterior = head;
+            for (int i = 0; i < size(); i++) {
+                if (aux->data() > data) {
+                    Node* novo = new Node(data, aux);
+                    anterior->next(novo);
+                    aux = novo;
+                    break;
+                }
+                anterior = aux;
+                aux = aux->next();
+            }
+        }
+        size_++;
+    }  // inserir em ordem
     //! ...
-    T& at(std::size_t index);  // acessar um elemento na posição index
+    T& at(std::size_t index) {
+        if (empty() || index >= size()) {
+            throw std::out_of_range("Posição inválida");
+        } else {
+            Node* aux = travelTo(index);
+            return aux;
+        }
+    }  // acessar um elemento na posição index
     //! ...
-    T pop(std::size_t index);  // retirar da posição
+    T pop(std::size_t index) {
+        if (empty() || index >= size()) {
+            throw std::out_of_range("Posição inválida");
+        } else {
+            Node* anterior = travelTo(index-1);
+            Node* aux = anterior->next()
+            Node* next = aux->next();
+            anterior->next(next)
+            size_--;
+            return aux;
+        }
+    }  // retirar da posição
     //! ...
-    T pop_back();  // retirar do fim
+    T pop_back() {
+        if (empty()) {
+            throw std::out_of_range("Lista vazia");
+        } else {
+            Node* anterior = travelTo(size()-1);
+            aux = anterior->next();
+            anterior->next(nullptr);
+            size_--;
+            return aux;
+        }
+    }  // retirar do fim
     //! ...
-    T pop_front();  // retirar do início
+    T pop_front() {
+        
+    }  // retirar do início
     //! ...
     void remove(const T& data);  // remover específico
     //! ...
@@ -55,6 +122,15 @@ class LinkedList {
     std::size_t find(const T& data) const;  // posição do dado
     //! ...
     std::size_t size() const;  // tamanho da lista
+
+    Node* travelTo(int index) {
+        Node* aux = head;
+        for (int i = 0; i < index; i++) {
+
+            aux = aux->next
+        }
+        return aux;
+    }
 
  private:
     class Node {  // Elemento
