@@ -6,18 +6,12 @@
 	E: .word 50
 	F: .word 60
 	
-	Alist: .word 0:80
-	Blist: .word 1:250
-	Clist: .word 2:20
-	Dlist: .word 3:70
+	Alist: .word 10:80
+	Blist: .word 20:250
+	Clist: .word 30:20
+	Dlist: .word 40:70
 
 .text
-enderecador:
-	move	$t9, $a0
-	mul	$t9, $t9, 4
-	add	$t9, $t9, $a1
-	
-	
 
 main:
 	
@@ -62,7 +56,7 @@ main:
 	add	$t2, $t1, $t3	# Soma B+D
 	sub 	$t2, $t0, $t2	# Subtracao A-(B+D)
 	
-	sw	$t3, ($s3)	# Armazena o resultado no endereco de C
+	sw	$t2, ($s2)	# Armazena o resultado no endereco de C
 	
 	
 	# e) E = (A - (B - C) + F)
@@ -83,12 +77,12 @@ main:
 	
 	
 	# g) A = B[15] – C
-	la	$s6, Blist	# Carrega o endereco da lista A
+	la	$s6, Blist	# Carrega o endereco da lista B
 	
-	li	$t9, 15		# Indice da lista A
-	mul	$t9, $t9, 4	# Multiplicacao por 4 para apontar para o endereco
-	add	$s6, $s6, $t9	# Soma endereco base + indice
-	lw	$t6, ($s6)	# Carrega o valor no endereço A[15]
+	li	$a0, 15		# Indice da lista B
+	move	$a1, $s6	# Endereco da lista
+	jal 	enderecador
+	lw	$t6, ($v0)	# Carrega o valor no endereço B[15]
 	
 	sub	$t0, $t6, $t2	# Subtracao B[15]-C
 	
@@ -96,18 +90,18 @@ main:
 	
 	
 	# h) B = A[5] + C[3]
-	la	$s6, Alist	# Carrega o endereco da lita A
+	la	$s6, Alist	# Carrega o endereco da lista A
 	la	$s7, Clist	# Carrega o endereco da lista C
 	
-	li	$t9, 5		# Indice da lista A
-	mul	$t9, $t9, 4	# Ajuste para endereco
-	add	$s6, $s7, $t9	# Soma endereco base + indice
-	lw	$t6, ($s6)	# Carrega o valor de A[5]
+	li	$a0, 5		# Indice da lista A
+	move	$a1, $s6	# Endereco da lista A
+	jal	enderecador	
+	lw	$t6, ($v0)	# Carrega o valor de A[5]
 	
-	li	$t9, 3		# Indice da lista C
-	mul	$t9, $t9, 4	# Ajuste para endereco
-	add	$s7, $s7, $t9	# Soma endereco base + indice
-	lw	$t7, ($s7)	# Carrega o valor de C[3]
+	li	$a0, 3		# Indice da lista C
+	move	$a1, $s7	# Endereco da lista C
+	jal 	enderecador
+	lw	$t7, ($v0)	# Carrega o valor de C[3]
 	
 	add	$t1, $t6, $t7	# Soma A[5] + C[3]
 	
@@ -117,9 +111,10 @@ main:
 	# i)  A[10] = B – C
 	la	$s6, Alist	# Carrega o endereco da lista A
 	
-	li	$t9, 10		# Indice da lista A
-	mul	$t9, $t9, 4	# Ajuste para endereco
-	add	$s6, $s6, $t9	# Soma endereco base + indice
+	li	$a0, 10		# Indice da lista A
+	move	$a1, $s6	# Endereco da lista A
+	jal	enderecador
+	move	$s6, $v0	# Armazena o endereco do indice
 	
 	sub	$t6, $t1, $t2	# Subtracao B-C
 	
@@ -129,9 +124,10 @@ main:
 	# j)  B[245] = A + C
 	la	$s6, Blist	# Carrega o endereco da lista B
 	
-	li	$t9, 245	# Indice da lista B
-	mul 	$t9, $t9, 4	# Ajuste para endereco
-	add	$s6, $s6 ,$t9	# Soma endereco base + indice
+	li	$a0, 245	# Indice da lista B
+	move	$a1, $s6	# Endereco da lista B
+	jal 	enderecador
+	move	$s6, $v0	# Armazena o endereco do indice
 	
 	add	$t6, $t0, $t2	# Soma A+C
 	
@@ -142,14 +138,15 @@ main:
 	la	$s6, Alist	# Carrega o endereco da lista A
 	la	$s7, Dlist	# Carrega o endereco da lista D
 	
-	li	$t9, 45		# Indice da lista A
-	mul	$t9, $t9, 4	# Ajuste para endereco
-	add	$s6, $s6, $t9	# Soma endereco base + indice
+	li	$a0, 45		# Indice da lista A
+	move	$a1, $s6	# Endereco base da lista A
+	jal	enderecador
+	move	$s6, $v0	# Armazena o endereco do indice
 	
-	li	$t9, 67		# Indice da lista D
-	mul	$t9, $t9, 4	# Ajuste para endereco
-	add	$s7, $s7, $t9	# Soma endereco base + indice
-	lw	$t7, ($s7)	# Carrega o valor de D[67]
+	li	$a0, 67		# Indice da lista D
+	move	$a1, $s7	# Endereco base da lista D
+	jal 	enderecador
+	lw	$t7, ($v0)	# Carrega o valor de D[67]
 	
 	sub	$t6, $t1, $t2	# Subtracao B-C
 	add	$t6, $t6, $t7	# Soma (B-C) + D[67]
@@ -161,4 +158,30 @@ main:
 	la	$s6, Alist	# Carrega o endereco base da lista A
 	la	$s7, Clist	# Carrega o endereco base da lista C
 	
-	li	$t9, 45
+	li	$a0, 79		# Indice da lista
+	move	$a1, $s6	# Endereco da lista
+	jal	enderecador	# Chamada de funcao
+	move	$s6, $v0	# Passa o resultado para $s6
+	
+	li	$a0, 18		# Indice da lista C
+	move	$a1, $s7	# Endereco da lista
+	jal 	enderecador	# Chamada de funcao
+	lw	$t7, ($s7)	# Carrega o valor de C[18]
+		
+	sub	$t6, $t1, $t7	# Subtracao B - C[18]
+	add	$t6, $t6, $t3	# Soma (B - C[18]) + D
+	
+	sw	$t6, ($s6)	# Armazena o resultado em A[45]
+	
+	li	$v0, 10
+	syscall			# Fecha o programa
+
+enderecador:
+
+	# $a0 -> Indice da lista
+	# $a1 -> Endereco base da lista
+
+	mul	$t9, $a0, 4	# Multiplica o indice desejado por 4
+	add	$v0, $t9, $a1	# Soma endereco base + indice
+	
+	jr	$ra		# Retorna
