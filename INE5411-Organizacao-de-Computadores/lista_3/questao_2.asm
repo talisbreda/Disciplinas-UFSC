@@ -8,12 +8,13 @@ main:
 	
 loop:
 	
-	add	$t0, $t0, 1	
-	add	$t2, $t2, $t0
+	add	$t0, $t0, 1	# i = i + 1
+	add	$t2, $t2, $t0	# resultado = resultado + i
 
-	bne	$t1, $t0, loop
+	bne	$t1, $t0, loop	# enquanto i < 5, continua
 
 endloop:
 	
+	# Fim do programa
 	li	$v0, 10
-	syscall
+	syscall		
