@@ -1,0 +1,78 @@
+#Escreva um programa em Assembly do MIPS que implemente a função escrita em alto nível
+#apresentada abaixo. Considere que:
+# – Os valores de g, h, i, j devem ser números inteiros informados pelo usuário via teclado;
+# – Os valores lidos (g, h, i, j) e o valor calculado (f) devem ser armazenados em memória;
+# – A função calcula() deverá ser implementada como um procedimento no Assembly do MIPS.
+# f = (g + h) - (i + j)
+
+.data
+	vars: .word 0:5
+
+.text
+main:
+
+	la	$s7, vars
+
+	# Atribuição do valor de g
+	move	$a0, $s7	# Define o endereço da variável
+	jal	getAndSaveInput
+	move	$s0, $v0	
+	
+	# Atribuição do valor de h
+	add	$a0, $s7, 4	# Define o endereço da variável
+	jal	getAndSaveInput
+	move	$s1, $v0
+	
+	# Atribuição do valor de i
+	add	$a0, $s7, 8	# Define o endereço da variável
+	jal	getAndSaveInput
+	move	$s2, $v0
+	
+	# Atribuição do valor de j
+	add	$a0, $s7, 12	# Define o endereço da variável
+	jal	getAndSaveInput
+	move	$s3, $v0
+	
+	
+	move	$a0, $s0
+	move	$a1, $s1
+	move	$a2, $s2
+	move	$a3, $s3
+	jal	calcula
+	
+	sw	$v0, 16($s7)	# Armazena o resultado na memória
+	
+	li	$v0, 10
+	syscall
+	
+calcula:
+	# $a0 -> g
+	# $a1 -> h
+	# $a2 -> i
+	# $a3 -> j
+	
+	addi	$sp, $sp, -8
+	sw	$t0, 0($sp)
+	sw	$t1, 4($sp)
+	
+	add	$t0, $a0, $a1	# g + h
+	add	$t1, $a2, $a3	# i + j
+	sub	$v0, $t0, $t1	# (g + h) - (i + j)
+	
+	lw	$t0, 0($sp)
+	lw	$t1, 4($sp)
+	addi	$sp, $sp, 8
+	
+	jr	$ra
+
+getAndSaveInput:
+	# $a0 -> endereço onde o valor será salvo
+	
+	# Chamada de sistema para input de inteiro
+	li	$v0, 5
+	syscall
+	
+	sw	$v0, ($a0) 	# Salva o valor na memória
+	
+	jr	$ra
+	
