@@ -1,10 +1,8 @@
 //! Copyright 2023 Tális Breda
-#ifndef STRUCTURES_LINKED_LIST_H
 #define STRUCTURES_LINKED_LIST_H
 
 #include <stdint.h>
 #include <stdexcept>
-#include <iostream>
 
 namespace structures {
 //! ...
@@ -49,32 +47,40 @@ class LinkedList {
         if (index > size()) {
             throw std::out_of_range("Posição inválida");
         } else {
-            Node* aux = travelTo(index);
-            Node* novo = new Node(data, aux->next());
-            aux->next(novo);
+            Node* anterior = travelTo(index-1);
+            Node* aux = anterior->next();
+            Node* novo = new Node(data, aux);
+            anterior->next(novo);
         }
         size_++;
     }  // inserir na posição
     //! ...
+    // [3, 5, 7, 9, 11]
+    // node(12, nullptr)
+    // node(11, 12)
     void insert_sorted(const T& data) {
         if (empty()) {
             head = new Node(data);
         } else {
-            Node* aux = head;
-            Node* anterior = head;
-            for (int i = 0; i < static_cast<int>(size()); i++) {
-                if (aux->data() > data) {
-                    Node* novo = new Node(data, aux);
-                    anterior->next(novo);
-                    aux = novo;
+            Node* atual = head;
+            Node* anterior = nullptr;
+            for (auto i = 0u; i <= size(); i++) {
+                if (atual == nullptr || atual->data() > data) {
+                    Node* novo = new Node(data, atual);
+                    if (anterior == nullptr) {
+                        head = novo;
+                    } else {
+                        anterior->next(novo);
+                    }
                     break;
                 }
-                anterior = aux;
-                aux = aux->next();
+                anterior = atual;
+                atual = atual->next();
             }
         }
         size_++;
-    }  // inserir em ordem
+    }
+  // inserir em ordem
     //! ...
     T& at(std::size_t index) {
         if (empty() || index >= size()) {
@@ -101,12 +107,18 @@ class LinkedList {
     T pop_back() {
         if (empty()) {
             throw std::out_of_range("Lista vazia");
+        } else if (size() == 1) {
+            Node* tail = end();
+            T data = tail->data();
+            head = tail = nullptr;
+            size_ = 0;
+            return data;
         } else {
-            Node* anterior = travelTo(size()-1);
-            Node* aux = anterior->next();
+            Node* anterior = travelTo(size()-2);
+            Node* tail = end();
             anterior->next(nullptr);
             size_--;
-            return aux->data();
+            return tail->data();
         }
     }  // retirar do fim
     //! ...
@@ -129,7 +141,7 @@ class LinkedList {
         } else {
             Node* anterior = head;
             Node* aux = head->next();
-            for (auto i = 0; i < static_cast<int>(size()); i++) {
+            for (auto i = 0u; i < size(); i++) {
                 if (aux->data() == data) {
                     Node* next = aux->next();
                     anterior->next(next);
@@ -148,7 +160,7 @@ class LinkedList {
     //! ...
     bool contains(const T& data) const {
         Node* aux = head;
-        for (auto i = 0; i < static_cast<int>(size()); i++) {
+        for (auto i = 0u; i < size(); i++) {
             if (aux->data() == data) {
                 return true;
             }
@@ -159,7 +171,7 @@ class LinkedList {
     //! ...
     std::size_t find(const T& data) const {
         Node* aux = head;
-        for (auto i = 0; i < static_cast<int>(size()); i++) {
+        for (auto i = 0u; i < size(); i++) {
             if (aux->data() == data) {
                 return i;
             }
@@ -219,7 +231,7 @@ class LinkedList {
 
     Node* travelTo(std::size_t index) {
         Node* aux = head;
-        for (auto i = 0; i < static_cast<int>(index); i++) {
+        for (auto i = 0u; i < index; i++) {
             aux = aux->next();
         }
         return aux;
@@ -229,14 +241,5 @@ class LinkedList {
     std::size_t size_{0u};
 };
 
-#endif
 
 }  // namespace structures
-
-int main(int argc, char const *argv[])
-{
-    structures::LinkedList<int> lista = structures::LinkedList<int>();
-    lista.push_back(1);
-    printf("%d\n", lista.at(0));
-    return 0;
-}
