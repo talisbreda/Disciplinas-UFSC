@@ -3,7 +3,7 @@ main:
 
 	li	$a0, 3		# Carrega o valor da base
 	li	$a1, 3		# Carrega o valor do expoente
-	jal	pow		# Faz o cálculo
+	jal	pow		# Faz o cï¿½lculo
 	move	$s0, $v0	# Guarda o resultado
 	
 	# Imprime o resultado no console
@@ -20,15 +20,14 @@ pow:
 	# $a0 -> base
 	# $a1 -> expoente
 	
-	li	$t0, 0	# Contador
-	li	$t1, 1	# Resultado
+	li	$t1, 1
 	
 loop:
 	
 	mul	$t1, $t1, $a0	# resultado = resultado * base
 	
-	addi	$t0, $t0, 1	# i = i + 1
-	blt	$t0, $a1, loop	# se i < expoente, continua o loop
+	addi	$a1, $a1, -1	# Diminui o expoente
+	bgt	$a1, 0, loop	# se i < expoente, continua o loop
 
 endloop:
 	

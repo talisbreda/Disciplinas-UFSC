@@ -1,3 +1,5 @@
+# Faça um programa que calcule: somatório de i de 1 a 5
+
 .data 
 
 .text

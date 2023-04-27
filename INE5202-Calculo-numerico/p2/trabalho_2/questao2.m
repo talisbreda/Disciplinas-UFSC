@@ -14,6 +14,6 @@ residuo_maximo = max(abs([f1(x), f2(x), f3(x)]))
 printf("============================\n");
 printf("Solução 2: \n")
 
-xi = [complex(5, 1), complex(12, 1), complex(-4, 1)];
+xi = [complex(2, 2), complex(2, 2), complex(2, 2)];
 x = newtonSistema(f1, f2, f3, xi)
 residuo_maximo = max(abs([f1(x), f2(x), f3(x)]))

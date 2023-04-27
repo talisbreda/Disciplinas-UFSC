@@ -1,0 +1,50 @@
+.data
+
+	buffer: .space 8
+	input: .asciiz "\nDigite uma palavra de até 7 letras:\n"
+	resultado1: .asciiz "\nA letra 'a' apareceu "
+	resultado2: .asciiz " vezes."
+
+.text
+main:
+
+	la	$s0, buffer	# Carrega o endereco do buffer
+	
+	li	$v0, 4
+	la	$a0, input
+	syscall
+
+	li	$v0, 8		# Chamada de sistema para ler string
+	move	$a0, $s0	# Argumento 1: endereco do buffer
+	li	$a1, 8		# Argumento 2: tamanho em bytes da entrada
+	syscall
+	
+	li	$t0, 0		# Contador para o loop
+	li	$t1, 0		# Contador de 'a'
+	
+loop:
+
+	lbu	$t2, ($s0)
+	addi	$s0, $s0, 1
+	bne	$t2, 0x00000061, continue
+	addi	$t1, $t1, 1
+
+continue:
+
+	bne	$t2, 0x00000000, loop
+	
+endloop:
+
+	li	$v0, 4
+	la	$a0, resultado1
+	syscall
+	
+	li	$v0, 1
+	move	$a0, $t1
+	syscall
+	
+	li	$v0, 4
+	la	$a0, resultado2
+	syscall
+	
+	

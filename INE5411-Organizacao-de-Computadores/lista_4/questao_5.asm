@@ -1,19 +1,19 @@
 .data
 
 	resultado1: .asciiz "O fatorial de "
-	resultado2: .asciiz " é: "
+	resultado2: .asciiz " ï¿½: "
 
 .text
 main:	
 
-	li	$s0, 9
+	li	$s0, 5
 
 	move	$a0, $s0	# Valor a ser fatorialado
-	jal	fatorial	# Chama de função
+	jal	fatorial	# Chama de funï¿½ï¿½o
 	move	$s1, $v0	# Armazena o resultado
 	
 	# =====================================================================================
-	# Inicia impressão do resultado
+	# Inicia impressï¿½o do resultado
 	# =====================================================================================
 	
 	# Imprime primeira string
@@ -37,7 +37,7 @@ main:
 	syscall
 	
 	# =====================================================================================
-	# Finaliza impressão do resultado
+	# Finaliza impressï¿½o do resultado
 	# =====================================================================================
 	
 	# Finaliza o programa
@@ -45,7 +45,7 @@ main:
 	syscall			# Finaliza o programa
 
 fatorial:
-	# $a0 -< número
+	# $a0 -< nï¿½mero
 	addi	$sp, $sp, -8	# Reduz o stack pointer
 	sw	$ra, 0($sp)	# Armazena o ponteiro da chamada no stack pointer
 
@@ -58,8 +58,8 @@ else:
 	addi	$a0, $a0, -1	# n = n - 1
 	jal	fatorial	# Chama o fatorial para n-1
 	
-	lw	$t0, 4($sp)	# Obtém o valor anterior da stack
-	mul	$v0, $v0, $t0	# Multiplicação n * fatorial(n-1)
+	lw	$t0, 4($sp)	# Obtï¿½m o valor anterior da stack
+	mul	$v0, $v0, $t0	# Multiplicaï¿½ï¿½o n * fatorial(n-1)
 
 end:
 	lw	$ra, 0($sp)	# Carrega o ponteiro da chamada anterior

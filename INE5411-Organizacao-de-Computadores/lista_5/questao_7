@@ -1,0 +1,84 @@
+.data
+
+	input1: .asciiz "\n0 desliga, 1 liga, 2 fecha\n"
+	input2: .asciiz "\nBit desejado:\n"
+
+.text
+main:
+	li	$s0, 0x10010040		# Carrega o endereco
+	li	$s1, 8			# Divisor para manipulacao de bits
+	
+loop:
+	# Imprime string na tela
+	li	$v0, 4
+	la	$a0, input1
+	syscall
+	
+	# Le inteiro
+	li	$v0, 5
+	syscall
+	move	$t0, $v0
+	
+	# Fecha o programa caso o input seja 2
+	beq	$t0, 2, endloop
+	
+	# Imprime string na tela
+	li	$v0, 4
+	la	$a0, input2
+	syscall
+	
+	# Le inteiro
+	li	$v0, 5
+	syscall
+	move	$t1, $v0
+
+	div	$t1, $s1	# Divide o nº do bit por 8
+	mfhi	$t3		# Move o resto para $t3
+	mflo	$t2		# Move o resultado para $t2
+	add	$t2, $t2, $s0	# Ajusta o endereco
+	lbu	$t4, ($t2)	# Carrega o byte no enderecoo
+	
+	li	$a0, 2
+	move	$a1, $t3
+	jal	expo
+	
+	# Branch de acordo com o input
+	beq	$t0, 0, desliga
+
+liga:
+
+	add	$t4, $t4, $v0
+	sb	$t4, ($t2)
+	
+	j 	loop
+
+desliga:
+	
+	sub	$t4, $t4, $v0
+	sb	$t4, ($t2)
+	
+	j 	loop
+	
+endloop:
+
+	li	$v0, 10
+	syscall
+
+expo:
+
+	# $a0 -> base
+	# $a1 -> expoente
+	li	$t9, 1
+	beq	$a1, 0, endexpo
+	
+expoloop:
+	
+	mul	$t9, $t9, $a0
+	addi	$a1, $a1, -1
+	
+	bge	$a1, 1, expoloop
+
+endexpo:
+	
+	move	$v0, $t9
+	jr	$ra

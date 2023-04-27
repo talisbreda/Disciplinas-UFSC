@@ -1,0 +1,14 @@
+.data
+
+	buffer: .space 8
+
+.text
+main:
+
+	la	$s0, buffer	# Carrega o endereco do buffer
+
+	li	$v0, 8		# Chamada de sistema para ler string
+	move	$a0, $s0	# Argumento 1: endereco do buffer
+	li	$a1, 8		# Argumento 2: tamanho em bytes da entrada
+	syscall
+	
