@@ -1,0 +1,62 @@
+#O método iterativo de Newton pode ser usado para aproximar a raiz quadrada de um número x,
+#usando a expressão: guess = ((x/guess) + guess) / 2. Deve-se iniciar o algoritmo com o valor 1
+#(guess). Escreva uma função chamada square_root que recebe um parâmetro de precisão dupla x,
+#calcula, e retorna o valor aproximado da raiz quadrada de x. Escreva um loop que se repita 20 vezes
+#e calcula 20 valores de palpite e, em seguida, retorna o palpite final após 20 iterações. Compare o
+#resultado da instrução sqrt.d com o resultado de sua função square_root. Qual é o erro em valor
+#absoluto?
+.data
+	
+	prompt: .asciiz "Digite um valor de x: "
+	guess_result: .asciiz "A raiz de x obtida é: "
+	true_result: .asciiz "\nA raiz real de x é: "
+	guess: .double 1
+	double_two: .double 2
+
+.text
+main:
+
+	# $f2 -> 2
+	# $f4 -> guess
+	# $f6 -> x
+
+	l.d	$f2, double_two
+	l.d	$f4, guess
+	
+	li	$v0, 4
+	la	$a0, prompt
+	syscall
+	
+	li	$v0, 7
+	syscall
+	mov.d	$f6, $f0
+	
+	li	$t0, 0
+
+square_root:
+	
+	div.d	$f8, $f6, $f4	# x / guess
+	add.d	$f8, $f8, $f4	# (x / guess) + guess
+	div.d	$f4, $f8, $f2	# ((x / guess) + guess) / 2
+	
+	addi	$t0, $t0, 1
+	blt	$t0, 20, square_root
+
+end:
+
+	li	$v0, 4
+	la	$a0, guess_result
+	syscall
+
+	li	$v0, 3
+	mov.d	$f12, $f4
+	syscall
+	
+	li	$v0, 4
+	la	$a0, true_result
+	syscall
+	
+	li	$v0, 3
+	sqrt.d	$f12, $f6
+	syscall
+	

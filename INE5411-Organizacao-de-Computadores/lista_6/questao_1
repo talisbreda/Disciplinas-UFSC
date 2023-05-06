@@ -1,0 +1,40 @@
+.data
+
+	pi: .double 3.141592653589793
+	input: .asciiz "Insira o raio:\n"
+	result: .asciiz "A area do circulo é:\n"
+
+.text
+main:
+
+	#$s1 -> area
+	#$f2 -> pi
+	#$f0 -> raio
+
+	l.d	$f2, pi
+
+	# String para input
+	li	$v0, 4
+	la	$a0, input
+	syscall
+
+	# Le o valor do raio
+	li	$v0, 7
+	syscall	
+	
+	mul.d	$f0, $f0, $f0	# r = r*r
+	mul.d	$f4, $f0, $f2	# a = pi*(r^2)
+	
+	# String para resultado
+	li	$v0, 4
+	la	$a0, result
+	syscall
+	
+	# Imprime o valor da area
+	li	$v0, 3
+	mov.d	$f12, $f4
+	syscall
+	
+	# Fecha o programa
+	li	$v0, 10
+	syscall

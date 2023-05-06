@@ -14,7 +14,7 @@ loop:
 	la	$a0, input1
 	syscall
 	
-	# Le inteiro
+	# Le 0, 1 ou 2 (desliga, liga ou fecha)
 	li	$v0, 5
 	syscall
 	move	$t0, $v0
@@ -27,58 +27,42 @@ loop:
 	la	$a0, input2
 	syscall
 	
-	# Le inteiro
+	# Le o numero do bit
 	li	$v0, 5
 	syscall
 	move	$t1, $v0
-
-	div	$t1, $s1	# Divide o nÂº do bit por 8
-	mfhi	$t3		# Move o resto para $t3
-	mflo	$t2		# Move o resultado para $t2
-	add	$t2, $t2, $s0	# Ajusta o endereco
-	lbu	$t4, ($t2)	# Carrega o byte no enderecoo
 	
-	li	$a0, 2
-	move	$a1, $t3
-	jal	expo
 	
-	# Branch de acordo com o input
+	div	$t1, $s1	# Divisão do numero do bit por 8
+	mflo	$t3		# Pega o quociente
+	mfhi	$t4		# Pega o resto
+	add	$t3, $s0, $t3	# Soma o endereço base com o quociente
+	lb	$t2, ($t3)	# Carrega o byte da memoria
+	
+	li	$t5, 1		# Reseta o registrador $t5
+	sllv	$t5, $t5, $t4	# Shifta $t5 para o valor adequado
+	
 	beq	$t0, 0, desliga
 
 liga:
 
-	add	$t4, $t4, $v0
-	sb	$t4, ($t2)
+	or	$t2, $t2, $t5	# Liga o bit
+	sb	$t2, ($t3)	# Armazena na memoria
 	
-	j 	loop
+	j 	loop		# Volta pro loop
+	
 
 desliga:
+
+	# Operacao NAND
+	not	$t5, $t5	# Inverte $t5 para operação AND
+	and	$t2, $t2, $t5	# Desliga o bit
+	sb	$t2, ($t3)	# Armazena na memoria
 	
-	sub	$t4, $t4, $v0
-	sb	$t4, ($t2)
-	
-	j 	loop
-	
+	j 	loop		# Volta pro loop
+
 endloop:
 
 	li	$v0, 10
 	syscall
 
-expo:
-
-	# $a0 -> base
-	# $a1 -> expoente
-	li	$t9, 1
-	beq	$a1, 0, endexpo
-	
-expoloop:
-	
-	mul	$t9, $t9, $a0
-	addi	$a1, $a1, -1
-	
-	bge	$a1, 1, expoloop
-
-endexpo:
-	
-	move	$v0, $t9
-	jr	$ra

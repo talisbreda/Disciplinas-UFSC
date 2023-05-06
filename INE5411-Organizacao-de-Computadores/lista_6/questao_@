@@ -1,0 +1,26 @@
+.data
+
+	input: .asciiz "Insira uma temperatura em Fahrenheit: "
+	result: .asciiz "A temperatura em Celsius é: "
+
+.text
+main:
+
+	# $f0 -> temperature em F
+	
+	# Imprime string para input
+	li	$v0, 4
+	la	$a0, input
+	syscall
+	
+	# Le temperatura do console como double
+	li	$v0, 7
+	syscall
+	
+	
+	
+converte:
+
+	# $f12 -> temperatura em F
+
+	sub	$f12, $f12, 32

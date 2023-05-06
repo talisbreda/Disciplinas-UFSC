@@ -1,24 +1,58 @@
-.data	
-
+.data
 	A: .word 1, 2, 3, 0, 1, 4, 0, 0, 1
 	B: .word 1, 0, 0, -2, 1, 0, 5, -4, 1
 	C: .word 0:9
 	string: .asciiz "                      "
 	space: .asciiz " "
-	filename: .asciiz "output.txt"
-
+	fout: .asciiz "output.txt"
+	
 .text
+	# ===============================================================================================
+	# Início do Programa principal - main.
+	# ===============================================================================================	
+main:
+	# Abre o arquivo txt 
+	li	$v0, 13		# Comando para abrir arquivo
+	la	$a0, fout	# Nome do arquivo
+	li	$a1, 1		# Flag para modo escrita
+	li	$a2, 0		# Modo ignorado (neste caso).
+	syscall			
+	move	$s5, $v0	# Armazena a descricao do arquivo em $s6
+	
+	
+	jal	multiplica	# Chama funcao que multiplica matrizes
+
+
+	# Escreve a string no arquivo		
+	li	$v0, 15		# Comando para escrever em arquivo
+	move	$a0, $s5	# Descrição do arquivo
+	la	$a1, string	# Buffer do que será escrito
+	li	$a2, 50		# Tamanho limite
+	syscall	
+	
+	# Fecha o arquivo
+	li	$v0, 16		# Código para fechar arquivo
+	move	$a0, $s5	# Descrição do arquivo
+	syscall	
+	
+end:
+	# Loop eterno no final do programa
+	j	end		
+	# ===============================================================================================
+	# Fim do programa principal. 
+	# ===============================================================================================
+		
 
 	# ===============================================================================================
 	# Início da multiplicação de matrizes
-	# ===============================================================================================	
-
-main:
-
+	# ===============================================================================================
+multiplica:
+	
 	la	$s0, A  	# Endereco de A
 	la	$s1, B  	# Endereco de B
 	la 	$s2, C		# Endereco de C
-	la	$s3, string	# Endereco da string
+	la	$s3, string	# Endereco variavel da string
+	la	$s4, string	# Endereco fixo da string
 		
 	li	$t0, 0		# Contador para o loop
 	li	$t1, 9		# Limite do contador
@@ -85,35 +119,10 @@ save_to_string:
 	
 		bne	$t1, $s0, save_loop1	# Condicao de continuidade
 
+end_save:
+
+	jr	$ra
 	# ===============================================================================================
 	# Fim do armazenamento da matriz na string
 	# ===============================================================================================
 	
-write:
-	# ===============================================================================================
-	# Inicio da escrita da string no arquivo .txt
-	# ===============================================================================================
-	
-	# Abre o arquivo txt 
-	li	$v0, 13		# Comando para abrir arquivo
-	la	$a0, filename	# Nome do arquivo
-	li	$a1, 1		# Flag para modo escrita
-	syscall
-	
-	move 	$s4, $v0	# Armazena a descricao do arquivo em $s4
-	
-	# Escreve a string no arquivo
-	li	$v0, 15		# Comando para escrever em arquivo
-	move	$a0, $s4	# Descrição do arquivo
-	la	$a1, string	# Buffer do que será escrito
-	li	$a2, 50		# Tamanho limite
-	syscall
-	
-	# Fecha o arquivo
-	li	$v0, 16		# Código para fechar arquivo
-	move	$a0, $s4	# Descrição do arquivo
-	syscall
-
-	# ===============================================================================================
-	# Fim da escrita da string no arquivo .txt
-	# ===============================================================================================

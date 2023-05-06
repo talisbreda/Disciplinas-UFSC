@@ -1,0 +1,127 @@
+.data
+
+	prompt1: .asciiz "Digite o valor do primeiro coeficiente: "
+	prompt2: .asciiz "Digite o valor do segundo coeficiente: "
+	prompt3: .asciiz "Digite o valor do terceiro coeficiente: "
+	semraizes: .asciiz "A equacao nao tem raizes reais."
+	result1: .asciiz "O valor de x1 é: "
+	result2: .asciiz "\nO valor de x2 é: "
+	double_minus_4: .double -4
+	double_minus_1: .double -1
+	double_zero: .double 0
+
+.text
+
+main:
+	
+	# Primeiro coeficiente (a)
+	li	$v0, 4
+	la	$a0, prompt1
+	syscall
+	
+	li	$v0, 7
+	syscall
+	mov.d	$f4, $f0
+	
+	
+	# Segundo coeficiente (b)
+	li	$v0, 4
+	la	$a0, prompt2
+	syscall
+	
+	li	$v0, 7
+	syscall
+	mov.d	$f6, $f0
+	
+	
+	# Terceiro coeficiente (c)
+	li	$v0, 4
+	la	$a0, prompt3
+	syscall
+	
+	li	$v0, 7
+	syscall
+	mov.d	$f8, $f0
+	
+	
+resolve:
+
+	# $f4 -> A
+	# $f6 -> B
+	# $f8 -> C
+	
+	l.d	$f10, double_minus_4
+	l.d	$f20, double_zero
+	
+	mul.d	$f16, $f6, $f6	# B^2
+	mul.d	$f18, $f4, $f10	# -4 * A
+	mul.d	$f18, $f18, $f8	# -4 * A * C
+	
+	add.d	$f16, $f16, $f18# Delta = B^2 + (-4*A*C)
+	
+	c.lt.d	$f16, $f20		# Se delta > 0, existem duas raizes reais diferentes
+	bc1t	zeroraizes
+	
+	l.d	$f10, double_minus_1	# Carrega -1
+	mul.d	$f6, $f6, $f10		# -B
+	add.d	$f4, $f4, $f4		# 2*A
+	
+	c.eq.d	$f16, $f20
+	bc1t	umaraiz			# Se delta = 0, existem duas raizes reais iguais
+	j	duasraizes		# Se delta < 0, nao existem raizes reais
+
+zeroraizes:
+
+	li	$v0, 4
+	la	$a0, semraizes
+	syscall
+	
+	j 	end
+	
+umaraiz:
+
+	div.d	$f0, $f6, $f4		# x = -B/(2*A)
+	
+	li	$v0, 4
+	la	$a0, result1
+	syscall
+	
+	li	$v0, 3
+	mov.d	$f12, $f0
+	syscall
+	
+	j 	end
+
+duasraizes:
+
+	sqrt.d	$f16, $f16
+	
+	# Primeira raiz
+	add.d	$f0, $f6, $f16		# -B + sqrt(delta)
+	div.d	$f0, $f0, $f4		# (-B + sqrt(delta)) / 2*A
+	
+	# Segunda raiz
+	sub.d	$f2, $f6, $f16		# -B - sqrt(delta)
+	div.d	$f2, $f2, $f4		# (-B - sqrt(delta)) / 2*A
+
+	li	$v0, 4
+	la	$a0, result1
+	syscall
+	
+	li	$v0, 3
+	mov.d	$f12, $f0
+	syscall
+	
+	li	$v0, 4
+	la	$a0, result2
+	syscall
+	
+	li	$v0, 3
+	mov.d	$f12, $f2
+	syscall
+	
+end:
+
+	li	$v0, 10
+	syscall
+	

@@ -1,0 +1,98 @@
+.data
+	
+	linebreak: .asciiz "\n"
+	space: .asciiz " "
+	a: .double 0
+
+.text
+main:
+
+	la	$s0, a			# endereco da matriz
+	li	$s1, 10			# num
+	
+	jal	init
+	
+	jal 	print
+	
+	li	$v0, 10
+	syscall
+
+init:
+
+	li	$t0, 0
+	li	$t1, 0
+	
+init_fori:
+
+	init_forj:
+	
+		mul	$t2, $t0, 80	# i * 80
+		mul	$t3, $t1, 8	# j * 8
+		add	$t2, $t2, $t3	# (i*80) + (j*8)
+		add	$t2, $t2, $s0	# (i*80) + (j*8) + endereco_base
+		# $t2 -> endereco
+		
+		add	$t3, $t0, $t1	# i + j
+		mtc1	$t3, $f4	# lanca para o c1
+		#$f4 -> valor a ser inserido
+		
+		s.d	$f4, ($t2)	# armazena na memoria
+		
+		addi	$t1, $t1, 1	# soma o j
+		blt	$t1, $s1, init_forj
+			
+	end_init_forj:
+	
+		addi	$t0, $t0, 1	# soma o i
+		li	$t1, 0		# reseta o j
+		blt	$t0, $s1, init_fori
+
+end_init_fori:
+
+	jr 	$ra
+
+print:
+
+	addi	$sp, $sp, -4
+	sw	$ra, ($sp)
+	
+	li	$t0, 0
+	li	$t1, 0
+
+print_fori:
+
+	print_forj:
+	
+		mul	$t2, $t0, 80
+		mul	$t3, $t1, 8
+		add	$t2, $t2, $t3
+		add	$t2, $t2, $s0
+		# $t2 -> endereco
+		
+		li	$v0, 4
+		la	$a0, space
+		syscall
+		
+		lw	$a0, ($t2)
+	
+		li	$v0, 1
+		syscall
+		
+		addi	$t1, $t1, 1
+		blt	$t1, $s1, print_forj
+		
+	end_print_forj:
+	
+		li	$v0, 4
+		la	$a0, linebreak
+		syscall
+	
+		addi	$t0, $t0, 1
+		li	$t1, 0
+		blt	$t0, $s1, print_fori
+
+end_print_fori:
+
+	lw	$ra, ($sp)
+	addi	$sp, $sp, 4
+	jr	$ra

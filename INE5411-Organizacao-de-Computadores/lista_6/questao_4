@@ -1,0 +1,48 @@
+.data
+
+	prompt1: .asciiz "Digite o valor do primeiro coeficiente: "
+	prompt2: .asciiz "Digite o valor do segundo coeficiente: "
+	result: .asciiz "O valor de x é: "
+	float_minus_1: .float -1
+
+.text
+main:
+
+	li	$v0, 4
+	la	$a0, prompt1
+	syscall
+	
+	li	$v0, 6
+	syscall
+	mov.s	$f4, $f0
+	
+	li	$v0, 4
+	la	$a0, prompt2
+	syscall
+	
+	li	$v0, 6
+	syscall
+	mov.s	$f6, $f0
+	
+
+resolve:
+
+	l.s	$f8, float_minus_1	# Carrega -1
+	mul.s	$f6, $f6, $f8		# B = -B
+	div.s	$f0, $f6, $f4		# x = -B/A
+
+imprime:
+
+	li	$v0, 4
+	la	$a0, result
+	syscall
+	
+	li	$v0, 2
+	mov.s	$f12, $f0
+	syscall
+	
+end:
+
+	li	$v0, 10
+	syscall
+	

@@ -1,0 +1,52 @@
+.data
+
+	prompt1: .asciiz "Insira um numero: "
+	prompt2: .asciiz "Insira outro numero: "
+	result: .asciiz "A media dos numeros é: "
+	
+	float_two: .float 2
+
+.text
+main:
+
+	#$f4 -> S
+	#$f6 -> C
+	#$f8 -> M
+
+	# Prompt 1
+	li	$v0, 4
+	la	$a0, prompt1
+	syscall
+
+	# Le float do console
+	li	$v0, 6
+	syscall
+	mov.s	$f4, $f0
+	
+	# Prompt 2
+	li	$v0, 4
+	la	$a0, prompt2
+	syscall
+	
+	# Le float do console
+	li	$v0, 6
+	syscall
+	mov.s	$f6, $f0
+	
+	add.s	$f4, $f4, $f6	# S + C
+	l.s	$f10, float_two # Carrega 2 como float
+	div.s	$f0, $f4, $f10	# (S+C) / 2
+	
+	# Prompt de resultado
+	li	$v0, 4		
+	la	$a0, result
+	syscall
+	
+	# Imprime resultado na tela
+	li	$v0, 2
+	mov.s	$f12, $f0
+	syscall
+	
+	# Fecha o programa
+	li	$v0, 10
+	syscall
