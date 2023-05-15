@@ -6,7 +6,6 @@
 #include <map>
 #include <functional>
 
-// Function to read a file and return its contents as a string
 std::string readFileToString(const std::string& filePath) {
     std::ifstream file(filePath);
 
@@ -15,28 +14,13 @@ std::string readFileToString(const std::string& filePath) {
         return "";
     }
 
-    // Read file contents into a stringstream
     std::stringstream buffer;
     buffer << file.rdbuf();
 
-    // Convert stringstream to string
     std::string fileContents = buffer.str();
 
-    // Close file and return its contents
     file.close();
     return fileContents;
-}
-
-bool checkIfStackIsEmpty(std::vector<std::string> &pilha) {
-    if (!pilha.empty()) {
-        printf("erro\n");
-        for (std::vector<std::string>::iterator it = pilha.begin(); it != pilha.end(); ++it) {
-            std::cout << "\n    - " << *it;
-        }
-        std::cout << "\n";
-        return false;
-    }
-    return true;
 }
 
 bool checkSyntax(
@@ -45,7 +29,6 @@ bool checkSyntax(
         bool &inClosingTag, 
         std::string &tag, 
         std::vector<std::string> &pilha, 
-        int &lineCounter,
         std::vector<std::string> &tagSequence) {
 
     if (inTag) {
@@ -109,6 +92,71 @@ bool checkSyntax(
     return true;
 }
 
+bool checkIfStackIsEmpty(std::vector<std::string> &pilha) {
+    if (!pilha.empty()) {
+        printf("erro\n");
+        for (std::vector<std::string>::iterator it = pilha.begin(); it != pilha.end(); ++it) {
+            std::cout << "\n    - " << *it;
+        }
+        std::cout << "\n";
+        return false;
+    }
+    return true;
+}
+
+void appendToString(std::string &s, char aux) {
+    std::string auxString(&aux, 1);
+    s.append(auxString);
+}
+
+int storeMatrixDataAndSkip(
+        int posInicial,
+        int& lineCounter,
+        std::string &s_x, 
+        std::string &s_y, 
+        std::string &s_altura, 
+        std::string &s_largura, 
+        std::string &nome, 
+        std::map<std::string, std::vector<int>> &map) 
+    {
+    int altura = std::stoi(s_altura);
+    int largura = std::stoi(s_largura);
+    int x = std::stoi(s_x);
+    int y = std::stoi(s_y);
+
+    std::vector<int> vetor = {posInicial, x, y, altura, largura};
+    
+    map[nome] = vetor;
+
+    s_x.clear();
+    s_y.clear();
+    s_altura.clear();
+    s_largura.clear();
+    nome.clear();
+    lineCounter += altura;
+
+    return altura * (largura + 1)-1;
+}
+
+std::vector<std::vector<int>> getMatrix(std::string xml, int start, int end) {
+    std::vector<std::vector<int>> matrix;
+    int lineCounter = 0;
+    matrix.push_back({});
+    for (int i = start; i < end; i++) {
+        char aux = xml[i];
+
+        if (aux == '\n') {
+            lineCounter++;
+            matrix.push_back({});
+            continue;
+        }
+
+        matrix[lineCounter].push_back(aux-48); // ajuste relacionado ao valor ASCII
+    }
+
+    return matrix;
+}
+
 int solveMatrix(int x, int y, int altura, int largura, std::vector<std::vector<int>> &matrix) {
     std::vector<std::tuple<int, int>> fila;
     int counter = 0;
@@ -142,79 +190,25 @@ int solveMatrix(int x, int y, int altura, int largura, std::vector<std::vector<i
     return counter;
 }
 
-int handleMatrix(
-        int posInicial,
-        int& lineCounter,
-        std::string &s_x, 
-        std::string &s_y, 
-        std::string &s_altura, 
-        std::string &s_largura, 
-        std::string &nome, 
-        std::map<std::string, std::vector<int>> &map) 
-    {
-    int altura = std::stoi(s_altura);
-    int largura = std::stoi(s_largura);
-    int x = std::stoi(s_x);
-    int y = std::stoi(s_y);
-
-    std::vector<int> vetor = {posInicial, x, y, altura, largura};
-    
-    map[nome] = vetor;
-
-    s_x.clear();
-    s_y.clear();
-    s_altura.clear();
-    s_largura.clear();
-    nome.clear();
-    lineCounter += altura;
-
-    return altura * (largura + 1)-1;
-}
-
-void appendToString(std::string &s, char aux) {
-    std::string auxString(&aux, 1);
-    s.append(auxString);
-}
-
-std::vector<std::vector<int>> getMatrix(std::string xml, int start, int end) {
-    std::vector<std::vector<int>> matrix;
-    int lineCounter = 0;
-    matrix.push_back({});
-    for (int i = start; i < end; i++) {
-        char aux = xml[i];
-
-        if (aux == '\n') {
-            lineCounter++;
-            matrix.push_back({});
-            continue;
-        }
-
-        matrix[lineCounter].push_back(aux-48);
-    }
-
-    return matrix;
-}
-
-void solveMatrices(std::map<std::string, std::vector<int>> map, std::string xml) {
-    for (auto matrixData : map) {
+void solveMatrices(std::map<std::string, std::vector<int>> matrixDataMap, std::string xml) {
+    for (auto matrixData : matrixDataMap) {
         int start = matrixData.second[0];
         int x = matrixData.second[1];
         int y = matrixData.second[2];
         int altura = matrixData.second[3];
         int largura = matrixData.second[4];
         int end = start + (altura * (largura+1));
+        char* nome = (char*)matrixData.first.c_str();
 
         std::vector<std::vector<int>> matrix = getMatrix(xml, start, end);
 
         int total = solveMatrix(x, y, altura, largura, matrix);
 
-        printf("%s %d\n", matrixData.first.c_str(), total);
+        printf("%s %d\n", nome, total);
     }
 }
 
 int main() {
-    // Example usage: read a file named "example.txt" in the current directory
-
     std::string filePath;
     std::cin >> filePath;
 
@@ -229,7 +223,7 @@ int main() {
     int lineCounter = 1;
     std::string tag;
 
-    std::map<std::string, std::vector<int>> map;
+    std::map<std::string, std::vector<int>> matrixDataMap;
     std::string s_altura;
     std::string s_largura;
     std::string nome;
@@ -245,28 +239,32 @@ int main() {
             lineCounter++;
         }
 
-        xmlCorrect = checkSyntax(aux, inTag, inClosingTag, tag, pilha, lineCounter, tagSequence);
+        xmlCorrect = checkSyntax(aux, inTag, inClosingTag, tag, pilha, tagSequence);
         if (!xmlCorrect) break;
-        
-        if (!pilha.empty() && pilha.back() == "altura" && isdigit(aux)) {
-            appendToString(s_altura, aux);
-        }
-        if (!pilha.empty() && pilha.back() == "largura" && isdigit(aux)) {
-            appendToString(s_largura, aux);
-        }
-        if (!pilha.empty() && pilha.back() == "nome" && aux != '<' && aux != '>' && !inClosingTag) {
-            appendToString(nome, aux);
-        }
-        if (!pilha.empty() && pilha.back() == "x" && isdigit(aux)) {
-            appendToString(s_x, aux);
-        }
-        if (!pilha.empty() && pilha.back() == "y" && isdigit(aux)) {
-            appendToString(s_y, aux);
-        }
-        if (!pilha.empty() && pilha.back() == "matriz" && isdigit(aux)) {
-            i += handleMatrix(i, lineCounter, s_x, s_y, s_altura, s_largura, nome, map);
-        }
 
+        if (!pilha.empty()) {
+            if (isdigit(aux)) {
+                if (pilha.back() == "altura") {
+                    appendToString(s_altura, aux);
+                }
+                if (pilha.back() == "largura") {
+                    appendToString(s_largura, aux);
+                }
+                if (pilha.back() == "x") {
+                    appendToString(s_x, aux);
+                }
+                if (pilha.back() == "y") {
+                    appendToString(s_y, aux);
+                }
+                if (pilha.back() == "matriz") {
+                    i += storeMatrixDataAndSkip(i, lineCounter, s_x, s_y, s_altura, s_largura, nome, matrixDataMap);
+                }
+            }
+            if (pilha.back() == "nome" && aux != '<' && aux != '>' && !inClosingTag) {
+                appendToString(nome, aux);
+            }
+        }     
+        
     }
     if (xmlCorrect) {
         xmlCorrect = checkIfStackIsEmpty(pilha);
@@ -275,7 +273,7 @@ int main() {
     }
 
     if (xmlCorrect) {
-        solveMatrices(map, fileContents);
+        solveMatrices(matrixDataMap, fileContents);
     }
 
     return 0;
