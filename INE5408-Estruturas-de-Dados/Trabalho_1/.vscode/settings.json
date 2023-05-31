@@ -60,6 +60,9 @@
         "string_view": "cpp",
         "numbers": "cpp",
         "sstream": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "list": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp"
     }
 }

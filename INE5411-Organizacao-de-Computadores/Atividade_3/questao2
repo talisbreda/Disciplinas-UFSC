@@ -1,0 +1,47 @@
+.data
+
+	matriz: .space 1024
+	size: .word 16
+
+.text
+main:
+
+	lw	$s0, size
+	li	$s1, 0		# value
+	la	$s2, matriz	# endereco da matriz
+	
+	li	$t0, 0		# column
+	li 	$t1, 0		# row
+	
+	blt	$t0, $s0, for_row
+	j	end_for_row
+	
+	for_column:
+	
+		blt	$t1, $s0, for_row
+		j	end_for_row
+	
+		for_row:
+		
+			mul	$t2, $t1, 64
+			mul	$t3, $t0, 4
+			add	$t2, $t2, $t3
+			add	$t2, $t2, $s2
+			
+			sw	$s1, ($t2)
+			addi	$s1, $s1, 1
+			
+			addi	$t1, $t1, 1
+			blt	$t1, $s0, for_row
+			
+		end_for_row:
+	
+		li	$t1, 0
+		addi	$t0, $t0, 1
+		blt	$t0, $s0, for_column
+		
+	
+	end_for_column:
+	
+	li	$v0, 10
+	syscall

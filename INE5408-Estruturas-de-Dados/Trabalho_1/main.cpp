@@ -266,9 +266,8 @@ int main() {
         }     
         
     }
-    if (xmlCorrect) {
-        xmlCorrect = checkIfStackIsEmpty(pilha);
-    } else {
+    if (xmlCorrect && !pilha.empty()) {
+        printf("erro");
         return 0;
     }
 
