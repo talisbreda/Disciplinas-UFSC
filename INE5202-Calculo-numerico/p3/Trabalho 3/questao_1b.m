@@ -18,5 +18,8 @@ y_exato = f(x_plot);
 erro_local = abs(y_plot - y_exato);
 
 [erro_max, pos_erro] = max(abs(y_plot - y_exato))
+subplot(3, 2, 2)
+
 plot(x, y, "* r", x_plot, y_plot, "- b", x_plot, y_exato, "- k");
+title("Questão 1 - b)")
 

@@ -1,6 +1,6 @@
 #Dados
-x = [ 1.2,   1.5,   2,     4,     6,     10,   15, ]
-y = [ 0.45, 0.40, 0.33, 0.20, 0.14, 0.10, 0.06 ]
+x = [ 1.2, 1.5, 2, 4, 6, 10, 15];
+y = [ 0.45, 0.40, 0.33, 0.20, 0.14, 0.10, 0.06 ];
 
 #plot(x,y, "*r")
 #grid on
@@ -8,12 +8,12 @@ y = [ 0.45, 0.40, 0.33, 0.20, 0.14, 0.10, 0.06 ]
 #1 Representar por qual g(x)? -> genérica não-linear'
 #g(x) = c(1) / (c(2) + c(3)*x)
 
-g = @(c,x) c(1) / (c(2) + c(3)*x);
+g = @(c,xa) c(1) ./ (c(2) + c(3).*xa);
 
 c = min_desv_quad_g(x,y);
 
-x_plot = [min(x) : 0.1 : max(x)];
-y_calculado_g = g(c,x_plot);
+x_plot = [min(x) : 0.1 : max(x)]
+y_calculado_g = g(c,x_plot)
 
 aux = g(c,x) - y;
 desvio_quad_total_g = sum(aux.*aux)
@@ -24,7 +24,7 @@ desvio_quad_total_g = sum(aux.*aux)
 
 # Pn = @(c,x) c(1) + c(2)*x.^(-c(3));
 
-n = 6
+n = 3
 a = min_desv_quad_pn(n,x,y);
 
 y_calculado_pn = valor_pn(a, x_plot);
@@ -32,5 +32,7 @@ y_calculado_pn = valor_pn(a, x_plot);
 aux = valor_pn(a, x) - y;
 desvio_quad_total_pn = sum(aux.*aux)
 
+subplot(3, 2, 3)
 plot(x,y, "*r", x_plot, y_calculado_g, "-b", x_plot, y_calculado_pn, "-k")
+title("Questão 2")
 grid on

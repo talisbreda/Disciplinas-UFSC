@@ -7,5 +7,8 @@ y_exato = f(x);
 
 [erro_max, pos_max] = max(abs(y - y_exato))
 
+subplot(3, 2, 1)
+
 plot(x, y, "- r", x, y_exato, "- b", xi, 0, "* k");
+title("Questão 1 - a)")
 grid on
