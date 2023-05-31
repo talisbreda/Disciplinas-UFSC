@@ -6,7 +6,7 @@ function y_plot = func_pol_gn(n, c, x, x_plot)
           for j = 1 : k
             prod(k) = prod(k) * (x_plot(i) - x(j));
           end
+          y_plot(i) = y_plot(i) + c(k+1)*prod(k);
       endfor
-      y_plot(i) = y_plot(i) + c(k+1)*prod(k);
   end
 end
