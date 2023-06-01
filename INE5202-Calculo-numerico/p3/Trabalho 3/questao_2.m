@@ -12,8 +12,8 @@ g = @(c,xa) c(1) ./ (c(2) + c(3).*xa);
 
 c = min_desv_quad_g(x,y);
 
-x_plot = [min(x) : 0.1 : max(x)]
-y_calculado_g = g(c,x_plot)
+x_plot = [min(x) : 0.1 : max(x)];
+y_calculado_g = g(c,x_plot);
 
 aux = g(c,x) - y;
 desvio_quad_total_g = sum(aux.*aux)
@@ -24,7 +24,7 @@ desvio_quad_total_g = sum(aux.*aux)
 
 # Pn = @(c,x) c(1) + c(2)*x.^(-c(3));
 
-n = 3
+n = 4
 a = min_desv_quad_pn(n,x,y);
 
 y_calculado_pn = valor_pn(a, x_plot);

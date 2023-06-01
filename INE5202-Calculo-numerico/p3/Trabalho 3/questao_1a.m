@@ -9,6 +9,6 @@ y_exato = f(x);
 
 subplot(3, 2, 1)
 
-plot(x, y, "- r", x, y_exato, "- b", xi, 0, "* k");
+plot(x, y, "- r", x, y_exato, "- b", xi, taylor(xi), "* k");
 title("Questão 1 - a)")
 grid on

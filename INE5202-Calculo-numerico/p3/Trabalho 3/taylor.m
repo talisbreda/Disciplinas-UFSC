@@ -16,13 +16,14 @@ function y = taylor(x)
     % c(5) = f'4(x) / 5!
 
     xi = pi/4;
-    n = 4
+    n = 5
 
     c(1) = (xi * sin(xi));
     c(2) = (sin(xi) + xi*cos(xi)) / 1;
     c(3) = (2*cos(xi) - xi*sin(xi)) / 2;
     c(4) = (-3*sin(xi) - xi*cos(xi)) / 6;
     c(5) = (-4*cos(xi) + xi*sin(xi)) / 24;
+    c(6) = (  5*sin(xi) + xi*cos(xi)) / 120;
 
     for k = 1 : length(x)
 
