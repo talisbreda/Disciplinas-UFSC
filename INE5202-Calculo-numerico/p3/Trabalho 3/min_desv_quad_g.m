@@ -15,7 +15,7 @@ function c = min_desv_quad_g(x,y)
 
     f1 = @(c,x,y) sum((g(c,x)-y)./ (c(2)+c(3).*x));
     f2 = @(c,x,y) sum((g(c,x)-y)./ ((c(2) + c(3).*x).*(c(2) + c(3).*x)));
-    f3 = @(c,x,y) sum((g(c,x)-y).*x./ ((c(2) + c(3).*x).*(c(2) + c(3).*x)));
+    f3 = @(c,x,y) sum((g(c,x)-y)./ ((c(2) + c(3).*x).*(c(2) + c(3).*x)));
 
     c_inicial = [1;1;1]; #É um valor inicial que precisa ser refinado
 
