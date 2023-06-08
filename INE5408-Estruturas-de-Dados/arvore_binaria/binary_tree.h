@@ -103,7 +103,11 @@ private:
             if (this->left == nullptr && this->right == nullptr) {
                 remove_case_1_right(pai);
             } else {
-                remove_2_3(pai);
+                if (this->left != nullptr && this->right != nullptr) {
+                    remove_case_3();
+                } else {
+                    remove_case_2_right(pai);
+                }
             }
         }
 
@@ -111,7 +115,11 @@ private:
             if (this->left == nullptr && this->right == nullptr) {
                 remove_case_1_left(pai);
             } else {
-                remove_2_3(pai);
+                if (this->left != nullptr && this->right != nullptr) {
+                    remove_case_3();
+                } else {
+                    remove_case_2_left(pai);
+                }
             }
         }
 
@@ -125,19 +133,19 @@ private:
             delete this;
         }
 
-        void remove_2_3(Node* pai) {
-            if (this->left != nullptr && this->right != nullptr) {
-                remove_case_3();
-            } else {
-                remove_case_2(pai);
-            }
-        }
-
-        void remove_case_2(Node* pai) {
+        void remove_case_2_right(Node* pai) {
             if (this->left != nullptr) {
                 pai->right = this->left;
             } else {
                 pai->right = this->right;
+            }
+        }
+
+        void remove_case_2_left(Node* pai) {
+            if (this->left != nullptr) {
+                pai->left = this->left;
+            } else {
+                pai->left = this->right;
             }
         }
 
