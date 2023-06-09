@@ -1,3 +1,4 @@
+// Copyright 2023 Talis Breda
 #include "array_list.h"
 
 namespace structures {
@@ -16,38 +17,56 @@ public:
         } else {
             root->insert(data);
         }
-        size++;
+        size_++;
     }
 
     void remove(const T& data) {
         if (empty()) {
-            throw std::out_of_range("Árvore vazia")
+            throw std::out_of_range("Árvore vazia");
         } else {
             root->remove(data);
-            size--;
+            size_--;
         }
     }
 
-    bool contains(const T& data) const;
+    bool contains(const T& data) const {
+        if (empty()) {
+            throw std::out_of_range("Árvore vazia");
+        } else {
+            return root->contains(data);
+        }
+    }
 
     bool empty() const {
         return size_ == 0;
     }
 
     std::size_t size() const {
-        return size;
+        return size_;
     }
 
-    ArrayList<T> pre_order() const;
+    ArrayList<T> pre_order() const {
+        ArrayList<T> list = ArrayList<T>(size_);
+        root->pre_order(list);
+        return list;
+    }
 
-    ArrayList<T> in_order() const;
+    ArrayList<T> in_order() const {
+        ArrayList<T> list = ArrayList<T>(size_);
+        root->in_order(list);
+        return list;
+    }
 
-    ArrayList<T> post_order() const;
+    ArrayList<T> post_order() const {
+        ArrayList<T> list = ArrayList<T>(size_);
+        root->post_order(list);
+        return list;
+    }
 
 private:
     struct Node {
         explicit Node(const T& data):
-            this->data{data},
+            data{data},
             left{nullptr},
             right{nullptr}
         {}
@@ -82,86 +101,123 @@ private:
         }
 
         bool remove(const T& data_) {
-            if (data_ == this->right->data) {
-                this->right->remove_right(data, this);
-            } else if (data_ == this->left->data) {
-                this->left->remove_left(data, this);
-            } else if (data_ > this->data) {
-                this->right->remove(data_);
-            } else if (data_ < this->data) {
-                this->left->remove(data_);
-            } else if (data_ == this->data) {
-                if (this->left == nullptr && this->right == nullptr) {
-                    delete this;
-                } else {
-                    remove_2_3();
-                }
+            bool rightNull = this->right == nullptr;
+            bool leftNull = this->left == nullptr;
+
+            if (!rightNull && data_ == this->right->data) {
+                return this->right->remove_right(data, this);
+            } else if (!leftNull && data_ == this->left->data) {
+                return this->left->remove_left(data, this);
+            } else if (!rightNull && data_ > this->data) {
+                return this->right->remove(data_);
+            } else if (!leftNull && data_ < this->data) {
+                return this->left->remove(data_);
             }
+            return false;
         }
 
-        void remove_right(const T& data_, Node* pai) {
+        bool remove_right(const T& data_, Node* pai) {
             if (this->left == nullptr && this->right == nullptr) {
-                remove_case_1_right(pai);
+                return remove_case_1_right(pai);
             } else {
                 if (this->left != nullptr && this->right != nullptr) {
-                    remove_case_3();
+                    return remove_case_3();
                 } else {
-                    remove_case_2_right(pai);
+                    return remove_case_2_right(pai);
                 }
             }
         }
 
-        void remove_left(const T& data_, Node* pai) {
+        bool remove_left(const T& data_, Node* pai) {
             if (this->left == nullptr && this->right == nullptr) {
-                remove_case_1_left(pai);
+                return remove_case_1_left(pai);
             } else {
                 if (this->left != nullptr && this->right != nullptr) {
-                    remove_case_3();
+                    return remove_case_3();
                 } else {
-                    remove_case_2_left(pai);
+                    return remove_case_2_left(pai);
                 }
             }
         }
 
-        void remove_case_1_left(Node* pai) {
+        bool remove_case_1_left(Node* pai) {
             pai->left = nullptr;
             delete this;
+            return true;
         }
 
-        void remove_case_1_right(Node* pai) {
+        bool remove_case_1_right(Node* pai) {
             pai->right = nullptr;
             delete this;
+            return true;
         }
 
-        void remove_case_2_right(Node* pai) {
+        bool remove_case_2_right(Node* pai) {
             if (this->left != nullptr) {
                 pai->right = this->left;
             } else {
                 pai->right = this->right;
             }
+            return true;
         }
 
-        void remove_case_2_left(Node* pai) {
+        bool remove_case_2_left(Node* pai) {
             if (this->left != nullptr) {
                 pai->left = this->left;
             } else {
                 pai->left = this->right;
             }
+            return true;
         }
 
-        void remove_case_3() {
+        bool remove_case_3() {
             Node* min = minimum(this->right);
             this->data = min->data;
             min->remove(this->data);
+            return true;
         }
 
-        bool contains(const T& data_) const;
+        bool contains(const T& data_) const {
+            if (data_ == this->data)  {
+                return true;
+            } else if (this->right != nullptr && data_ > this->data) {
+                return this->right->contains(data_);
+            } else if (this->left != nullptr && data_ < this->data) {
+                return this->left->contains(data_);
+            } else {
+                return false;
+            }
+        }
 
-        void pre_order(ArrayList<T>& v) const;
+        void pre_order(ArrayList<T>& v) const {
+            v.push_back(this->data);
+            if (this->left != nullptr) {
+                this->left->pre_order(v);
+            }
+            if (this->right != nullptr) {
+                this->right->pre_order(v);
+            }
+        }
 
-        void in_order(ArrayList<T>& v) const;
+        void in_order(ArrayList<T>& v) const {
+            if (this->left != nullptr) {
+                this->left->in_order(v);
+            }
+            v.push_back(this->data);
+            if (this->right != nullptr) {
+                this->right->in_order(v);
+            }
+        }
 
-        void post_order(ArrayList<T>& v) const;
+        void post_order(ArrayList<T>& v) const {
+            if (this->left != nullptr) {
+                this->left->post_order(v);
+            }
+            if (this->right != nullptr) {
+                this->right->post_order(v);
+            }
+            v.push_back(this->data);
+        }
     };
 
     Node* root;
@@ -179,7 +235,7 @@ private:
         return aux;
     }
 
-    Node* minimum(Node* sub) {
+    static Node* minimum(Node* sub) {
         while (sub->left != nullptr) {
             sub = sub->left;
         }
@@ -187,4 +243,4 @@ private:
     }
 };
 
-}
+}  // namespace structures
