@@ -79,6 +79,11 @@ end_for_matrix:
 	mul	$s4, $s0, $s0
 	mul	$s4, $s4, 4
 	add	$s4, $s4, $s2
+	
+	# Input do  block_size
+	li	$v0, 5
+	syscall
+	move	$s5, $v0
 
 	li	$t0, 0	# i
 	bge	$t0, $s0, end_fori
@@ -89,31 +94,53 @@ fori:
 	bge	$t1, $s0, end_forj
 
 	forj:
+	
+		move	$t2, $t0	# definindo ii
+		add	$s6, $t0, $s5	# i + block_size
+		bge	$t2, $s6, end_forii
 		
-		mul	$t2, $t0, 4	# ajuste para linha
-		mul	$t3, $t2, $s0	# ajuste para coluna
+		forii:
 		
-		mul	$t4, $t1, 4	# ajuste para linha
-		mul	$t5, $t4, $s0	# ajuste para coluna
+			move	$t3, $t1	# definindo jj
+			add	$s7, $t1, $s5	# j + block_size
+			bge	$t3, $s7, end_forjj
+			
+			forjj:
+			
+				mul	$t4, $t2, 4	# ajuste para linha
+				mul	$t5, $t4, $s0	# ajuste para coluna
 		
+				mul	$t6, $t3, 4	# ajuste para linha
+				mul	$t7, $t6, $s0	# ajuste para coluna
+				
 		
-		add	$t6, $t3, $t4	# soma linha i e coluna j
-		add	$t6, $t6, $s2	# soma com o endereço basee
-		l.s	$f1, ($t6)	# carrega A[i, j]
+				add	$t8, $t5, $t6	# soma linha i e coluna j
+				add	$t8, $t8, $s2	# soma com o endereço basee
+				l.s	$f1, ($t8)	# carrega A[i, j]
 		
-		add	$t7, $t2, $t5	# soma linha j e coluna i
-		add 	$t7, $t7, $s4	# soma com o endereço base
-		l.s	$f2, ($t7)	# carrega B[j, i]
+				add	$t9, $t4, $t7	# soma linha j e coluna i
+				add 	$t9, $t9, $s4	# soma com o endereço base
+				l.s	$f2, ($t9)	# carrega B[j, i]
+				
+				add.s	$f1, $f1, $f2	# soma A[i,j] + B[j, i]
+				s.s	$f1, ($t8)	# armazena a soma
+				
+				addi	$t3, $t3, 1
+				blt	$t3, $s7, forjj
+			
+			end_forjj:
+			
+			addi	$t2, $t2, 1
+			blt	$t2, $s6, forii
+			
+		end_forii:
 		
-		add.s	$f1, $f1, $f2	# soma A[i,j] + B[j, i]
-		s.s	$f1, ($t6)	# armazena a soma
-		
-		addi	$t1, $t1, 1	# j++
+		add	$t1, $t1, $s5	# j++
 		blt	$t1, $s0, forj
 	
 	end_forj:	
 	
-	addi	$t0, $t0, 1	# i++
+	add	$t0, $t0, $s5	# i++
 	blt	$t0, $s0, fori
 	
 end_fori:
