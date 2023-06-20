@@ -1,6 +1,12 @@
 {
     "files.associations": {
         "*.embeddedhtml": "html",
-        "cstdint": "cpp"
+        "cstdint": "cpp",
+        "*.tcc": "cpp",
+        "iosfwd": "cpp",
+        "numeric": "cpp",
+        "string_view": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp"
     }
 }
