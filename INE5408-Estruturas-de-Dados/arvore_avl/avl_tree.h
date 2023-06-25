@@ -285,11 +285,13 @@ private:
         }
 
         Node* doubleLeft() {
+            this->left->simpleRight();
             this->simpleLeft();
             return this;
         }
 
         Node* doubleRight() {
+            this->right->simpleLeft();
             this->simpleRight();
             return this;
         }
