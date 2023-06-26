@@ -9,56 +9,66 @@ class TrieNode {
     explicit TrieNode(char letra) {
         this->letra = letra;
         this->comprimento = -1;
-        this->filhos = std::vector<TrieNode*>();
+        initializeFilhos();
     }
 
     TrieNode(char letra, int posicao) {
         this->letra = letra;
         this->posicao = posicao;
         this->comprimento = -1;
-        this->filhos = std::vector<TrieNode*>();
+        initializeFilhos();
     }
 
     TrieNode() {
         this->letra = '\0';
         this->comprimento = -1;
-        this->filhos = std::vector<TrieNode*>();
+        initializeFilhos();
+    }
+
+    // ~TrieNode() {
+    //     for (auto i = 0u; i < 26; i++) {
+    //         delete filhos[i];
+    //     }
+    // }
+
+    void initializeFilhos() {
+        for (auto i = 0u; i < 26; i++) {
+            this->filhos[i] = nullptr;
+        }
     }
 
     bool contains(char value) {
-        // for (auto i = 0u; i < 26; i++) {
-        //     // if (filhos[i]->letra == value) {
-        //     //     return true;
-        //     // }
-        //     std::cout << filhos[i];
-        // }
-        return false;
+        return this->filhos[value - 'a'] != nullptr;
     }
 
-    int countWords() {
+    int countPrefixes() {
         int count = 0;
         if (this->comprimento != -1) {
             count++;
         }
         for (auto i = 0u; i < 26; i++) {
             if (this->filhos[i] != nullptr) {
-                count += this->filhos[i]->countWords();
+                count += this->filhos[i]->countPrefixes();
             }
         }
         return count;
     }
 
-    TrieNode* find(char value) {
-        TrieNode* aux = new TrieNode(value);
-        auto it = std::find(filhos.begin(), filhos.end(), aux);
-        if (it != filhos.end()) {
-            return *it;
+    bool filhosEmpty() {
+        for (auto i = 0u; i < 26; i++) {
+            if (this->filhos[i] != nullptr) {
+                return false;
+            }
         }
-        return nullptr;
+        return true;
+    }
+
+    TrieNode* find(char value) {
+        return this->filhos[value - 'a'];
     }
 
     char letra;
-    std::vector<TrieNode*> filhos;
+    TrieNode* filhos[26];
     int posicao;
     int comprimento;
 
@@ -83,13 +93,6 @@ std::string readFileToString(const std::string& filePath) {
     return fileContents;
 }
 
-void setLineLength(TrieNode *node, std::string word, int length) {
-    for (auto i = 0u; i < word.size(); i++) {
-        node = node->filhos[word[i] - 'a'];
-    }
-    node->comprimento = length;
-}
-
 int main() {
     
     std::string filePath;
@@ -106,20 +109,27 @@ int main() {
 
     int posicao;
     int lineLength = 0;
+    int lineCounter = 1;
+    char prev = '\0';
+    char aux = '\0';
 
     for (auto i = 0u; i < fileContents.size(); i++) {
-        char aux = fileContents[i];
+        prev = aux;
+        aux = fileContents[i];
 
-        if (aux == '\n') {
-            setLineLength(root, word, lineLength);
+        if (aux == '\n' || aux == 46) {
+            // setLineLength(root, word, lineLength);
+            currentNode->comprimento = lineLength;
             word = "";
             lineLength = 0;
+            lineCounter++;
+            currentNode = root;
             continue;
         } else {
             lineLength++;
         }
         
-        if (aux == '[') {
+        if (i == 0 || (aux == '[' && prev == '\n')) {
             inWord = true;
             posicao = i;
             continue;
@@ -128,14 +138,20 @@ int main() {
         if (inWord) {
             if (aux == ']') {
                 inWord = false;
-                currentNode = root;
             } else {
                 word += aux;
                 if (!currentNode->contains(aux)) {
                     TrieNode* newnode = new TrieNode(aux, posicao);
-                    currentNode->filhos.push_back(newnode);
+                    currentNode->filhos[aux - 'a'] = newnode;
+                    currentNode = newnode;
+                    delete newnode;
+                } else {
+                    currentNode = currentNode->find(aux);
+                    if (currentNode == nullptr) {
+                        printf("aaaaaaaa");
+                        break;
+                    }
                 }
-                currentNode = currentNode->find(aux);
             }
         }
     }
@@ -146,28 +162,32 @@ int main() {
         if (word.compare("0") == 0) {
             break;
         }
-        int prefixCounter = 1;
 
+        int pos = -1;
         for (auto i = 0u; i < word.size(); i++) {
             if (!currentNode->contains(word[i])) {
-                std::cout << word + "is not prefix" << std::endl;
+                pos = i;
                 break;
             } else {
                 currentNode = currentNode->find(word[i]);
             }
         }
-
         int prefixCount = 1;
-        if (currentNode->filhos.empty()) {
-            std::cout << word + "is prefix of 1 words" << std::endl;
-            break;
-        } else {
-            prefixCount = currentNode->countWords();
+        if (currentNode != nullptr) {
+            prefixCount = currentNode->countPrefixes();
         }
 
-        printf("%s is prefix of %d words\n", word.c_str(), prefixCount);
-        printf("%s is at (%d, %d)\n", word.c_str(), currentNode->posicao, currentNode->comprimento);
+        if (pos != -1 && !currentNode->contains(word[pos])) {
+            printf("%s is not prefix\n", word.c_str());
+        } else if (currentNode->comprimento == -1) {
+            printf("%s is prefix of %d words\n", word.c_str(), prefixCount);
+        } else {
+            printf("%s is prefix of %d words\n", word.c_str(), prefixCount);
+            printf("%s is at (%d,%d)\n", word.c_str(), currentNode->posicao, currentNode->comprimento);
+        }
     }
+
+    delete root;
 
     return 0;
 }

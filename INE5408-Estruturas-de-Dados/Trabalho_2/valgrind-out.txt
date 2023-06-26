@@ -1,0 +1,197 @@
+==6550== Memcheck, a memory error detector
+==6550== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==6550== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
+==6550== Command: ./main
+==6550== Parent PID: 2292
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AE71: TrieNode::contains(char) (main.cpp:41)
+==6550==    by 0x10A940: main (main.cpp:143)
+==6550==  Address 0x4de1e78 is 40 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid write of size 8
+==6550==    at 0x10A98E: main (main.cpp:145)
+==6550==  Address 0x4de1e78 is 40 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid write of size 4
+==6550==    at 0x10A878: main (main.cpp:122)
+==6550==  Address 0x4de228c is 220 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AF07: TrieNode::find(char) (main.cpp:67)
+==6550==    by 0x10A9CE: main (main.cpp:149)
+==6550==  Address 0x4de1e78 is 40 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AE71: TrieNode::contains(char) (main.cpp:41)
+==6550==    by 0x10AAA5: main (main.cpp:168)
+==6550==  Address 0x4de1e78 is 40 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AF07: TrieNode::find(char) (main.cpp:67)
+==6550==    by 0x10AAE6: main (main.cpp:172)
+==6550==  Address 0x4de1e78 is 40 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 4
+==6550==    at 0x10AE99: TrieNode::countPrefixes() (main.cpp:46)
+==6550==    by 0x10AB37: main (main.cpp:177)
+==6550==  Address 0x4de228c is 220 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AEB8: TrieNode::countPrefixes() (main.cpp:50)
+==6550==    by 0x10AB37: main (main.cpp:177)
+==6550==  Address 0x4de21b8 is 8 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 4
+==6550==    at 0x10ABBC: main (main.cpp:182)
+==6550==  Address 0x4de228c is 220 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 4
+==6550==    at 0x10AC2C: main (main.cpp:186)
+==6550==  Address 0x4de228c is 220 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 4
+==6550==    at 0x10AC3A: main (main.cpp:186)
+==6550==  Address 0x4de2288 is 216 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AEC9: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AB37: main (main.cpp:177)
+==6550==  Address 0x4de27b0 is 96 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 4
+==6550==    at 0x10AE99: TrieNode::countPrefixes() (main.cpp:46)
+==6550==    by 0x10AED5: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AB37: main (main.cpp:177)
+==6550==  Address 0x4de294c is 220 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AEB8: TrieNode::countPrefixes() (main.cpp:50)
+==6550==    by 0x10AED5: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AB37: main (main.cpp:177)
+==6550==  Address 0x4de2878 is 8 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AEC9: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AED5: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AB37: main (main.cpp:177)
+==6550==  Address 0x4de28d0 is 96 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 4
+==6550==    at 0x10AE99: TrieNode::countPrefixes() (main.cpp:46)
+==6550==    by 0x10AED5: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AED5: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AB37: main (main.cpp:177)
+==6550==  Address 0x4de2a6c is 220 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AEB8: TrieNode::countPrefixes() (main.cpp:50)
+==6550==    by 0x10AED5: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AED5: TrieNode::countPrefixes() (main.cpp:51)
+==6550==    by 0x10AB37: main (main.cpp:177)
+==6550==  Address 0x4de2998 is 8 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== Invalid read of size 8
+==6550==    at 0x10AE71: TrieNode::contains(char) (main.cpp:41)
+==6550==    by 0x10AB75: main (main.cpp:180)
+==6550==  Address 0x4de27f0 is 160 bytes inside a block of size 224 free'd
+==6550==    at 0x484B649: operator delete(void*) (vg_replace_malloc.c:935)
+==6550==    by 0x10A9B4: main (main.cpp:147)
+==6550==  Block was alloc'd at
+==6550==    at 0x4848FD5: operator new(unsigned long) (vg_replace_malloc.c:434)
+==6550==    by 0x10A951: main (main.cpp:144)
+==6550== 
+==6550== 
+==6550== HEAP SUMMARY:
+==6550==     in use at exit: 0 bytes in 0 blocks
+==6550==   total heap usage: 30 allocs, 30 frees, 90,691 bytes allocated
+==6550== 
+==6550== All heap blocks were freed -- no leaks are possible
+==6550== 
+==6550== For lists of detected and suppressed errors, rerun with: -s
+==6550== ERROR SUMMARY: 569 errors from 18 contexts (suppressed: 0 from 0)
