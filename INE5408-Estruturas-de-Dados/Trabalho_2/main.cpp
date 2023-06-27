@@ -25,11 +25,11 @@ class TrieNode {
         initializeFilhos();
     }
 
-    // ~TrieNode() {
-    //     for (auto i = 0u; i < 26; i++) {
-    //         delete filhos[i];
-    //     }
-    // }
+    ~TrieNode() {
+        for (auto i = 0u; i < 26; i++) {
+            if (this->filhos[i] != nullptr) delete filhos[i];
+        }
+    }
 
     void initializeFilhos() {
         for (auto i = 0u; i < 26; i++) {
@@ -117,7 +117,12 @@ int main() {
         prev = aux;
         aux = fileContents[i];
 
-        if (aux == '\n' || aux == 46) {
+        if (i == fileContents.size() - 1) {
+            currentNode->comprimento = lineLength;
+            break;
+        }
+
+        if (aux == '\n') {
             // setLineLength(root, word, lineLength);
             currentNode->comprimento = lineLength;
             word = "";
@@ -144,7 +149,6 @@ int main() {
                     TrieNode* newnode = new TrieNode(aux, posicao);
                     currentNode->filhos[aux - 'a'] = newnode;
                     currentNode = newnode;
-                    delete newnode;
                 } else {
                     currentNode = currentNode->find(aux);
                     if (currentNode == nullptr) {
