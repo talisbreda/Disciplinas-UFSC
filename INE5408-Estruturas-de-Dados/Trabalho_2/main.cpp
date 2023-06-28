@@ -6,25 +6,28 @@
 
 class TrieNode {
     public:
-    explicit TrieNode(char letra) {
-        this->letra = letra;
-        this->comprimento = -1;
-        initializeFilhos();
-    }
 
-    TrieNode(char letra, int posicao) {
+    char letra;
+    TrieNode* filhos[26];
+    int posicao;
+    int comprimento;
+
+    /* Construtor para nodos da lista */
+    explicit TrieNode(char letra, int posicao) {
         this->letra = letra;
         this->posicao = posicao;
         this->comprimento = -1;
         initializeFilhos();
     }
 
+    /* Construtor para o nodo raiz */
     TrieNode() {
         this->letra = '\0';
         this->comprimento = -1;
         initializeFilhos();
     }
 
+    /* Destrutor recursivo */
     ~TrieNode() {
         for (auto i = 0u; i < 26; i++) {
             if (this->filhos[i] != nullptr) delete filhos[i];
@@ -54,23 +57,9 @@ class TrieNode {
         return count;
     }
 
-    bool filhosEmpty() {
-        for (auto i = 0u; i < 26; i++) {
-            if (this->filhos[i] != nullptr) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    TrieNode* find(char value) {
+    TrieNode* get(char value) {
         return this->filhos[value - 'a'];
     }
-
-    char letra;
-    TrieNode* filhos[26];
-    int posicao;
-    int comprimento;
 
 };
 
@@ -93,6 +82,90 @@ std::string readFileToString(const std::string& filePath) {
     return fileContents;
 }
 
+void readAndStoreFileContents(std::string fileContents, TrieNode *root) {
+    TrieNode *currentNode = root;
+
+    bool inWord;
+    int position;
+    int lineLength = 0;
+    char previousLetter = '\0';
+    char letter = '\0';
+
+    for (auto i = 0u; i < fileContents.size(); i++) {
+        previousLetter = letter;
+        letter = fileContents[i];
+
+        /* Se a letra atual for um '\n', ou for a última do arquivo, resetamos o comprimento da linha atual e voltamos para o nodo raiz */
+        if (letter == '\n' || i == fileContents.size() - 1) {
+            currentNode->comprimento = lineLength;
+            lineLength = 0;
+            currentNode = root;
+            continue;
+        } else { /* Se não, incrementamos o comprimento da linha atual */
+            lineLength++;
+        }
+        
+        /* Se estivermos na primeira letra ou tivermos um '\n' seguido de um '[', iniciamos a leitura de uma palavra */
+        if (i == 0 || (letter == '[' && previousLetter == '\n')) {
+            inWord = true;
+            position = i;
+            continue;
+        }
+
+        /* Se estivermos dentro de uma palavra, adicionamos a letra atual ao nodo atual */
+        if (inWord) {
+            if (letter == ']') {
+                inWord = false;
+            } else if (!currentNode->contains(letter)) {
+                TrieNode* newnode = new TrieNode(letter, position);
+                currentNode->filhos[letter - 'a'] = newnode;
+                currentNode = newnode;
+            } else {
+                currentNode = currentNode->get(letter);
+            }
+            
+        }
+    }
+}
+
+void analyzeInputAndPrintResult(TrieNode *root) {
+    while (true) {
+        TrieNode* currentNode = root;
+        std::string word;
+
+        std::cin >> word;
+
+        /* Quebra a execução caso o input seja 0 */
+        if (word.compare("0") == 0) {
+            break;
+        }
+
+        /* Viaja pelos nodos até chegar ao fim da palavra atual */
+        bool isNotPrefix = false;
+        for (auto i = 0u; i < word.size(); i++) {
+            if (currentNode->contains(word[i])) {
+                currentNode = currentNode->get(word[i]);
+            } else {
+                isNotPrefix = true;
+                break;
+            }
+        }
+
+        /* Conta a quantidade de prefixos que a palavra atual tem */
+        int prefixCount = currentNode->countPrefixes();
+
+        /* Imprime o resultado */
+        if (isNotPrefix) {
+            printf("%s is not prefix\n", word.c_str());
+        } else if (currentNode->comprimento == -1) {
+            printf("%s is prefix of %d words\n", word.c_str(), prefixCount);
+        } else {
+            printf("%s is prefix of %d words\n", word.c_str(), prefixCount);
+            printf("%s is at (%d,%d)\n", word.c_str(), currentNode->posicao, currentNode->comprimento);
+        }
+    }
+}
+
 int main() {
     
     std::string filePath;
@@ -102,94 +175,8 @@ int main() {
 
     TrieNode *root = new TrieNode();
 
-    bool inWord;
-    std::string word = "";
-
-    TrieNode *currentNode = root;
-
-    int posicao;
-    int lineLength = 0;
-    int lineCounter = 1;
-    char prev = '\0';
-    char aux = '\0';
-
-    for (auto i = 0u; i < fileContents.size(); i++) {
-        prev = aux;
-        aux = fileContents[i];
-
-        if (i == fileContents.size() - 1) {
-            currentNode->comprimento = lineLength;
-            break;
-        }
-
-        if (aux == '\n') {
-            // setLineLength(root, word, lineLength);
-            currentNode->comprimento = lineLength;
-            word = "";
-            lineLength = 0;
-            lineCounter++;
-            currentNode = root;
-            continue;
-        } else {
-            lineLength++;
-        }
-        
-        if (i == 0 || (aux == '[' && prev == '\n')) {
-            inWord = true;
-            posicao = i;
-            continue;
-        }
-
-        if (inWord) {
-            if (aux == ']') {
-                inWord = false;
-            } else {
-                word += aux;
-                if (!currentNode->contains(aux)) {
-                    TrieNode* newnode = new TrieNode(aux, posicao);
-                    currentNode->filhos[aux - 'a'] = newnode;
-                    currentNode = newnode;
-                } else {
-                    currentNode = currentNode->find(aux);
-                    if (currentNode == nullptr) {
-                        printf("aaaaaaaa");
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    
-    while (true) {
-        currentNode = root;
-        std::cin >> word;
-        if (word.compare("0") == 0) {
-            break;
-        }
-
-        int pos = -1;
-        for (auto i = 0u; i < word.size(); i++) {
-            if (!currentNode->contains(word[i])) {
-                pos = i;
-                break;
-            } else {
-                currentNode = currentNode->find(word[i]);
-            }
-        }
-        int prefixCount = 1;
-        if (currentNode != nullptr) {
-            prefixCount = currentNode->countPrefixes();
-        }
-
-        if (pos != -1 && !currentNode->contains(word[pos])) {
-            printf("%s is not prefix\n", word.c_str());
-        } else if (currentNode->comprimento == -1) {
-            printf("%s is prefix of %d words\n", word.c_str(), prefixCount);
-        } else {
-            printf("%s is prefix of %d words\n", word.c_str(), prefixCount);
-            printf("%s is at (%d,%d)\n", word.c_str(), currentNode->posicao, currentNode->comprimento);
-        }
-    }
+    readAndStoreFileContents(fileContents, root);
+    analyzeInputAndPrintResult(root);
 
     delete root;
 
