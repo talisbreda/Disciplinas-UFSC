@@ -30,7 +30,7 @@ f_y1 = @(x,y1,y2,y3) y2;
 f_y2 = @(x,y1,y2,y3) y3;
 f_y3 = @(x,y1,y2,y3) -y3-y2-(x+1).*y1+x.*sin(x);
 
-a = 0; b = 10;
+a = 0; b = pi/2;
 x(1) = 0;
 y1(1) = 0;
 y2(1) = 1;
@@ -45,7 +45,9 @@ n = 64 #para erro de y1 menor que 1e-6
 erro_estimado_y1 = max(abs(y1 - y1_e(1 : 2 : 2*n+1)))
 erro_estimado_y2 = max(abs(y2 - y2_e(1 : 2 : 2*n+1)))
 erro_estimado_y3 = max(abs(y3 - y3_e(1 : 2 : 2*n+1)))
+subplot(2, 1, 1)
 plot(x, y1, "-r", x, y2, "-g", x, y3, "-b")
+title("Questão 3")
 legenda = legend("y1", "y2", "y3");
 legend(legenda, "location", "northwest")
 grid on
