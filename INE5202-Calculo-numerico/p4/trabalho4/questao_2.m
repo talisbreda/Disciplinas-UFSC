@@ -1,3 +1,4 @@
+clear
 format long
 #Vamos calcular numericamente a integral de 1/(1+x) entre 1 e 6,
 # com 6 digitos significativos exatos (erro estimado menor que 1e-6)

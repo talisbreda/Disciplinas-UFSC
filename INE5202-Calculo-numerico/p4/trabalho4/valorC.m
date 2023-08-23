@@ -13,11 +13,11 @@ function C = valorC(x, y1, y2, f_y1, f_y2, f_y3, a, b, n, D)
 
         y3(1) = Ci;
         [x, y1, y2, y3] = f_runge_kutta4_3EDOs(x, y1, y2, y3, f_y1, f_y2, f_y3, a, b, n);
-        fErro_CC1 = y2(n+1) - D;
+        fErro_CC1 = y3(n+1) - D;
 
         y3(1) = Ci + deltaC;
         [x, y1, y2, y3] = f_runge_kutta4_3EDOs(x, y1, y2, y3, f_y1, f_y2, f_y3, a, b, n);
-        fErro_CC2 = y2(n+1) - D;
+        fErro_CC2 = y3(n+1) - D;
 
         derivada_fErroCC = (fErro_CC2 - fErro_CC1)/deltaC;
         deltaC = -fErro_CC1/derivada_fErroCC;

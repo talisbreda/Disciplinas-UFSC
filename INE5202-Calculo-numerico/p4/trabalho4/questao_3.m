@@ -1,3 +1,4 @@
+clear
 format long
 %Equação de Blasius" da camada limite plana y('x)
 %y'''+(1/2)*y*y''=0 x E [0;10]
@@ -38,7 +39,7 @@ y3(1) = 0;
 
 #Vamos criar uma função Runge-Kutta de 4ª ordem para resolver 3 equações diferenciais de 1ª ordem
 
-n = 64 #para erro de y1 menor que 1e-6
+n = 8 #para erro de y1 menor que 1e-6
 [x, y1, y2, y3] = f_runge_kutta4_3EDOs(x, y1, y2, y3, f_y1, f_y2, f_y3, a, b, n);
 [x_e, y1_e, y2_e, y3_e] = f_runge_kutta4_3EDOs(x, y1, y2, y3, f_y1, f_y2, f_y3, a, b, 2*n);
 

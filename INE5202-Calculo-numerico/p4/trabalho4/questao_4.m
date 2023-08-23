@@ -35,7 +35,7 @@ f_y3 = @(x,y1,y2,y3) -y3-y2-(x+1).*y1+x.*sin(x);
 a = 0; b = pi/2;
 x(1) = 0;
 y1(1) = 0;
-y2(1) = 0;
+y2(1) = 1;
 D = -1 #Condição de contorno y'(x = 10) = D = 1; Valor conhecido
 n = 64 #para erro de y1 menor que 1e-6
 C = valorC(x, y1, y2, f_y1, f_y2, f_y3, a, b, n, D);
@@ -52,8 +52,8 @@ erro_estimado_y2 = max(abs(y2 - y2_e(1 : 2 : 2*n+1)))
 erro_estimado_y3 = max(abs(y3 - y3_e(1 : 2 : 2*n+1)))
 erro_CC = y2(n+1) - D #Erro do valor de contorno: Valor calculado - Valor conhecido, para a mesma incógnita
 subplot(2, 1, 2);
-plot(x, y1, "-r", x, y2, "-k", x, y3, "-b"); hold on;
-plot(x(1), y1(1), "*r", x(1), y2(1), "s k", x(n+1), y2(n+1), "x k", x(n+1), D, "o k", x(1), y3(1), "d b")
+plot(x, y1, "-r", x, y2, "-g", x, y3, "-b"); hold on;
+plot(x(1), y1(1), "*r", x(1), y2(1), "s g", x(1), y3(1), "d b", x(n+1), y3(n+1), "x b", x(n+1), D, "o b" )
 title("Questão 4")
 legenda = legend("y1", "y2", "y3");
 legend(legenda, "location", "northwest")
