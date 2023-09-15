@@ -5,13 +5,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Grafo {
 
     private List<Vertice> vertices;
 
     public Grafo() {
-        this.vertices = new ArrayList<Vertice>();
+        this.vertices = new ArrayList<>();
     }
 
     public int qtdVertices() {
@@ -27,7 +28,7 @@ public class Grafo {
     }
 
     public int grau(int vertice) {
-        return vertices.get(vertice).arestas.size();
+        return vertices.get(vertice-1).arestas.size();
     }
 
     public String rotulo(int vertice) {
@@ -35,15 +36,27 @@ public class Grafo {
     }
 
     public List<Vertice> vizinhos(int vertice) {
-        return new ArrayList<Vertice>(vertices.get(vertice).arestas.keySet());        
+        Set<Aresta> arestas = vertices.get(vertice).arestas;
+        List<Vertice> vizinhos = new ArrayList<>();
+        for (Aresta a : arestas) {
+            vizinhos.add(a.v2);
+        }
+        return vizinhos;
     }
 
     public boolean haAresta(int v1, int v2) {
-        return vertices.get(v1).arestas.containsKey(vertices.get(v2));
+        return vertices.get(v1).arestas.contains(new Aresta(new Vertice(v1), new Vertice(v2)));
     }
 
     public Double peso(int v1, int v2) {
-        return vertices.get(v1).arestas.get(vertices.get(v2));
+        Set<Aresta> arestas = vertices.get(v1).arestas;
+        Aresta aresta = new Aresta(new Vertice(v1), new Vertice(v2));
+        for (Aresta a : arestas) {
+            if (a == aresta) {
+                return a.peso;
+            }
+        }
+        return Double.POSITIVE_INFINITY;
     }
 
     public void lerArquivo(String nomeArquivo) {
@@ -68,7 +81,7 @@ public class Grafo {
                 String[] partes = linha.split(" ");
                 String index = partes[0];
                 String rotulo = partes[1];
-                Vertice v = new Vertice(Integer.parseInt(index) - 1, rotulo);
+                Vertice v = new Vertice(Integer.parseInt(index), rotulo);
                 vertices.add(v);
             }
 
@@ -79,8 +92,8 @@ public class Grafo {
                 String peso = partes[2];
                 Vertice v1 = vertices.get(Integer.parseInt(index1) - 1);
                 Vertice v2 = vertices.get(Integer.parseInt(index2) - 1);
-                v1.arestas.put(v2, Double.parseDouble(peso));
-                v2.arestas.put(v1, Double.parseDouble(peso));
+                v1.arestas.add(new Aresta(v1, v2, Double.parseDouble(peso)));
+                v2.arestas.add(new Aresta(v2, v1, Double.parseDouble(peso)));
             }
         }
     }

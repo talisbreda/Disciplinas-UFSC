@@ -1,14 +1,26 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Vertice {
     int index;
     String rotulo;
-    Map<Vertice, Double> arestas;
+    Set<Aresta> arestas;
 
     public Vertice(int index, String rotulo) {
         this.index = index;
         this.rotulo = rotulo;
-        this.arestas = new HashMap<Vertice, Double>();
+        this.arestas = new LinkedHashSet<>();
+    }
+
+    public Vertice(int index) {
+        this.index = index;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Vertice v) {
+            return (v.index == this.index);
+        } else {
+            return false;
+        }
     }
 }

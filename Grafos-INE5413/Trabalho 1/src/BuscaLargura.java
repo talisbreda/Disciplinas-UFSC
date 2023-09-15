@@ -13,17 +13,17 @@ public class BuscaLargura {
         List<Vertice> nivelAtual = new ArrayList<Vertice>();
         List<Vertice> proxNivel = new ArrayList<Vertice>();
         List<Vertice> visitados = new ArrayList<Vertice>();
-        nivelAtual.add(g.getVertices().get(index));
-        visitados.add(g.getVertices().get(index));
+        nivelAtual.add(g.getVertices().get(index-1));
+        visitados.add(g.getVertices().get(index-1));
         int nivel = 0;
         while (!nivelAtual.isEmpty()) {
             printNivel(nivel, nivelAtual);
             for (Vertice v : nivelAtual) {
-                Set<Vertice> vizinhos = v.arestas.keySet();
-                for (Vertice vizinho : vizinhos) {
-                    if (!visitados.contains(vizinho)) {
-                        proxNivel.add(vizinho);
-                        visitados.add(vizinho);
+                Set<Aresta> arestas = v.arestas;
+                for (Aresta a : arestas) {
+                    if (!visitados.contains(a.v2)) {
+                        proxNivel.add(a.v2);
+                        visitados.add(a.v2);
                     }
                 }
             }
