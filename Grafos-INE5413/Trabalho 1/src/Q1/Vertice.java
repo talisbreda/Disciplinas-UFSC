@@ -1,14 +1,16 @@
+package Q1;
+
 import java.util.*;
 
 public class Vertice {
-    int index;
-    String rotulo;
-    Set<Aresta> arestas;
+    public int index;
+    public String rotulo;
+    public Map<Vertice, Double> arestas;
 
     public Vertice(int index, String rotulo) {
         this.index = index;
         this.rotulo = rotulo;
-        this.arestas = new LinkedHashSet<>();
+        this.arestas = new HashMap<>();
     }
 
     public Vertice(int index) {
@@ -22,5 +24,14 @@ public class Vertice {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 37;
+
+        result = 43 * result + index;
+
+        return result;
     }
 }
