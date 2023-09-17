@@ -1,8 +1,9 @@
 package Q1;
 
 import java.util.*;
+import java.lang.Comparable;
 
-public class Vertice {
+public class Vertice implements Comparable<Vertice> {
     public int index;
     public String rotulo;
     public Map<Vertice, Double> arestas;
@@ -15,6 +16,11 @@ public class Vertice {
 
     public Vertice(int index) {
         this.index = index;
+    }
+
+    @Override
+    public int compareTo(Vertice o) {
+        return Integer.compare(this.index, o.index);
     }
 
     @Override

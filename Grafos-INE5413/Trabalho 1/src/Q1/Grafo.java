@@ -68,7 +68,7 @@ public class Grafo {
             }
 
             if (inVertices) {
-                String[] partes = linha.split(" ");
+                String[] partes = linha.split(" ", 2);
                 String index = partes[0];
                 String rotulo = partes[1];
                 Vertice v = new Vertice(Integer.parseInt(index), rotulo);

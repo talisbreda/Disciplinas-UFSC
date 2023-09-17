@@ -68,6 +68,7 @@ public class CicloEuleriano {
                 System.out.print(", ");
             }
         }
+        System.out.println();
     }
 
 }
