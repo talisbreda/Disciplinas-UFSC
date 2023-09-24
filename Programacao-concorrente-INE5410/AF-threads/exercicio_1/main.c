@@ -23,15 +23,17 @@
 // - cada thread deve incrementar contador_global (operador ++) n_loops vezes
 // - pai deve esperar pelas worker threads  antes de imprimir!
 
-
 int contador_global = 0;
 
-void* worker(void* arg) {
-    int* loops = (int*) arg;
-    for (int i = 0; i < *loops; i++) {
+void* increment(void* n_loops) {
+
+    int loops = *((int*) n_loops);
+
+    for (size_t i = 0; i < loops; i++) {
         contador_global++;
     }
-    return NULL;
+
+    pthread_exit(NULL);
 }
 
 int main(int argc, char* argv[]) {
@@ -43,14 +45,22 @@ int main(int argc, char* argv[]) {
 
     int n_threads = atoi(argv[1]);
     int n_loops = atoi(argv[2]);
+    //...
+
 
     pthread_t threads[n_threads];
+
     for (int i = 0; i < n_threads; i++) {
-        pthread_create(&threads[i], NULL, worker, (void*)&n_loops);
+        pthread_create(&threads[i], NULL, increment, (void*) &n_loops);
     }
+
     for (int i = 0; i < n_threads; i++) {
         pthread_join(threads[i], NULL);
     }
+
+    // pthread_t thread;
+    // pthread_create(&thread, NULL, increment, (void*) &n_loops);
+    // pthread_join(thread, NULL);
     
     printf("Contador: %d\n", contador_global);
     printf("Esperado: %d\n", n_threads*n_loops);

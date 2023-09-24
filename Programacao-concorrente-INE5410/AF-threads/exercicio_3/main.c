@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <math.h>
 
 // Lê o conteúdo do arquivo filename e retorna um vetor E o tamanho dele
 // Se filename for da forma "gen:%d", gera um vetor aleatório com %d elementos
@@ -20,20 +21,25 @@ double* load_vector(const char* filename, int* out_size);
 // que ambos a e b sejam vetores de tamanho size.
 void avaliar(double* a, double* b, int size, double prod_escalar);
 
-typedef struct Range {
-    int start;
-    int end;
-    double* v1;
-    double* v2;
-    int result;
-} Range;
+typedef struct Info {
+    int startIndex;
+    int endIndex;
+    double* a;
+    double* b;
+    double result;
+    // double* c;
+} Info ;
 
-void* worker(void* arg) {
-    Range* range = (Range*)arg;
-    for (int i = range->start; i < range->end; i++) {
-        range->result += range->v1[i] * range->v2[i];
+void* vetorial(void* var_struct) {
+    struct Info* info = (struct Info*) var_struct;
+
+    info->result = 0;
+
+    for(int i = info->startIndex; i < info->endIndex; i++) {
+        info->result += info->a[i] * info->b[i];
     }
-    return NULL;
+
+    pthread_exit(NULL);
 }
 
 int main(int argc, char* argv[]) {
@@ -51,7 +57,7 @@ int main(int argc, char* argv[]) {
   
     //Quantas threads?
     int n_threads = atoi(argv[1]);
-    if (!n_threads) {
+    if (n_threads <= 0) {
         printf("Número de threads deve ser > 0\n");
         return 1;
     }
@@ -77,25 +83,41 @@ int main(int argc, char* argv[]) {
 
     //Calcula produto escalar. Paralelize essa parte
     double result = 0;
-    pthread_t threads[n_threads];
-    Range* ranges[n_threads];
-    for (int i = 0; i < n_threads; i++) {
-        Range* range = (Range*)malloc(sizeof(Range));
-        range->start = i * (a_size / n_threads);
-        range->end = (i + 1) * (a_size / n_threads);
-        range->v1 = a;
-        range->v2 = b;
-        range->result = 0;
-        ranges[i] = range;
-        pthread_create(&threads[i], NULL, worker, (void*)range);
-    }
-    for (int i = 0; i < n_threads; i++) {
-        pthread_join(threads[i], NULL);
-        result += ranges[i]->result;
-        free(ranges[i]);
-    }
     // for (int i = 0; i < a_size; ++i) 
     //     result += a[i] * b[i];
+
+
+    if (n_threads > a_size) {
+        n_threads = a_size;
+    }
+
+    pthread_t threads[n_threads];
+        struct Info* info;
+
+    double action = (a_size + n_threads - 1) / n_threads;
+    double elementsToPass = ceil(action);
+    Info* infos[n_threads];
+    for (int i = 0; i < n_threads; i++) {
+        info = malloc(sizeof(struct Info));
+        infos[i] = info;
+        info->startIndex = elementsToPass * i;
+        info->endIndex = elementsToPass * (i + 1);
+
+        if (elementsToPass * (i + 1) > a_size) {
+            info->endIndex = a_size;
+        }
+
+        info->a = a;
+        info->b = b;
+
+        pthread_create(&threads[i], NULL, vetorial, (void*) info);
+    }
+
+    for (int i = 0; i < n_threads; i++) {
+        pthread_join(threads[i], NULL);
+        result += infos[i]->result;
+        free(infos[i]);
+    }
     
     //    +---------------------------------+
     // ** | IMPORTANTE: avalia o resultado! | **
