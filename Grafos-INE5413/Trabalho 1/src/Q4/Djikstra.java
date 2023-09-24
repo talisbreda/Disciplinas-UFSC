@@ -29,15 +29,11 @@ public class Djikstra {
         PriorityQueue<Distancia> distancias = new PriorityQueue<>();
         List<Distancia> listDistancias = new ArrayList<>();
         for (Vertice v : g.getVertices()) {
-            if (v.index-1 == index) {
-                Distancia d = new Distancia(v, 0);
-                distancias.add(d);
-                listDistancias.add(d);
-            } else {
-                Distancia d = new Distancia(v, Double.POSITIVE_INFINITY);
-                distancias.add(d);
-                listDistancias.add(d);
-            }
+            Distancia d;
+            double peso = v.index-1 == index ? 0 : Double.POSITIVE_INFINITY;
+            d = new Distancia(v, peso);
+            distancias.add(d);
+            listDistancias.add(d);
         }
         List<Vertice> ancestrais = new ArrayList<>(Collections.nCopies(nVertices+1, null));
 
