@@ -13,9 +13,12 @@ public class Grafo {
 
     private final Set<Aresta> arestas;
 
+    private final MatrizAdjacencia matrizAdjacencia;
+
     public Grafo() {
         this.vertices = new ArrayList<>();
         this.arestas = new HashSet<>();
+        this.matrizAdjacencia = new MatrizAdjacencia();
     }
 
     public int qtdVertices() {
@@ -37,7 +40,7 @@ public class Grafo {
     }
 
     public boolean haAresta(int v1, int v2) {
-        return vertices.get(v1).arestas.containsKey(new Vertice(v2));
+        return vertices.get(v1-1).arestas.containsKey(new Vertice(v2));
     }
 
     public Double peso(int v1, int v2) {
@@ -73,6 +76,7 @@ public class Grafo {
                 String rotulo = partes[1];
                 Vertice v = new Vertice(Integer.parseInt(index), rotulo);
                 vertices.add(v);
+                matrizAdjacencia.addVertice();
             }
 
             if (inEdges) {
@@ -82,15 +86,21 @@ public class Grafo {
                 String peso = partes[2];
                 Vertice v1 = vertices.get(Integer.parseInt(index1) - 1);
                 Vertice v2 = vertices.get(Integer.parseInt(index2) - 1);
-                v1.arestas.put(v2, Double.parseDouble(peso));
-                v2.arestas.put(v1, Double.parseDouble(peso));
-                this.arestas.add(new Aresta(v1, v2, Double.parseDouble(peso)));
+                double pesoDouble = Double.parseDouble(peso);
+                v1.arestas.put(v2, pesoDouble);
+                v2.arestas.put(v1, pesoDouble);
+                this.arestas.add(new Aresta(v1, v2, pesoDouble));
+                matrizAdjacencia.setPeso(v1.index, v2.index, pesoDouble);
             }
         }
     }
 
     public List<Vertice> getVertices() {
         return vertices;
+    }
+
+    public List<List<Double>> getMatrizAdjacencia() {
+        return matrizAdjacencia.getMatriz();
     }
 
     public String readFileToString(String fileName) {
