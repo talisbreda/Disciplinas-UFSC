@@ -1,7 +1,5 @@
 package Q1;
 
-import Q3.Aresta;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

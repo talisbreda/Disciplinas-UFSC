@@ -1,5 +1,6 @@
 package Q3;
 
+import Q1.Aresta;
 import Q1.Grafo;
 import Q1.Vertice;
 
@@ -10,6 +11,7 @@ public class CicloEuleriano {
         Grafo g = new Grafo();
         g.lerArquivo(arquivo);
         System.out.println("Questão 3 - Ciclo Euleriano");
+        System.out.println("------------------------------------------------------------------------------");
         if (temCiclo(g)) {
             hierholzer(g);
         } else {
@@ -46,10 +48,10 @@ public class CicloEuleriano {
         RespostaHierholzer subciclo = buscarSubcicloEuleriano(g, v, visitados);
 
         if (!subciclo.temCiclo) {
-            System.out.println("0");
+            System.out.println(0);
         } else {
             if (visitados.containsValue(false)) {
-                System.out.println("0");
+                System.out.println(0);
             } else {
                 printCiclo(subciclo.caminho);
             }

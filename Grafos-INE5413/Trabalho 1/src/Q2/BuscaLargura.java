@@ -12,6 +12,7 @@ public class BuscaLargura {
         Grafo g = new Grafo();
         g.lerArquivo(arquivo);
         System.out.println("Questão 2 - Busca em Largura");
+        System.out.println("------------------------------------------------------------------------------");
         busca(g, index);
         System.out.println("------------------------------------------------------------------------------\n");
     }

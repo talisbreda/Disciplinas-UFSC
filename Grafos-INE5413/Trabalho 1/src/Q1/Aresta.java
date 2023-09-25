@@ -1,6 +1,4 @@
-package Q3;
-
-import Q1.Vertice;
+package Q1;
 
 public class Aresta {
     public final Vertice v1;

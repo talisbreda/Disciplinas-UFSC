@@ -61,6 +61,7 @@ public class Djikstra {
 
     public static void printResposta(Grafo g, RespostaDjikstra resposta, int origem) {
         System.out.println("Questão 4 - Djikstra");
+        System.out.println("------------------------------------------------------------------------------");
         for (Vertice v : g.getVertices()) {
             List<Integer> caminho = new ArrayList<>();
             double distancia = 0;
