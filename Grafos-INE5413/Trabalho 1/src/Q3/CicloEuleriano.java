@@ -29,10 +29,10 @@ public class CicloEuleriano {
     }
 
     private static class RespostaHierholzer {
-        public Stack<Vertice> caminho;
+        public List<Vertice> caminho;
         public boolean temCiclo;
 
-        public RespostaHierholzer(boolean temCiclo, Stack<Vertice> caminho) {
+        public RespostaHierholzer(boolean temCiclo, List<Vertice> caminho) {
             this.temCiclo = temCiclo;
             this.caminho = caminho;
         }
@@ -59,7 +59,7 @@ public class CicloEuleriano {
     }
 
     private static RespostaHierholzer buscarSubcicloEuleriano(Grafo g, Vertice v, Map<Aresta, Boolean> visitados) {
-        Stack<Vertice> ciclo = new Stack<>();
+        List<Vertice> ciclo = new ArrayList<>();
         ciclo.add(v);
         Vertice t = v;
 
@@ -97,7 +97,7 @@ public class CicloEuleriano {
         return null;
     }
 
-    private static void printCiclo(Stack<Vertice> caminho) {
+    private static void printCiclo(List<Vertice> caminho) {
         System.out.println(1);
         for (int i = 0; i < caminho.size(); i++) {
             System.out.print(caminho.get(i).index);

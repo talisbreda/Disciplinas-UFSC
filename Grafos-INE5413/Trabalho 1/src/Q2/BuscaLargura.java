@@ -4,6 +4,7 @@ import Q1.Grafo;
 import Q1.Vertice;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class BuscaLargura {
     private static void busca(Grafo g, int index) {
         List<Vertice> nivelAtual = new ArrayList<>();
         List<Vertice> proxNivel = new ArrayList<>();
-        List<Vertice> visitados = new ArrayList<>();
+        Set<Vertice> visitados = new HashSet<>();
         nivelAtual.add(g.getVertices().get(index-1));
         visitados.add(g.getVertices().get(index-1));
         int nivel = 0;

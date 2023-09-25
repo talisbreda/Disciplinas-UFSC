@@ -5,27 +5,27 @@ import Q1.Vertice;
 
 import java.util.*;
 
-public class Djikstra {
+public class Dijkstra {
     public static void run(String arquivo, int index) {
         Grafo g = new Grafo();
         g.lerArquivo(arquivo);
-        RespostaDjikstra resposta = djikstra(g, index-1);
+        RespostaDijkstra resposta = dijkstra(g, index-1);
         printResposta(g, resposta, index-1);
     }
 
-    public static class RespostaDjikstra {
+    public static class RespostaDijkstra {
         public List<Distancia> distancias;
         public List<Vertice> ancestrais;
 
-        public RespostaDjikstra(List<Distancia> distancias, List<Vertice> ancestrais) {
+        public RespostaDijkstra(List<Distancia> distancias, List<Vertice> ancestrais) {
             this.distancias = distancias;
             this.ancestrais = ancestrais;
         }
     }
 
-    public static RespostaDjikstra djikstra(Grafo g, int index) {
+    public static RespostaDijkstra dijkstra(Grafo g, int index) {
         int nVertices = g.getVertices().size();
-        Set<Vertice> visitados = new HashSet<>();
+        List<Vertice> visitados = new ArrayList<>();
         PriorityQueue<Distancia> distancias = new PriorityQueue<>();
         List<Distancia> listDistancias = new ArrayList<>();
         for (Vertice v : g.getVertices()) {
@@ -56,10 +56,10 @@ public class Djikstra {
                 }
             }
         }
-        return new RespostaDjikstra(listDistancias, ancestrais);
+        return new RespostaDijkstra(listDistancias, ancestrais);
     }
 
-    public static void printResposta(Grafo g, RespostaDjikstra resposta, int origem) {
+    public static void printResposta(Grafo g, RespostaDijkstra resposta, int origem) {
         System.out.println("Questão 4 - Djikstra");
         System.out.println("------------------------------------------------------------------------------");
         for (Vertice v : g.getVertices()) {
