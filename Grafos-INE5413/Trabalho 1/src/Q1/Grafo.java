@@ -103,6 +103,10 @@ public class Grafo {
         return matrizAdjacencia.getMatriz();
     }
 
+    public Set<Aresta> getArestas() {
+        return arestas;
+    }
+
     public String readFileToString(String fileName) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -113,7 +117,6 @@ public class Grafo {
                 stringBuilder.append(line);
                 stringBuilder.append(ls);
             }
-            // delete the last new line separator
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
             reader.close();
 

@@ -11,7 +11,7 @@ public class CicloEuleriano {
         g.lerArquivo(arquivo);
         System.out.println("Questão 3 - Ciclo Euleriano");
         if (temCiclo(g)) {
-            encontraCiclo(g);
+            hierholzer(g);
         } else {
             System.out.println(0);
         }
@@ -26,45 +26,80 @@ public class CicloEuleriano {
         return true;
     }
 
-    private static void encontraCiclo(Grafo g) {
-        HashSet<Aresta> visitados = new HashSet<>();
-        Stack<Vertice> pilha = new Stack<>();
-        List<Aresta> remover = new ArrayList<>();
-        Stack<Aresta> caminho = new Stack<>();
-        boolean continua = false;
-        pilha.add(g.getVertices().get(0));
-        while (!pilha.isEmpty()) {
-            Vertice v = pilha.peek();
-            Set<Vertice> vizinhos = v.arestas.keySet();
-            for (Vertice vizinho : vizinhos) {
-                Aresta a = new Aresta(v, vizinho);
-                if (!visitados.contains(a)) {
-                    visitados.add(a);
-                    pilha.add(vizinho);
-                    remover.forEach(visitados::remove);
-                    remover.clear();
-                    caminho.add(a);
-                    continua = true;
-                    break;
-                }
-                continua = false;
-            }
-            if (caminho.size() == g.qtdArestas()) {
-                printCiclo(caminho);
-                break;
-            } else if (!continua) {
-                remover.add(caminho.pop());
-                pilha.pop();
+    private static class RespostaHierholzer {
+        public Stack<Vertice> caminho;
+        public boolean temCiclo;
+
+        public RespostaHierholzer(boolean temCiclo, Stack<Vertice> caminho) {
+            this.temCiclo = temCiclo;
+            this.caminho = caminho;
+        }
+    }
+
+    private static void hierholzer(Grafo g) {
+        Map<Aresta, Boolean> visitados = new HashMap<>();
+        for (Aresta aresta : g.getArestas()) {
+            visitados.put(aresta, false);
+        }
+        Vertice v = g.getVertices().get(0);
+
+        RespostaHierholzer subciclo = buscarSubcicloEuleriano(g, v, visitados);
+
+        if (!subciclo.temCiclo) {
+            System.out.println("0");
+        } else {
+            if (visitados.containsValue(false)) {
+                System.out.println("0");
+            } else {
+                printCiclo(subciclo.caminho);
             }
         }
     }
 
-    private static void printCiclo(Stack<Aresta> arestas) {
+    private static RespostaHierholzer buscarSubcicloEuleriano(Grafo g, Vertice v, Map<Aresta, Boolean> visitados) {
+        Stack<Vertice> ciclo = new Stack<>();
+        ciclo.add(v);
+        Vertice t = v;
+
+        do {
+            Aresta vu = selecionaArestaNaoVisitada(visitados, v);
+            if (vu != null) {
+                visitados.put(vu, true);
+                v = vu.v2;
+                ciclo.add(v);
+            } else {
+                return new RespostaHierholzer(false, null);
+            }
+        } while (t != v);
+
+        for (Vertice vertice : ciclo) {
+            Aresta a = selecionaArestaNaoVisitada(visitados, vertice);
+            if (a != null) {
+                RespostaHierholzer subciclo = buscarSubcicloEuleriano(g, vertice, visitados);
+                if (!subciclo.temCiclo) {
+                    return new RespostaHierholzer(false, null);
+                }
+            }
+        }
+        return new RespostaHierholzer(true, ciclo);
+    }
+
+    private static Aresta selecionaArestaNaoVisitada(Map<Aresta, Boolean> visitados, Vertice v) {
+        Set<Vertice> vizinhos = v.arestas.keySet();
+        for (Vertice vizinho : vizinhos) {
+            Aresta a = new Aresta(v, vizinho);
+            if (!visitados.get(a)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    private static void printCiclo(Stack<Vertice> caminho) {
         System.out.println(1);
-        System.out.printf("%d, ", arestas.get(0).v1.index);
-        for (int i = 0; i < arestas.size(); i++) {
-            System.out.print(arestas.get(i).v2.index);
-            if (i < arestas.size() - 1) {
+        for (int i = 0; i < caminho.size(); i++) {
+            System.out.print(caminho.get(i).index);
+            if (i < caminho.size() - 1) {
                 System.out.print(", ");
             }
         }

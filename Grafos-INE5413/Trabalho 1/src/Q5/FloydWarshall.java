@@ -54,7 +54,7 @@ public class FloydWarshall {
             for (int j = 1; j < D.size(); j++) {
                 double distancia = D.get(i).get(j);
                 if (distancia != Double.POSITIVE_INFINITY) System.out.printf("%d", (int)distancia);
-                if (j != D.size()-1) System.out.printf(", ");
+                if (j != D.size()-1) System.out.print(", ");
             }
             System.out.println();
         }
