@@ -14,7 +14,8 @@ public class BuscaLargura {
         g.lerArquivo(arquivo);
         System.out.println("Questão 2 - Busca em Largura");
         System.out.println("------------------------------------------------------------------------------");
-        busca(g, index);
+        if (index > g.getVertices().size()) System.out.println("Índice de início é maior que o tamanho do grafo!!");
+        else busca(g, index);
         System.out.println("------------------------------------------------------------------------------\n");
     }
 

@@ -38,16 +38,12 @@ public class Grafo {
     }
 
     public boolean haAresta(int v1, int v2) {
-        return vertices.get(v1-1).arestas.containsKey(new Vertice(v2));
+        double pesoAresta = this.matrizAdjacencia.get(v1, v2);
+        return pesoAresta != Double.POSITIVE_INFINITY;
     }
 
     public Double peso(int v1, int v2) {
-        Map<Vertice, Double> arestas = vertices.get(v1).arestas;
-        Vertice v = new Vertice(v2);
-        if (arestas.containsKey(v)) {
-            return arestas.get(v);
-        }
-        return Double.POSITIVE_INFINITY;
+        return this.matrizAdjacencia.get(v1, v2);
     }
 
     public void lerArquivo(String nomeArquivo) {
