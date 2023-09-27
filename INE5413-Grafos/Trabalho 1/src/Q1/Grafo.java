@@ -30,20 +30,20 @@ public class Grafo {
     }
 
     public String rotulo(int vertice) {
-        return vertices.get(vertice).rotulo;
+        return vertices.get(vertice-1).rotulo;
     }
 
     public Set<Vertice> vizinhos(int vertice) {
-        return vertices.get(vertice).arestas.keySet();
+        return vertices.get(vertice-1).arestas.keySet();
     }
 
     public boolean haAresta(int v1, int v2) {
-        double pesoAresta = this.matrizAdjacencia.get(v1, v2);
+        double pesoAresta = this.matrizAdjacencia.get(v1-1, v2-1);
         return pesoAresta != Double.POSITIVE_INFINITY;
     }
 
     public Double peso(int v1, int v2) {
-        return this.matrizAdjacencia.get(v1, v2);
+        return this.matrizAdjacencia.get(v1-1, v2-1);
     }
 
     public void lerArquivo(String nomeArquivo) {

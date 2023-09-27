@@ -15,6 +15,7 @@ public class BuscaLargura {
         System.out.println("Questão 2 - Busca em Largura");
         System.out.println("------------------------------------------------------------------------------");
         if (index > g.getVertices().size()) System.out.println("Índice de início é maior que o tamanho do grafo!!");
+        else if (index == 0) System.out.println("Índice inicial não pode ser 0!");
         else busca(g, index);
         System.out.println("------------------------------------------------------------------------------\n");
     }

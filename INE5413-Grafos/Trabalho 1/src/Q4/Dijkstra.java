@@ -9,8 +9,13 @@ public class Dijkstra {
     public static void run(String arquivo, int index) {
         Grafo g = new Grafo();
         g.lerArquivo(arquivo);
-        RespostaDijkstra resposta = dijkstra(g, index-1);
-        printResposta(g, resposta, index-1);
+        RespostaDijkstra resposta;
+        if (index > g.getVertices().size()) System.out.println("Índice de início é maior que o tamanho do grafo!!");
+        else if (index == 0) System.out.println("Índice inicial não pode ser 0!");
+        else {
+            resposta = dijkstra(g, index-1);
+            printResposta(g, resposta, index-1);
+        }
     }
 
     public static class RespostaDijkstra {
