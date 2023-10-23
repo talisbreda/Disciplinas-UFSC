@@ -36,7 +36,23 @@ void mult_matrix(double* out, double* left, double *right,
     }
 }
 
-void print_matrix(int sz, double* c) {
+int main (int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Uso: %s tam_matriz\n", argv[0]);
+        return 1;
+    }
+    int sz = atoi(argv[1]);
+    double* a = malloc(sz*sz*sizeof(double));
+    double* b = malloc(sz*sz*sizeof(double));
+    double* c = calloc(sz*sz, sizeof(double));
+
+    init_matrix(a, sz, sz);
+    init_matrix(b, sz, sz);
+
+    //          c = a * b
+    mult_matrix(c,  a,  b, sz, sz, sz);
+
+
     /* ~~~ imprime matriz ~~~ */
     char tmp[32];
     int max_len = 1;
@@ -54,28 +70,6 @@ void print_matrix(int sz, double* c) {
             printf(fmt, j == 0 ? "" : " ", (unsigned long)c[i*sz+j]);
         printf("\n");
     }
-}
-
-int main (int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Uso: %s tam_matriz\n", argv[0]);
-        return 1;
-    }
-    int sz = atoi(argv[1]);
-    double* a = malloc(sz*sz*sizeof(double));
-    double* b = malloc(sz*sz*sizeof(double));
-    double* c = calloc(sz*sz, sizeof(double));
-
-    init_matrix(a, sz, sz);
-    init_matrix(b, sz, sz);
-
-    //          c = a * b
-    print_matrix(sz, a);
-    printf("\n");
-    print_matrix(sz, b);
-    printf("\n");
-    mult_matrix(c,  a,  b, sz, sz, sz);
-    print_matrix(sz, c);
 
     free(a);
     free(b);
