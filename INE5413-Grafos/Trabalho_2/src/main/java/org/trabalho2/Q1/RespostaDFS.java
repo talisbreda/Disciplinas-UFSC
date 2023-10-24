@@ -6,18 +6,22 @@ import java.util.List;
 
 public class RespostaDFS {
     List<Boolean> visitados;
-    List<Integer> tempos;
+    List<Integer> temposEntrada;
     List<Integer> temposFinais;
     List<Vertice> antecessores;
+    int tempo;
+
     public RespostaDFS(
             List<Boolean> visitados,
-            List<Integer> tempos,
+            List<Integer> temposEntrada,
             List<Integer> temposFinais,
-            List<Vertice> antecessores
+            List<Vertice> antecessores,
+            int tempo
     ) {
         this.visitados = visitados;
-        this.tempos = tempos;
+        this.temposEntrada = temposEntrada;
         this.temposFinais = temposFinais;
         this.antecessores = antecessores;
+        this.tempo = tempo;
     }
 }

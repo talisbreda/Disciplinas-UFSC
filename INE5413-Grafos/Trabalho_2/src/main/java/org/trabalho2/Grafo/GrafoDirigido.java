@@ -11,21 +11,15 @@ public class GrafoDirigido {
 
     private final Set<Aresta> arestas;
 
-    private final MatrizAdjacencia matrizAdjacencia;
 
     public GrafoDirigido() {
         this.vertices = new ArrayList<>();
         this.arestas = new HashSet<>();
-        this.matrizAdjacencia = new MatrizAdjacencia();
     }
 
     public GrafoDirigido(List<Vertice> vertices, Set<Aresta> arestas) {
         this.vertices = vertices;
         this.arestas = arestas;
-        this.matrizAdjacencia = new MatrizAdjacencia();
-        for (Aresta aresta : arestas) {
-            this.matrizAdjacencia.setPeso(aresta.v1.index, aresta.v2.index, aresta.peso);
-        }
     }
 
     public int qtdVertices() {
@@ -47,12 +41,12 @@ public class GrafoDirigido {
     }
 
     public boolean haAresta(int v1, int v2) {
-        double pesoAresta = this.matrizAdjacencia.get(v1-1, v2-1);
+        double pesoAresta = this.vertices.get(v1-1).arestas.get(this.vertices.get(v2-1));
         return pesoAresta != Double.POSITIVE_INFINITY;
     }
 
     public Double peso(int v1, int v2) {
-        return this.matrizAdjacencia.get(v1-1, v2-1);
+        return this.vertices.get(v1-1).arestas.get(this.vertices.get(v2-1));
     }
 
     public void lerArquivo(String nomeArquivo) {
@@ -67,7 +61,7 @@ public class GrafoDirigido {
                 inEdges = false;
                 continue;
             }
-            if (linha.contains("*edges")) {
+            if (linha.contains("*edges") || linha.contains("*arcs")) {
                 inVertices = false;
                 inEdges = true;
                 continue;
@@ -77,9 +71,8 @@ public class GrafoDirigido {
                 String[] partes = linha.split(" ", 2);
                 String index = partes[0];
                 String rotulo = partes[1];
-                Vertice v = new Vertice(Integer.parseInt(index), rotulo);
+                Vertice v = new Vertice(Integer.parseInt(index)-1, rotulo);
                 vertices.add(v);
-                matrizAdjacencia.addVertice();
             }
 
             if (inEdges) {
@@ -92,7 +85,6 @@ public class GrafoDirigido {
                 double pesoDouble = Double.parseDouble(peso);
                 v1.arestas.put(v2, pesoDouble);
                 this.arestas.add(new Aresta(v1, v2, pesoDouble));
-                matrizAdjacencia.setPeso(v1.index, v2.index, pesoDouble);
             }
         }
     }
@@ -106,10 +98,6 @@ public class GrafoDirigido {
         this.vertices.addAll(vertices);
     }
 
-    public List<List<Double>> getMatrizAdjacencia() {
-        return matrizAdjacencia.getMatriz();
-    }
-
     public Set<Aresta> getArestas() {
         return arestas;
     }
@@ -117,16 +105,11 @@ public class GrafoDirigido {
     public void addAresta(Vertice v1, Vertice v2, double peso) {
         v1.arestas.put(v2, peso);
         this.arestas.add(new Aresta(v1, v2, peso));
-        matrizAdjacencia.setPeso(v1.index, v2.index, peso);
     }
 
     public void setArestas(Set<Aresta> arestas) {
         this.arestas.clear();
         this.arestas.addAll(arestas);
-        this.matrizAdjacencia.clear();
-        for (Aresta aresta : arestas) {
-            this.matrizAdjacencia.setPeso(aresta.v1.index, aresta.v2.index, aresta.peso);
-        }
     }
 
     public String readFileToString(String fileName) {

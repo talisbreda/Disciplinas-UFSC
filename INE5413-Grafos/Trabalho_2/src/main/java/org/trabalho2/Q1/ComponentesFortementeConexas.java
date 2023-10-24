@@ -4,69 +4,67 @@ import org.trabalho2.Grafo.Aresta;
 import org.trabalho2.Grafo.GrafoDirigido;
 import org.trabalho2.Grafo.Vertice;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ComponentesFortementeConexas {
-    public static void run(String caminho) {
+    public static void run(String path) {
         GrafoDirigido g = new GrafoDirigido();
-        g.lerArquivo(caminho);
-
+        g.lerArquivo(path);
+        encontraComponentes(g);
     }
 
-    private static List<Vertice> encontraComponentes(GrafoDirigido g) {
+    private static void encontraComponentes(GrafoDirigido g) {
         RespostaDFS resposta = DFS(g);
-        Set<Aresta> arestas = g.getArestas();
-        GrafoDirigido gt = new GrafoDirigido();
-        gt.setVertices(g.getVertices());
+        Set<Aresta> arestasTranspostas = new HashSet<>();
         for (Aresta a : g.getArestas()) {
-            gt.addAresta(a.v2, a.v1, a.peso);
+            arestasTranspostas.add(new Aresta(a.v2, a.v1, a.peso));
         }
+        GrafoDirigido gTransposto = new GrafoDirigido(g.getVertices(), arestasTranspostas);
+        
     }
 
     private static RespostaDFS DFS(GrafoDirigido g) {
-        List<Boolean> visitados = new ArrayList<>();
-        List<Integer> tempos = new ArrayList<>();
-        List<Vertice> antecessores = new ArrayList<>();
-        List<Integer> temposFinais = new ArrayList<>();
-        for (Vertice v : g.getVertices()) {
-            visitados.set(v.index, false);
-            tempos.set(v.index, Integer.MAX_VALUE);
-            temposFinais.set(v.index, Integer.MAX_VALUE);
-            antecessores.set(v.index, null);
-        }
+        int n = g.qtdVertices();
+        List<Boolean> visitados = new ArrayList<>(Collections.nCopies(n, false));
+        List<Integer> temposEntrada = new ArrayList<>(Collections.nCopies(n, Integer.MAX_VALUE));
+        List<Integer> temposFinais = new ArrayList<>(Collections.nCopies(n, Integer.MAX_VALUE));
+        List<Vertice> antecessores = new ArrayList<>(Collections.nCopies(n, null));
 
         int tempo = 0;
+        RespostaDFS r = new RespostaDFS(visitados, temposEntrada, temposFinais, antecessores, tempo);
+
         for (Vertice v : g.getVertices()) {
             if (!visitados.get(v.index)) {
-                DFS_visit(g, v, visitados, tempos, antecessores, temposFinais, tempo);
+                r = DFSVisit(g, v, visitados, temposEntrada, temposFinais, antecessores, tempo);
             }
         }
-        return new RespostaDFS(visitados, tempos, temposFinais, antecessores);
+        return r;
     }
 
-    private static RespostaDFS DFS_visit(
+    private static RespostaDFS DFSVisit(
             GrafoDirigido g,
             Vertice v,
             List<Boolean> visitados,
-            List<Integer> tempos,
-            List<Vertice> antecessores,
+            List<Integer> temposEntrada,
             List<Integer> temposFinais,
+            List<Vertice> antecessores,
             int tempo
     ) {
         visitados.set(v.index, true);
         tempo++;
-        tempos.set(v.index, tempo);
-        for (Vertice u : g.vizinhos(v.index)) {
+        temposEntrada.set(v.index, tempo);
+        RespostaDFS r = new RespostaDFS(visitados, temposEntrada, temposFinais, antecessores, tempo);
+
+        for (Vertice u : v.arestas.keySet()) {
             if (!visitados.get(u.index)) {
                 antecessores.set(u.index, v);
-                DFS_visit(g, u, visitados, tempos, antecessores, temposFinais, tempo);
+                r = DFSVisit(g, u, visitados, temposEntrada, temposFinais, antecessores, tempo);
             }
         }
-        tempo++;
+
+        tempo = r.tempo+1;
         temposFinais.set(v.index, tempo);
-        return new RespostaDFS(visitados, tempos, temposFinais, antecessores);
+
+        return r;
     }
 }

@@ -1,7 +1,9 @@
 package org.trabalho2;
 
+import org.trabalho2.Q1.ComponentesFortementeConexas;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        ComponentesFortementeConexas.run("./tcc_completo.net");
     }
 }
