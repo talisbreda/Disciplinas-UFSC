@@ -1,6 +1,6 @@
 package org.trabalho2.Grafo;
 
-public class Aresta {
+public class Aresta implements Comparable {
     public final Vertice v1;
     public final Vertice v2;
     public final double peso;
@@ -15,6 +15,15 @@ public class Aresta {
         this.v1 = v1;
         this.v2 = v2;
         this.peso = peso;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Aresta a) {
+            return Double.compare(this.peso, a.peso);
+        } else {
+            return -1;
+        }
     }
 
     @Override

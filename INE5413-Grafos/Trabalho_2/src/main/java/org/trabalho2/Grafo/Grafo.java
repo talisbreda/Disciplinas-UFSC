@@ -5,21 +5,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class GrafoDirigido {
+public class Grafo {
 
     private final List<Vertice> vertices;
 
     private final Set<Aresta> arestas;
 
 
-    public GrafoDirigido() {
+    public Grafo() {
         this.vertices = new ArrayList<>();
         this.arestas = new HashSet<>();
-    }
-
-    public GrafoDirigido(List<Vertice> vertices, Set<Aresta> arestas) {
-        this.vertices = vertices;
-        this.arestas = arestas;
     }
 
     public int qtdVertices() {
@@ -29,24 +24,23 @@ public class GrafoDirigido {
     public int qtdArestas() { return arestas.size(); }
 
     public int grau(int vertice) {
-        return vertices.get(vertice-1).arestas.size();
+        return vertices.get(vertice).arestas.size();
     }
 
     public String rotulo(int vertice) {
-        return vertices.get(vertice-1).getRotulo();
+        return vertices.get(vertice).getRotulo();
     }
 
     public Set<Vertice> vizinhos(int vertice) {
-        return vertices.get(vertice-1).arestas.keySet();
+        return vertices.get(vertice).arestas.keySet();
     }
 
     public boolean haAresta(int v1, int v2) {
-        double pesoAresta = this.vertices.get(v1-1).arestas.get(this.vertices.get(v2-1));
-        return pesoAresta != Double.POSITIVE_INFINITY;
+        return vertices.get(v1).arestas.containsKey(vertices.get(v2));
     }
 
     public Double peso(int v1, int v2) {
-        return this.vertices.get(v1-1).arestas.get(this.vertices.get(v2-1));
+        return vertices.get(v1).arestas.get(vertices.get(v2));
     }
 
     public void lerArquivo(String nomeArquivo) {
@@ -70,7 +64,7 @@ public class GrafoDirigido {
             if (inVertices) {
                 String[] partes = linha.split(" ", 2);
                 String index = partes[0];
-                String rotulo = partes[1].replace("\r", "");
+                String rotulo = partes[1];
                 Vertice v = new Vertice(Integer.parseInt(index)-1, rotulo);
                 vertices.add(v);
             }
@@ -84,6 +78,7 @@ public class GrafoDirigido {
                 Vertice v2 = vertices.get(Integer.parseInt(index2) - 1);
                 double pesoDouble = Double.parseDouble(peso);
                 v1.arestas.put(v2, pesoDouble);
+                v2.arestas.put(v1, pesoDouble);
                 this.arestas.add(new Aresta(v1, v2, pesoDouble));
             }
         }
@@ -93,23 +88,9 @@ public class GrafoDirigido {
         return vertices;
     }
 
-    public void setVertices(List<Vertice> vertices) {
-        this.vertices.clear();
-        this.vertices.addAll(vertices);
-    }
 
     public Set<Aresta> getArestas() {
         return arestas;
-    }
-
-    public void addAresta(Vertice v1, Vertice v2, double peso) {
-        v1.arestas.put(v2, peso);
-        this.arestas.add(new Aresta(v1, v2, peso));
-    }
-
-    public void setArestas(Set<Aresta> arestas) {
-        this.arestas.clear();
-        this.arestas.addAll(arestas);
     }
 
     public String readFileToString(String fileName) {

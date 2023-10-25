@@ -5,7 +5,7 @@ import java.lang.Comparable;
 
 public class Vertice implements Comparable<Vertice> {
     public int index;
-    public String rotulo;
+    private String rotulo;
     public Map<Vertice, Double> arestas;
 
     public Vertice(int index, String rotulo) {
@@ -16,6 +16,10 @@ public class Vertice implements Comparable<Vertice> {
 
     public Vertice(int index) {
         this.index = index;
+    }
+
+    public String getRotulo() {
+        return rotulo;
     }
 
     @Override
