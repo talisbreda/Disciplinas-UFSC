@@ -9,7 +9,10 @@ public class OrdenacaoTopologica {
     public static void run(String path) {
         GrafoDirigido g = new GrafoDirigido();
         g.lerArquivo(path);
+        System.out.println("Questão 2 - Ordenação Topológica");
+        System.out.println("------------------------------------------------------------------------------");
         ordenacaoTopologica(g);
+        System.out.println("------------------------------------------------------------------------------\n");
     }
 
     private static void ordenacaoTopologica(GrafoDirigido g) {
