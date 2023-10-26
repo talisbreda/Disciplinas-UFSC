@@ -10,7 +10,10 @@ public class Kruskal {
     public static void run(String path) {
          Grafo g = new Grafo();
          g.lerArquivo(path);
+        System.out.println("Questão 3 - Kruskal");
+        System.out.println("------------------------------------------------------------------------------");
          kruskal(g);
+        System.out.println("------------------------------------------------------------------------------\n");
     }
 
     private static void kruskal(Grafo g) {

@@ -6,8 +6,8 @@ import org.trabalho2.Q3.Kruskal;
 
 public class Main {
     public static void main(String[] args) {
-//        ComponentesFortementeConexas.run("./tcc_completo.net");
-//        OrdenacaoTopologica.run("./tcc_completo.net");
-        Kruskal.run("./karate_show.net");
+        ComponentesFortementeConexas.run("./teste_componente1.net");
+        OrdenacaoTopologica.run("./teste_ordenacao3.net");
+        Kruskal.run("./teste_kruskal2.net");
     }
 }
