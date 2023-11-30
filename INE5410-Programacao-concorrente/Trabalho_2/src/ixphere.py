@@ -7,7 +7,7 @@ from time import sleep, time
 import random
 
 def inicializaCliente(ixfera: StatusIxfera, i: int):
-    random.seed()
+    random.seed()   # Utilizar semente do parâmetro faz com que a proporção fique desigual
     faixaEtaria = random.randint(0, 2)
     ixfera.qtdClientes[faixaEtaria] += 1
     return Cliente(i, faixaEtaria)
@@ -33,8 +33,10 @@ def threadCliente(cliente: Cliente, ixfera: StatusIxfera):
 
     tempoStart = time()
     ixfera.semaforoChegada.release()
-    ixfera.filaMensagens.put(1)
+
+    ixfera.filaMensagens.put(1)     # mensagem interpretada como "cliente chegou"
     ixfera.semaforoControle.release()
+    
     ixfera.semaforoEntrada.acquire()
     tempoEnd = time()
 
@@ -94,6 +96,11 @@ if (__name__ == "__main__"):
     criadora.join()
     tempoFim = time()
     print("[Ixfera] Simulacao finalizada.")
+
+    print("Total de clientes:")
+    print("Faixa A: %d" % (ixfera.qtdClientes[0]))
+    print("Faixa B: %d" % (ixfera.qtdClientes[1]))
+    print("Faixa C: %d" % (ixfera.qtdClientes[2]))
 
     print("\nTempo médio de espera:")
     if (ixfera.qtdClientes[0] == 0): print("Faixa A: -.-- (nenhum cliente A)")

@@ -69,7 +69,7 @@ class StatusIxfera:
         self.pessoasQueSairam += 1
         print("[Pessoa %d / %s] Saiu da ixfera (quantidade = %d)" % (cliente.id, cliente.getFaixaEtaria(), self.pessoasNaApresentacao))
         if (self.pessoasNaApresentacao == 0):
-            self.filaMensagens.put(2)
+            self.filaMensagens.put(2)       # Mensagem interpretada como "ixfera vazia"
             self.semaforoControle.release()
         self.semaforoVagas.release()
         self.lock.release()
@@ -90,12 +90,16 @@ class StatusIxfera:
             if (self.primeiraVez):
                 self.primeiraVez = False
                 self.statusFim = valor
+            # Caso o valor atual for diferente do valor anterior
             elif (self.statusFim != valor):
                 self.statusFim = valor
+            # Se o valor for 2, significa que a ixfera esvaziou
             if valor == 2:
                 self.semaforoFim.release()
                 self.semaforoRetornoControle.release()
                 break
+
+            # Se a quantidade de pessoas que entraram for igual a quantidade de pessoas, significa que todas as pessoas entraram
             if (self.pessoasQueEntraram == self.n_pessoas): break
             self.semaforoRetornoControle.release()
         return
@@ -134,6 +138,7 @@ class StatusIxfera:
             self.liberaFila()
             self.semaforoFim.acquire()
             print("[Ixfera] Pausando a experiencia %s." % self.tipoApresentacao)
+            # Reseta os valores usados pela thread de controle
             self.primeiraVez = True
             self.statusFim = 0
         tempoFim = time()
