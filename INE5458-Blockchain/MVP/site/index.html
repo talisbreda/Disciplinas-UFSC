@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="overlay"></div>
+        <div class="brand-wrapper">
+            <div class="logo-wrapper">
+                <img src="./assets/logo.png">
+            </div>
+            <div class="name-wrapper">
+                <h1>FraudReport</h1>
+            </div>
+        </div>
+        <div class="scroll-box">
+            <h2>Send Feedback</h2>
+            <form>
+                <div class="form-input-wrapper">
+                    <label for="brand">Select the company</label>
+                    <select>
+                        <option >Select a Company</option>
+                        <option >Company A</option>
+                        <option >Company B</option>
+                        <option >Company C</option>
+                        <option >Company D</option>
+                    </select>
+                </div>
+
+                <div class="form-input-wrapper">
+                    <label>Describe your feedback</label>
+                    <textarea placeholder="Text here"></textarea>
+                </div>
+                <button class="submit">Submit</button>
+            </form>
+        </div>
+        <div class="receipt-window">
+            <h1>Thanks for sharing your feedback!</h1>
+            <p>Here is your receipt</p>
+            <div class="transaction-hash-wrapper">
+                <label>Transaction hash</label>
+                <input type="text" value="">
+            </div>
+            <div class="wallet-address-wrapper">
+                <label>Your wallet address</label>
+                <input type="text" value="">
+            </div>
+            <div class="contract-address-wrapper">
+                <label>Contract address</label>
+                <input type="text" value="">
+            </div>
+            <div class="block-hash-wrapper">
+                <label>Block Hash</label>
+                <input type="text" value="">
+            </div>
+            <div class="gas-used-wrapper">
+                <label>Gas Used</label>
+                <input type="text" value="">
+            </div>
+            <button class="close-receipt">OK</button>
+        </div>
+    </div>
+        
+
+    <script>
+        addEventListener("wheel", (event) => {});
+        onwheel = (event) => {};
+        var scrolled = 0;
+
+        function zoom(event) {
+            event.preventDefault();
+            var scrollBox = document.querySelector('.scroll-box');
+            var brandWrapper = document.querySelector('.brand-wrapper');
+            
+            var brandTopPosition = brandWrapper.getBoundingClientRect().top;
+            var scrollBoxTopPosition = scrollBox.getBoundingClientRect().top;
+
+            let scrolling = false;
+
+            if (!scrolling && event.deltaY > 0 && brandTopPosition == 276.5) {
+                scrolling = true;
+                scrolled -= 1185;
+                brandWrapper.style.transform = `translateY(${scrolled}px)`;
+                scrollBox.style.transform = `translateY(${scrolled}px)`;
+                brandTopPosition = brandWrapper.getBoundingClientRect().top;
+                scrollBoxTopPosition = scrollBox.getBoundingClientRect().top;
+                scrolling = false;
+            } else if (!scrolling && event.deltaY < 0 && scrollBoxTopPosition == 205.5) {
+                scrolling = true;
+                scrolled += 1185;
+                brandWrapper.style.transform = `translateY(${scrolled}px)`;
+                scrollBox.style.transform = `translateY(${scrolled}px)`;
+                brandTopPosition = brandWrapper.getBoundingClientRect().top;
+                scrollBoxTopPosition = scrollBox.getBoundingClientRect().top;
+                scrolling = false;
+            }
+
+            // scrolled -= event.deltaY;
+
+            // brandWrapper.style.transform = `translateY(${scrolled}px)`;
+            // scrollBox.style.transform = `translateY(${scrolled}px)`;
+        };
+        let scale = 1;
+        const el = document.querySelector("div");
+        el.onwheel = zoom;
+    </script>
+    
+    <script>
+        function fillReceipt(receipt) {
+            const transactionHash = document.querySelector('.transaction-hash-wrapper input');
+            const walletAddress = document.querySelector('.wallet-address-wrapper input');
+            const contractAddress = document.querySelector('.contract-address-wrapper input');
+            const blockHash = document.querySelector('.block-hash-wrapper input');
+            const gasUsed = document.querySelector('.gas-used-wrapper input');
+
+            transactionHash.value = receipt.transactionHash;
+            walletAddress.value = receipt.from;
+            contractAddress.value = receipt.to;
+            blockHash.value = receipt.blockHash;
+            gasUsed.value = receipt.gasUsed;
+        }
+
+        async function hashString(text) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+
+            // Generate the SHA-256 hash
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+            // Convert the hash to a hexadecimal string
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            const hash = '0x' + hashHex;
+            return hash
+        }
+
+        submitButton = document.querySelector('.submit');
+        submitButton.addEventListener('click', async () => {
+            event.preventDefault()
+
+            const text = document.querySelector('textarea').value;
+            if (text == '') {
+                alert('Please enter some text');
+                return;
+            }
+            const hash = await hashString(text);
+
+            myContract.methods.saveHash(hash)
+                .send({
+                    from: '0x759AaA358C3A22F9B205070ECC8bc168dF3cCCaa',
+                    gas: 3000000
+                })
+                .then(receipt => {
+                    console.log(receipt);
+                    fillReceipt(receipt)
+                    document.querySelector('.receipt-window').style.display = 'flex';
+                    document.querySelector('.overlay').style.display = 'block';
+                });
+        });
+
+        const closeReceiptButton = document.querySelector('.close-receipt');
+        closeReceiptButton.addEventListener('click', () => {
+            document.querySelector('.receipt-window').style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        });
+    </script>
+
+    <script>
+        // Connect to Ethereum network
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // Set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
+        }
+
+        // Replace with your contract ABI and address
+        const contractAbi = [
+            {
+                "inputs": [
+                    {
+                        "internalType": "bytes32",
+                        "name": "_hash",
+                        "type": "bytes32"
+                    }
+                ],
+                "name": "saveHash",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ]; // Your contract ABI
+        const contractAddress = '0x5cCe61011b4e163EfC72e1F7210F80C180BCC420'; // Your contract address
+
+        const myContract = new web3.eth.Contract(contractAbi, contractAddress);
+
+    </script>
+</body>
+
+</html>
