@@ -72,7 +72,8 @@
     <script>
         addEventListener("wheel", (event) => {});
         onwheel = (event) => {};
-        var scrolled = 0;
+        let scrolled = 0;
+        let down = false;
 
         function zoom(event) {
             event.preventDefault();
@@ -84,28 +85,25 @@
 
             let scrolling = false;
 
-            if (!scrolling && event.deltaY > 0 && brandTopPosition == 276.5) {
+            if (!scrolling && event.deltaY > 0 && !down) {
                 scrolling = true;
                 scrolled -= 1185;
                 brandWrapper.style.transform = `translateY(${scrolled}px)`;
                 scrollBox.style.transform = `translateY(${scrolled}px)`;
                 brandTopPosition = brandWrapper.getBoundingClientRect().top;
                 scrollBoxTopPosition = scrollBox.getBoundingClientRect().top;
+                down = true;
                 scrolling = false;
-            } else if (!scrolling && event.deltaY < 0 && scrollBoxTopPosition == 205.5) {
+            } else if (!scrolling && event.deltaY < 0 && down) {
                 scrolling = true;
                 scrolled += 1185;
                 brandWrapper.style.transform = `translateY(${scrolled}px)`;
                 scrollBox.style.transform = `translateY(${scrolled}px)`;
                 brandTopPosition = brandWrapper.getBoundingClientRect().top;
                 scrollBoxTopPosition = scrollBox.getBoundingClientRect().top;
+                down = false;
                 scrolling = false;
             }
-
-            // scrolled -= event.deltaY;
-
-            // brandWrapper.style.transform = `translateY(${scrolled}px)`;
-            // scrollBox.style.transform = `translateY(${scrolled}px)`;
         };
         let scale = 1;
         const el = document.querySelector("div");
