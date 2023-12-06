@@ -152,7 +152,7 @@
 
             myContract.methods.saveHash(hash)
                 .send({
-                    from: '0x759AaA358C3A22F9B205070ECC8bc168dF3cCCaa',
+                    from: '0xED509A6195e121B1f17ED296F70D798e60D48F19',
                     gas: 3000000
                 })
                 .then(receipt => {
@@ -195,7 +195,7 @@
                 "type": "function"
             }
         ]; // Your contract ABI
-        const contractAddress = '0x5cCe61011b4e163EfC72e1F7210F80C180BCC420'; // Your contract address
+        const contractAddress = '0x184a485A7C1a4e11d0Bc6B551c518dc728f78422'; // Your contract address
 
         const myContract = new web3.eth.Contract(contractAbi, contractAddress);
 
