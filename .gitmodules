@@ -1,3 +1,6 @@
 [submodule "INE5412-Sistemas-operacionais-I/INE5412-Trabalhos"]
 	path = INE5412-Sistemas-operacionais-I/INE5412-Trabalhos
 	url = https://github.com/talisbreda/INE5412-Trabalhos
+[submodule "INE5417-Engenharia-de-software-I/Misty"]
+	path = INE5417-Engenharia-de-software-I/Misty
+	url = https://github.com/GeovaneSchmitz/Misty
