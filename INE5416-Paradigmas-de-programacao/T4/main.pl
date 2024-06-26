@@ -136,9 +136,8 @@ exatamente_a_esquerda(A, B, Lista) :- exatamente_a_direita(B, A, Lista).
 entre(A, B, C, Lista) :- nth0(Ia, Lista, A), nth0(Ib, Lista, B), nth0(Ic, Lista, C), Ia < Ib, Ib < Ic.
 
 % Verifica se todos os elementos de uma lista são diferentes
-todos_diferentes(List) :- sort(List, Sorted), length(List, Len), length(Sorted, Len).
-% todos_diferentes([]).
-% todos_diferentes([H|T]) :- not(member(H,T)), todos_diferentes(T).
+todos_diferentes([]).
+todos_diferentes([H|T]) :- not(member(H,T)), todos_diferentes(T).
 
 % X está no canto se ele é o primeiro ou o último da lista
 noCanto(X,Lista) :- last(Lista,X).
