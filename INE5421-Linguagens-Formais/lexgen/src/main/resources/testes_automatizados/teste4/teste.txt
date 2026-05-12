@@ -1,0 +1,19 @@
+program exemploMedio {
+    int contador;
+    float valor;
+    float resultado;
+
+    contador = 0;
+    read(valor);
+
+    while (contador < 5) {
+        valor = valor * 2;
+
+        if (valor > 100)
+            print(valor);
+        else
+            print(0);
+
+        contador = contador + 1;
+    }
+}

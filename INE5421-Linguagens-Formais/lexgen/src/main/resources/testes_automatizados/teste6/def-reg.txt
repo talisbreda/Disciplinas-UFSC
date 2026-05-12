@@ -1,0 +1,57 @@
+const: const
+var: var
+proc: proc
+func: funcao
+inicio: inicio
+fim: fim
+inteiro: inteiro
+real: real
+booleano: booleano
+caracter: caracter
+cadeia: cadeia
+vetor: vetor
+intervalo: intervalo
+de: de
+ref: ref
+val: val
+se: se
+entao: entao
+senao: senao
+enquanto: enquanto
+faca: faca
+repita: repita
+ate: ate
+leia: leia
+escreva: escreva
+e: e
+ou: ou
+nao: nao
+falso: falso
+verdadeiro: verdadeiro
+
+ATRIBUICAO: :=
+PONTO_PONTO: \.\.
+OP_MENOR_IGUAL: <=
+OP_MAIOR_IGUAL: >=
+OP_DIFERENTE: <>
+
+PONTO: \.
+PONTO_VIRGULA: ;
+VIRGULA: ,
+DOIS_PONTOS: :
+ABRE_PAR: \(
+FECHA_PAR: \)
+ABRE_COL: \[
+FECHA_COL: \]
+IGUAL: =
+OP_MAIS: \+
+OP_MENOS: \-
+OP_VEZES: \*
+OP_DIV: /
+OP_MENOR: <
+OP_MAIOR: >
+
+id: [a-zA-Z][a-zA-Z0-9_]*
+num_int: [0-9]+
+num_real: [0-9]+\.[0-9]+
+literal: "([a-zA-Z0-9 ])*"

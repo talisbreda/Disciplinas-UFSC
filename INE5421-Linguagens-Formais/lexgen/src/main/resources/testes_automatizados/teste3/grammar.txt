@@ -1,0 +1,7 @@
+<Programa> ::= PROGRAM id PONTO_VIRGULA <ListaComandos>
+<ListaComandos> ::= <Comando>
+<ListaComandos> ::= &
+<Comando> ::= <ChamadaFuncao>
+<Comando> ::= <ChamadaProcedimento>
+<ChamadaFuncao> ::= id PONTO_VIRGULA
+<ChamadaProcedimento> ::= id PONTO_VIRGULA

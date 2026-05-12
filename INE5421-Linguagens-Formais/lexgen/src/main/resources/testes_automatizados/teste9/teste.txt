@@ -1,0 +1,24 @@
+program testePascal;
+
+var
+    x, y : integer;
+    flag : boolean;
+
+begin
+    x := 10;
+    y := 20;
+    flag := true;
+
+    if x < y then
+        writeln(x)
+    else
+        writeln(y);
+
+    for x := 1 to 5 do
+        begin
+            y := y + x;
+            writeln(y)
+        end;
+
+    writeln(flag)
+end.

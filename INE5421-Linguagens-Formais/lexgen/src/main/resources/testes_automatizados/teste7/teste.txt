@@ -1,0 +1,47 @@
+const inteiro MAX = 100;
+const booleano ATIVO = verdadeiro;
+
+var contador : inteiro;
+var entrada : inteiro;
+var resultado : real;
+var flag : booleano;
+
+proc calcularDobro(val n : inteiro);
+var temp : inteiro;
+
+inicio
+    temp := n * 2;
+    escreva(temp);
+
+    contador := 0;
+    flag := falso;
+
+    leia(entrada);
+
+    se entrada > MAX entao
+        inicio
+            escreva(entrada);
+            flag := @verdadeiro;
+        fim
+    senao
+        inicio
+            resultado := entrada / 2;
+            escreva(resultado);
+        fim;
+
+    enquanto contador < 10 faca
+    inicio
+        contador := contador + 1;
+        calcularDobro(contador);
+    fim;
+
+    repita
+        contador := contador - 1
+    ate contador = 0;
+
+    escreva(flag);
+fim;
+
+inicio
+    escreva(resultado)
+fim.

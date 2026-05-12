@@ -1,0 +1,28 @@
+PROGRAM: program
+INT: int
+FLOAT: float
+IF: if
+ELSE: else
+WHILE: while
+READ: read
+PRINT: print
+
+IGUAL: ==
+ATRIBUICAO: =
+OP_MAIS: \+
+OP_MENOS: \-
+OP_VEZES: \*
+OP_DIV: /
+OP_MAIOR: >
+OP_MENOR: <
+
+ABRE_PAR: \(
+FECHA_PAR: \)
+ABRE_CHAVES: \{
+FECHA_CHAVES: \}
+PONTO_VIRGULA: ;
+VIRGULA: ,
+
+id: [a-zA-Z][a-zA-Z0-9_]*
+num_int: [0-9]+
+num_real: [0-9]+\.[0-9]+
