@@ -1,0 +1,7 @@
+# Artefatos Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# NOTA: trabalho_compiladores.pdf NÃO é ignorado (permanece rastreável).
