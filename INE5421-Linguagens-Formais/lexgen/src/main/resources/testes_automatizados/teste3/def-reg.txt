@@ -1,0 +1,3 @@
+PROGRAM: program
+PONTO_VIRGULA: ;
+id: [a-zA-Z]+

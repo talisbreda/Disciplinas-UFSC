@@ -1,0 +1,33 @@
+variavelX
+contador_2
+MeuIdGigante123
+
+12345
+9
+0
+100
+
+3.1415
+.50
+199.
+0.001
+
+/#EsteEhUmComentarioValid0#/
+/#IgnorarIsso#/
+
+|
+!
+=
++
+-
+*
+;
+
+1010
+00
+010
+1110
+
+x = 10.5 + .99 ;
+flag = 0 ;
+binario = 1010 ;

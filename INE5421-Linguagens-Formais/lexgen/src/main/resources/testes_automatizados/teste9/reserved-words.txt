@@ -1,0 +1,15 @@
+program
+var
+integer
+boolean
+begin
+end
+if
+then
+else
+for
+to
+do
+writeln
+true
+false

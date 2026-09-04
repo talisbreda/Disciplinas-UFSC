@@ -1,0 +1,33 @@
+PROGRAM: program
+VAR: var
+INTEGER: integer
+BOOLEAN: boolean
+BEGIN: begin
+END: end
+IF: if
+THEN: then
+ELSE: else
+FOR: for
+TO: to
+DO: do
+WRITELN: writeln
+TRUE: true
+FALSE: false
+
+ASSIGN: :=
+PONTO_VIRGULA: ;
+DOIS_PONTOS: :
+PONTO: \.
+VIRGULA: ,
+ABRE_PAR: \(
+FECHA_PAR: \)
+MAIS: \+
+MENOS: \-
+VEZES: \*
+DIV: /
+MAIOR: >
+MENOR: <
+IGUAL: =
+
+id: [a-zA-Z][a-zA-Z0-9_]*
+num: [0-9]+

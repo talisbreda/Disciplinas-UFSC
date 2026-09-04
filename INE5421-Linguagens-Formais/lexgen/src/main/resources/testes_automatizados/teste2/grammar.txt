@@ -1,0 +1,15 @@
+<Programa> ::= <ListaComandos>
+<ListaComandos> ::= <Comando> PONTO_VIRGULA <ListaComandos>
+<ListaComandos> ::= <Comando> PONTO_VIRGULA
+<Comando> ::= <Atribuicao>
+<Comando> ::= <OperacaoLogica>
+<Comando> ::= <Especial>
+<Atribuicao> ::= id opAtrib <Valor>
+<OperacaoLogica> ::= <Valor> opLogico <Valor>
+<OperacaoLogica> ::= opLogico <Valor>
+<Especial> ::= talvez
+<Especial> ::= tokenA
+<Valor> ::= id
+<Valor> ::= numInt
+<Valor> ::= zero
+<Valor> ::= numReal
